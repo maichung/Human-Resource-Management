@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2deecd2cd90643fd99bd5352d2599c39" Name="Diagram1">
+        <EntityTypeShape EntityType="QLNSModel.BANGLUONG" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.CHAMCONGNGAY" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.CHITIETPHIEUCHI" Width="1.5" PointX="7.5" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.HOSOUNGTUYEN" Width="1.5" PointX="10" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.KHOANLUONG" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.KHOANNGHIPHEP" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.LICHSUNHANVIEN" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.LOAICHAMCONG" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.LOAILUONG" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.LOAINGHIPHEP" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.NGHIPHEP" Width="1.5" PointX="10.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.NHANVIEN" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.PHIEUCHI" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.PHONGBAN" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.TAIKHOAN" Width="1.5" PointX="5.25" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.UNGVIEN" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="QLNSModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NHANVIEN_TK_CO_NV_TAIKHOAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
