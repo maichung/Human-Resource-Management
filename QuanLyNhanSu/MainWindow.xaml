@@ -6,33 +6,43 @@
         xmlns:local="clr-namespace:QuanLyNhanSu"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="YOLOHR" Height="750" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="YOLOHR" Height="750" Width="1200" WindowStartupLocation="CenterScreen" Icon="Resources/Icons/logo_icon.png" Foreground="#FF232C3A">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" MinWidth="300"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
         <!-- Menu area -->
-        <Grid Grid.Column="0" Background="#f0f0f0" Margin="0,0,20,0">
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="150"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Source="Resources/Icons/iconbw.png" Width="100" Height="100" VerticalAlignment="Bottom"></Image>
-            <StackPanel Margin="10,30" Name="groupButtonTitles" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button Name="btnTrangChu" Height="50" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+
+            <!-- Thông tin tài khoản -->
+            <Grid Grid.Row="0" Width="180">
+                <StackPanel Grid.Row="0" VerticalAlignment="Center" Margin="10 0">
+                    <Ellipse Width="60" Height="60" Margin="0 10" HorizontalAlignment="Left">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semibold">
+                                Phạm Phong Phú
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Foreground="#FFB1B1B1">
+                                Trưởng phòng nhân sự
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <!-- Menu chính -->
+            <StackPanel Name="menuArea" Grid.Row="1" Width="230" HorizontalAlignment="center" VerticalAlignment="Top" Margin="0,20,0,0">
+                <Button Name="btnTrangChu" Height="45" BorderBrush="{x:Null}" Background="#8062FE " Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="White"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="0">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -48,19 +58,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnTrangChu.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnTrangChu_white.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="0">
-                                                <Setter Property="Source" Value="Resources\Icons\btnTrangChu2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnTrangChu_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -68,14 +78,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="TRANG CHỦ" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Trang chủ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0" ></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnAnUong" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnNhanVien" Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="1">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -92,19 +102,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnAnUong.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnNhanVien.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="1">
-                                                <Setter Property="Source" Value="Resources\Icons\btnAnUong2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnNhanVien_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -112,14 +122,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="DỊCH VỤ ĂN UỐNG" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Nhân viên" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnGiatUi" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnPhongBan"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="2">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -136,19 +146,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnGiatUi.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnPhongBan.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="2">
-                                                <Setter Property="Source" Value="Resources\Icons\btnGiatUi2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnPhongBan_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -156,14 +166,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="DỊCH VỤ GIẶT ỦI" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Phòng ban" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnDiChuyen" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnNghiPhep" Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="3">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -180,19 +190,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnDiChuyen.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnNghiPhep.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="3">
-                                                <Setter Property="Source" Value="Resources\Icons\btnDiChuyen2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnNghiPhep_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -200,14 +210,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="DỊCH VỤ DI CHUYỂN" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Nghỉ phép" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnTraCuu" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnChamCOng"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="4">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -223,19 +233,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnTraCuu.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnChamCong.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="4">
-                                                <Setter Property="Source" Value="Resources\Icons\btnTraCuu2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnChamCong_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -243,14 +253,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="TRA CỨU, QUẢN LÍ" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Chấm công" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnBaoCao" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnLuong"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="5">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -266,19 +276,19 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <Grid Width="250" >
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnBaoCao.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnLuong.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="5">
-                                                <Setter Property="Source" Value="Resources\Icons\btnBaoCao2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnLuong_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -286,14 +296,14 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="BÁO CÁO, THỐNG KÊ" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Lương" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
-                <Button Name="btnThongTin" Height="50" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16">
+                <Button Name="btnTuyenDung"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="Foreground" Value="#FFB1B1B1"></Setter>
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ChucNangKS}" Value="6">
                                     <Setter Property="Foreground" Value="White"></Setter>
@@ -307,20 +317,20 @@
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
-                    
-                    <Grid Width="250" >
+
+                    <Grid Width="180" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Image Margin="10,10,10,10">
+                            <Image Margin="7">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="Resources\Icons\btnThongTinPhanMem.png"></Setter>
+                                        <Setter Property="Source" Value="Resources\Icons\btnTuyenDung.png"></Setter>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ChucNangKS}" Value="6">
-                                                <Setter Property="Source" Value="Resources\Icons\btnThongTinPhanMem2.png"></Setter>
+                                                <Setter Property="Source" Value="Resources\Icons\btnTuyenDung_white.png"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -328,27 +338,206 @@
                             </Image>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="THÔNG TIN" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Tuyển dụng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
+                        </Grid>
+                    </Grid>
+                </Button>
+                <Button Name="btnBaoCao"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ChucNangKS}" Value="6">
+                                    <Setter Property="Foreground" Value="White"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnTroGiupCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+
+                    <Grid Width="180" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Image Margin="7">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="Resources\Icons\btnBaoCao.png"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ChucNangKS}" Value="7">
+                                                <Setter Property="Source" Value="Resources\Icons\btnBaoCao_white.png"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Báo cáo" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
+                        </Grid>
+                    </Grid>
+                </Button>
+                <Button Name="btnCaiDat"  Height="45" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,5" >
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                            <Setter Property="Foreground" Value="#b1b1b1"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ChucNangKS}" Value="6">
+                                    <Setter Property="Foreground" Value="White"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnTroGiupCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+
+                    <Grid Width="180" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Image Margin="7">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="Resources\Icons\btnCaiDat.png"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ChucNangKS}" Value="8">
+                                                <Setter Property="Source" Value="Resources\Icons\btnCaiDat_white.png"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Cài đặt" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="5,0,0,0"></TextBlock>
                         </Grid>
                     </Grid>
                 </Button>
             </StackPanel>
-            <GridSplitter Grid.Row="2" Height="1" Width="220" IsEnabled="False" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFC1C1C1"></GridSplitter>
-            <!-- Tài khoản đăng nhập -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource DangNhapVM}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="{Binding NVDangNhap.HOTEN_NV}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontFamily="Segoe UI Semibold"/>
-                <GridSplitter IsEnabled="False" Width="1" Margin="1,7,1,7" Background="#FFD6D6D6"></GridSplitter>
-                <Label Content="{Binding NVDangNhap.CHUCVU_NV}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontFamily="Segoe UI Light"/>
-                <GridSplitter IsEnabled="False" Width="1" Margin="10,0,10,0" Background="#FFD6D6D6"></GridSplitter>
-                <Image DataContext="{StaticResource MainVM}" Height="18" Width="18" Cursor="Hand" Source="Resources\Icons\btnDangXuat.png" ToolTip="Đăng xuất">
-                    <!--<i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding DangXuatCommand}" CommandParameter="{Binding ElementName=mainWindow}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>-->
-                </Image>
-            </StackPanel>
+        </Grid>
+
+        <!-- Content area-->
+        <Grid Grid.Column="1" Background="#FFFAFAFC">
+            <Grid Name="gridTrangChu" Margin="30 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Tiêu đề trang -->
+                <Grid Grid.Row="0">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" FontSize="36">
+                    Trang chủ
+                    </TextBlock>
+                </Grid>
+                <!-- Nội dung trang -->
+                <Grid Grid.Row="1">
+                    <WrapPanel Orientation="Horizontal">
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40" Padding="20" Foreground="White" Background="#FF8062FE">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock HorizontalAlignment="Center" Margin="0 5" FontSize="24" FontFamily="Segoe UI Semibold" TextAlignment="Center">
+                                    Xin chào,<LineBreak></LineBreak> Phong Phú
+                                </TextBlock>
+                                <TextBlock HorizontalAlignment="Center" Margin="0 5" FontSize="18" TextAlignment="Center" TextWrapping="Wrap">
+                                    Nắm bắt nhanh mọi thứ tại đây.
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" Margin="70 10" Background="White"/>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40">
+                            <StackPanel>
+                                <!-- Màu thẻ -->
+                                <Rectangle Height="3" Fill="#0A9F6B"></Rectangle>
+                                <!-- Tiêu đề thẻ -->
+                                <TextBlock HorizontalAlignment="Center" Margin="0 10" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold">
+                                    Nghỉ phép của tôi
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <!-- Nội dung thẻ -->
+                                <Grid>
+                                    <Button Command="{Binding RunDialogCommand}" Width="128">
+                                        RUN CODE
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40">
+                            <StackPanel>
+                                <!-- Màu thẻ -->
+                                <Rectangle Height="3" Fill="#AFD245"></Rectangle>
+                                <!-- Tiêu đề thẻ -->
+                                <TextBlock HorizontalAlignment="Center" Margin="0 10" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold">
+                                    Tuyển dụng mới
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <!-- Nội dung thẻ -->
+                                <Grid>
+
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40">
+                            <StackPanel>
+                                <!-- Màu thẻ -->
+                                <Rectangle Height="3" Fill="#E64F64"></Rectangle>
+                                <!-- Tiêu đề thẻ -->
+                                <TextBlock HorizontalAlignment="Center" Margin="0 10" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold">
+                                    Nhân viên nghỉ phép
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <!-- Nội dung thẻ -->
+                                <Grid>
+
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40">
+                            <StackPanel>
+                                <!-- Màu thẻ -->
+                                <Rectangle Height="3" Fill="#D79C80"></Rectangle>
+                                <!-- Tiêu đề thẻ -->
+                                <TextBlock HorizontalAlignment="Center" Margin="0 10" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold">
+                                   Nhân viên mới
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <!-- Nội dung thẻ -->
+                                <Grid>
+
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Width="250" Height="230" Margin="5,0,30,40">
+                            <StackPanel>
+                                <!-- Màu thẻ -->
+                                <Rectangle Height="3" Fill="#46B2BD"></Rectangle>
+                                <!-- Tiêu đề thẻ -->
+                                <TextBlock HorizontalAlignment="Center" Margin="0 10" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold">
+                                    Sinh nhật trong tháng
+                                </TextBlock>
+                                <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <!-- Nội dung thẻ -->
+                                <Grid>
+
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </WrapPanel>
+                </Grid>
+            </Grid>
+
         </Grid>
     </Grid>
 </Window>
