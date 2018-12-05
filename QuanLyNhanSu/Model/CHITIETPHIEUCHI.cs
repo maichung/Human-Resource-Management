@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class CHITIETPHIEUCHI : BaseViewModel
     {
         private int _MA_CTPC;
@@ -23,7 +23,7 @@ namespace QuanLyNhanSu.Model
         public string NOIDUNG_CTPC { get => _NOIDUNG_CTPC; set { _NOIDUNG_CTPC = value; OnPropertyChanged(); } }
         private Nullable<decimal> _TRIGIA_CTPC;
         public Nullable<decimal> TRIGIA_CTPC { get => _TRIGIA_CTPC; set { _TRIGIA_CTPC = value; OnPropertyChanged(); } }
-    
+
         public virtual PHIEUCHI PHIEUCHI { get; set; }
     }
 }

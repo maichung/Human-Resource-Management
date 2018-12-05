@@ -9,21 +9,26 @@
 
 namespace QuanLyNhanSu.Model
 {
+    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class PHIEUCHI
+    public partial class PHIEUCHI : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PHIEUCHI()
         {
             this.CHITIETPHIEUCHI = new HashSet<CHITIETPHIEUCHI>();
         }
-    
-        public int MA_PC { get; set; }
-        public int MA_NV { get; set; }
-        public Nullable<decimal> TRIGIA_PC { get; set; }
-        public Nullable<System.DateTime> THOIGIANLAP_PC { get; set; }
+
+        private int _MA_PC;
+        public int MA_PC { get => _MA_PC; set { _MA_PC = value; OnPropertyChanged(); } }
+        private int _MA_NV;
+        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
+        private Nullable<decimal> _TRIGIA_PC;
+        public Nullable<decimal> TRIGIA_PC { get => _TRIGIA_PC; set { _TRIGIA_PC = value; OnPropertyChanged(); } }
+        private Nullable<System.DateTime> _THOIGIANLAP_PC;
+        public Nullable<System.DateTime> THOIGIANLAP_PC { get => _THOIGIANLAP_PC; set { _THOIGIANLAP_PC = value; OnPropertyChanged(); } }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETPHIEUCHI> CHITIETPHIEUCHI { get; set; }

@@ -9,22 +9,27 @@
 
 namespace QuanLyNhanSu.Model
 {
+    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class TAIKHOAN
+    public partial class TAIKHOAN : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TAIKHOAN()
         {
             this.NHANVIEN = new HashSet<NHANVIEN>();
         }
-    
-        public int MA_TK { get; set; }
-        public int MA_NV { get; set; }
-        public string TENDANGNHAP_TK { get; set; }
-        public string MATKHAU_TK { get; set; }
-    
+
+        private int _MA_TK;
+        public int MA_TK { get => _MA_TK; set { _MA_TK = value; OnPropertyChanged(); } }
+        private int _MA_NV;
+        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
+        private string _TENDANGNHAP_TK;
+        public string TENDANGNHAP_TK { get => _TENDANGNHAP_TK; set { _TENDANGNHAP_TK = value; OnPropertyChanged(); } }
+        private string _MATKHAU_TK;
+        public string MATKHAU_TK { get => _MATKHAU_TK; set { _MATKHAU_TK = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NHANVIEN> NHANVIEN { get; set; }
         public virtual NHANVIEN NHANVIEN1 { get; set; }
