@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class BANGLUONG : BaseViewModel
     {
         private int _MA_BL;
@@ -23,7 +23,7 @@ namespace QuanLyNhanSu.Model
         public Nullable<System.DateTime> THANG_BL { get => _THANG_BL; set { _THANG_BL = value; OnPropertyChanged(); } }
         private Nullable<decimal> _TONGLUONG_BL;
         public Nullable<decimal> TONGLUONG_BL { get => _TONGLUONG_BL; set { _TONGLUONG_BL = value; OnPropertyChanged(); } }
-    
+
         public virtual NHANVIEN NHANVIEN { get; set; }
     }
 }

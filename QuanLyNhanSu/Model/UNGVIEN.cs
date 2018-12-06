@@ -9,25 +9,33 @@
 
 namespace QuanLyNhanSu.Model
 {
+    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class UNGVIEN
+    public partial class UNGVIEN : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UNGVIEN()
         {
             this.HOSOUNGTUYEN = new HashSet<HOSOUNGTUYEN>();
         }
-    
-        public int MA_UV { get; set; }
-        public string HOTEN_UV { get; set; }
-        public Nullable<bool> GIOITINH_UV { get; set; }
-        public Nullable<System.DateTime> NGAYSINH_UV { get; set; }
-        public string EMAIL_UV { get; set; }
-        public string SODIENTHOAI_UV { get; set; }
-        public string DIACHI_UV { get; set; }
-    
+
+        private int _MA_UV;
+        public int MA_UV { get => _MA_UV; set { _MA_UV = value; OnPropertyChanged(); } }
+        private string _HOTEN_UV;
+        public string HOTEN_UV { get => _HOTEN_UV; set { _HOTEN_UV = value; OnPropertyChanged(); } }
+        private Nullable<bool> _GIOITINH_UV;
+        public Nullable<bool> GIOITINH_UV { get => _GIOITINH_UV; set { _GIOITINH_UV = value; OnPropertyChanged(); } }
+        private Nullable<System.DateTime> _NGAYSINH_UV;
+        public Nullable<System.DateTime> NGAYSINH_UV { get => _NGAYSINH_UV; set { _NGAYSINH_UV = value; OnPropertyChanged(); } }
+        private string _EMAIL_UV;
+        public string EMAIL_UV { get => _EMAIL_UV; set { _EMAIL_UV = value; OnPropertyChanged(); } }
+        private string _SODIENTHOAI_UV;
+        public string SODIENTHOAI_UV { get => _SODIENTHOAI_UV; set { _SODIENTHOAI_UV = value; OnPropertyChanged(); } }
+        private string _DIACHI_UV;
+        public string DIACHI_UV { get => _DIACHI_UV; set { _DIACHI_UV = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOSOUNGTUYEN> HOSOUNGTUYEN { get; set; }
     }

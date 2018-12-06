@@ -29,17 +29,18 @@ namespace QuanLyNhanSu.Model
         public virtual DbSet<CHAMCONGNGAY> CHAMCONGNGAY { get; set; }
         public virtual DbSet<CHITIETPHIEUCHI> CHITIETPHIEUCHI { get; set; }
         public virtual DbSet<HOSOUNGTUYEN> HOSOUNGTUYEN { get; set; }
-        public virtual DbSet<KHOANLUONG> KHOANLUONG { get; set; }
         public virtual DbSet<KHOANNGHIPHEP> KHOANNGHIPHEP { get; set; }
         public virtual DbSet<LICHSUNHANVIEN> LICHSUNHANVIEN { get; set; }
         public virtual DbSet<LOAICHAMCONG> LOAICHAMCONG { get; set; }
         public virtual DbSet<LOAILUONG> LOAILUONG { get; set; }
         public virtual DbSet<LOAINGHIPHEP> LOAINGHIPHEP { get; set; }
+        public virtual DbSet<NGAYNGHILE> NGAYNGHILE { get; set; }
         public virtual DbSet<NGHIPHEP> NGHIPHEP { get; set; }
         public virtual DbSet<NHANVIEN> NHANVIEN { get; set; }
         public virtual DbSet<PHIEUCHI> PHIEUCHI { get; set; }
         public virtual DbSet<PHONGBAN> PHONGBAN { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOAN { get; set; }
         public virtual DbSet<UNGVIEN> UNGVIEN { get; set; }
+        public virtual DbSet<KHOANLUONG> KHOANLUONG { get; set; }
     }
 }

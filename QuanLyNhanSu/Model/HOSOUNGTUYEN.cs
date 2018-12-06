@@ -12,11 +12,11 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
-    public partial class HOSOUNGTUYEN: BaseViewModel
+
+    public partial class HOSOUNGTUYEN : BaseViewModel
     {
         private int _MA_HSUT;
-        public int MA_HSUT { get=>_MA_HSUT; set { _MA_HSUT = value; OnPropertyChanged(); } }
+        public int MA_HSUT { get => _MA_HSUT; set { _MA_HSUT = value; OnPropertyChanged(); } }
         private int _MA_UV;
         public int MA_UV { get => _MA_UV; set { _MA_UV = value; OnPropertyChanged(); } }
         private string _VITRICONGVIEC_HSUT;

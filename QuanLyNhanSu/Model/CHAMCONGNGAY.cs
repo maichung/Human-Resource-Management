@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class CHAMCONGNGAY : BaseViewModel
     {
         private int _MA_CCN;
@@ -25,7 +25,7 @@ namespace QuanLyNhanSu.Model
         public Nullable<System.DateTime> THOIGIANBATDAU_CCN { get => _THOIGIANBATDAU_CCN; set { _THOIGIANBATDAU_CCN = value; OnPropertyChanged(); } }
         private Nullable<System.DateTime> _THOIGIANKETTHUC_CCN;
         public Nullable<System.DateTime> THOIGIANKETTHUC_CCN { get; set; }
-    
+
         public virtual LOAICHAMCONG LOAICHAMCONG { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
     }
