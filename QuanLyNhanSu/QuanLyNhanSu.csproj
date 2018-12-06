@@ -131,11 +131,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ThongTinNhanVien.xaml.cs">
+      <DependentUpon>ThongTinNhanVien.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ThongTinNhanVien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\MainResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,54 +203,34 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icons\btnSua.png" />
+    <Resource Include="Resources\Icons\btnXoa.png" />
+    <Resource Include="Resources\Icons\btnThayDoiAnh.png" />
+    <Resource Include="Resources\Icons\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\btnThem_white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Icons\btnBaoCao.png" />
-    <Resource Include="Resources\Icons\btnBaoCao_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnCaiDat.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnCaiDat_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnChamCong.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnChamCong_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnLuong.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnLuong_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnNghiPhep.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnNghiPhep_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnNhanVien.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnNhanVien_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnPhongBan.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnPhongBan_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnTrangChu.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\btnTrangChu_white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Icons\btnBaoCao_white.png" />
+    <Resource Include="Resources\Icons\btnCaiDat.png" />
+    <Resource Include="Resources\Icons\btnCaiDat_white.png" />
+    <Resource Include="Resources\Icons\btnChamCong.png" />
+    <Resource Include="Resources\Icons\btnChamCong_white.png" />
+    <Resource Include="Resources\Icons\btnLuong.png" />
+    <Resource Include="Resources\Icons\btnLuong_white.png" />
+    <Resource Include="Resources\Icons\btnNghiPhep.png" />
+    <Resource Include="Resources\Icons\btnNghiPhep_white.png" />
+    <Resource Include="Resources\Icons\btnNhanVien.png" />
+    <Resource Include="Resources\Icons\btnNhanVien_white.png" />
+    <Resource Include="Resources\Icons\btnPhongBan.png" />
+    <Resource Include="Resources\Icons\btnPhongBan_white.png" />
+    <Resource Include="Resources\Icons\btnTrangChu.png" />
+    <Resource Include="Resources\Icons\btnTrangChu_white.png" />
     <Resource Include="Resources\Icons\btnTuyenDung.png" />
-    <Resource Include="Resources\Icons\btnTuyenDung_white.png">
+    <Resource Include="Resources\Icons\btnTuyenDung_white.png" />
+    <Resource Include="Resources\Icons\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -257,8 +244,6 @@
     <Resource Include="Resources\Icons\avatar.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Icons\logo.png" />
-    <Resource Include="Resources\Icons\logo_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

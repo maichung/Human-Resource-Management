@@ -1,0 +1,162 @@
+﻿<Window x:Class="QuanLyNhanSu.NhanVien"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyNhanSu"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Thông tin nhân viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="16">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề và thanh công cụ-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
+                    <Ellipse Width="100" Height="100" Margin="0 10" HorizontalAlignment="Left">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="PHẠM PHONG PHÚ" FontSize="24" HorizontalAlignment="Left"
+                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40">
+                        <Image Stretch="None" Source="Resources\Icons\btnThayDoiAnh.png"></Image>
+                    </Button>
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40">
+                        <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
+                    </Button>
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40">
+                        <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+
+        <!-- Thông tin nhân viên -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
+                    <TextBlock Text="Thông tin công việc" FontFamily="Segoe UI Semibold" FontSize="24" ></TextBlock>
+                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1">
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Mã nhân viên"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="EM0001" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Chức vụ"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="Trưởng phòng Hành chính - Nhân sự" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Số điện thoại"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="0708 989 089" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Email"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="phupham@yolohr.com" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Ngày vào làm"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="19/06/2015" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
+                    <TextBlock Text="Thông tin cá nhân" FontFamily="Segoe UI Semibold" FontSize="24" ></TextBlock>
+                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1">
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Họ tên"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="Phạm Phong Phú" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Ngày sinh"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="24/02/1997" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Giới tính"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="Nam" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Địa chỉ"></TextBlock>
+                            <TextBlock FontSize="16" Margin="0,5,0,0"
+                                       Text="205/16 Liên khu 5-6, Phường Bình Hưng Hoà B, Quận Bình Tân, Thành phố Hồ Chí Minh" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>
