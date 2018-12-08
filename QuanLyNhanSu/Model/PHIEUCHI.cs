@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class PHIEUCHI : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,7 +29,7 @@ namespace QuanLyNhanSu.Model
         public Nullable<decimal> TRIGIA_PC { get => _TRIGIA_PC; set { _TRIGIA_PC = value; OnPropertyChanged(); } }
         private Nullable<System.DateTime> _THOIGIANLAP_PC;
         public Nullable<System.DateTime> THOIGIANLAP_PC { get => _THOIGIANLAP_PC; set { _THOIGIANLAP_PC = value; OnPropertyChanged(); } }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETPHIEUCHI> CHITIETPHIEUCHI { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }

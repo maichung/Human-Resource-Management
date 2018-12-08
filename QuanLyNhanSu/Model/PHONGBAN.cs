@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class PHONGBAN : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

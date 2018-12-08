@@ -1,0 +1,251 @@
+﻿using QuanLyNhanSu.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+
+namespace QuanLyNhanSu.ViewModel
+{
+    public class NhanVienViewModel : BaseViewModel
+    {
+        #region DataContext
+        private ObservableCollection<NHANVIEN> _ListNhanVien;
+        public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Combobox item source
+        private ObservableCollection<PHONGBAN> _ListPhongBan;
+        public ObservableCollection<PHONGBAN> ListPhongBan { get => _ListPhongBan; set { _ListPhongBan = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _ListGioiTinh;
+        public ObservableCollection<string> ListGioiTinh { get => _ListGioiTinh; set { _ListGioiTinh = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Thuộc tính binding
+        private string _HoTen;
+        public string HoTen { get => _HoTen; set { _HoTen = value; OnPropertyChanged(); } }
+        private PHONGBAN _SelectedPhongBan;
+        public PHONGBAN SelectedPhongBan { get => _SelectedPhongBan; set { _SelectedPhongBan = value; OnPropertyChanged(); } }
+        private string _SelectedGioiTinh;
+        public string SelectedGioiTinh { get => _SelectedGioiTinh; set { _SelectedGioiTinh = value; OnPropertyChanged(); } }
+        private DateTime? _NgaySinh;
+        public DateTime? NgaySinh { get => _NgaySinh; set { _NgaySinh = value; OnPropertyChanged(); } }
+        private string _ChucVu;
+        public string ChucVu { get => _ChucVu; set { _ChucVu = value; OnPropertyChanged(); } }
+        private DateTime? _NgayVaoLam;
+        public DateTime? NgayVaoLam { get => _NgayVaoLam; set { _NgayVaoLam = value; OnPropertyChanged(); } }
+        private string _Email;
+        public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
+        private string _SoDienThoai;
+        public string SoDienThoai { get => _SoDienThoai; set { _SoDienThoai = value; OnPropertyChanged(); } }
+        private string _DiaChi;
+        public string DiaChi { get => _DiaChi; set { _DiaChi = value; OnPropertyChanged(); } }
+        private string _Avatar;
+        public string Avatar { get => _Avatar; set { _Avatar = value; OnPropertyChanged(); } }
+        private NHANVIEN _SelectedNhanVien;
+        public NHANVIEN SelectedNhanVien { get => _SelectedNhanVien; set { _SelectedNhanVien = value; OnPropertyChanged(); } }
+        private bool _IsEditable;
+        public bool IsEditable { get => _IsEditable; set { _IsEditable = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Thuộc tính khác
+        private string _SearchNhanVien;
+        public string SearchNhanVien { get => _SearchNhanVien; set { _SearchNhanVien = value; OnPropertyChanged(); } }
+        public bool sort;
+        #endregion
+
+        #region Command binding
+        public ICommand TaoMoiCommand { get; set; }
+        public ICommand LuuCommand { get; set; }
+        public ICommand HuyCommand { get; set; }
+        public ICommand SuaCommand { get; set; }
+        public ICommand HienThiCommand { get; set; }
+        public ICommand SortCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        #endregion
+
+        public NhanVienViewModel()
+        {
+            LoadListNhanVien();
+            string[] DSGioiTinh = new string[] { "Nam", "Nữ" };
+            ListGioiTinh = new ObservableCollection<string>(DSGioiTinh);
+            ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
+            IsEditable = false;
+
+            // Tạo mới command
+            TaoMoiCommand = new RelayCommand<Object>((p) =>
+              {
+                  return true;
+              }, (p) =>
+              {
+                  IsEditable = true;
+                  ResetControls();
+
+                  NhanVienWindow nhanVienWindow = new NhanVienWindow();
+                  nhanVienWindow.ShowDialog();
+              });
+
+            // Lưu command
+            LuuCommand = new RelayCommand<Window>((p) =>
+            {
+                if (string.IsNullOrEmpty(HoTen) || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(SoDienThoai) ||
+                string.IsNullOrEmpty(DiaChi) || string.IsNullOrEmpty(ChucVu) || SelectedPhongBan == null || SelectedGioiTinh == null ||
+                NgaySinh == null || NgayVaoLam == null)
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                if (IsEditable == false)
+                {
+                    MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                return true;
+            }, (p) =>
+            {
+                if (SelectedNhanVien == null)
+                {
+                    var NhanVienMoi = new NHANVIEN()
+                    {
+                        HOTEN_NV = HoTen,
+                        MA_PB = SelectedPhongBan.MA_PB,
+                        GIOITINH_NV = SelectedGioiTinh == "Nữ" ? true : false,
+                        NGAYSINH_NV = NgaySinh,
+                        CHUCVU_NV = ChucVu,
+                        NGAYVAOLAM_NV = NgayVaoLam,
+                        EMAIL_NV = Email,
+                        SODIENTHOAI_NV = SoDienThoai,
+                        DIACHI_NV = DiaChi
+                    };
+                    DataProvider.Ins.model.NHANVIEN.Add(NhanVienMoi);
+                    DataProvider.Ins.model.SaveChanges();
+                    MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
+                    NhanVienSua.HOTEN_NV = HoTen;
+                    NhanVienSua.MA_PB = SelectedPhongBan.MA_PB;
+                    NhanVienSua.GIOITINH_NV = SelectedGioiTinh == "Nữ" ? true : false;
+                    NhanVienSua.NGAYSINH_NV = NgaySinh;
+                    NhanVienSua.CHUCVU_NV = ChucVu;
+                    NhanVienSua.NGAYVAOLAM_NV = NgayVaoLam;
+                    NhanVienSua.EMAIL_NV = Email;
+                    NhanVienSua.SODIENTHOAI_NV = SoDienThoai;
+                    NhanVienSua.DIACHI_NV = DiaChi;
+
+                    DataProvider.Ins.model.SaveChanges();
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                LoadListNhanVien();
+                p.Close();
+            });
+
+            // Huỷ command
+            HuyCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    IsEditable = false;
+                    p.Close();
+                }
+
+            });
+
+            // Sửa command
+            SuaCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                IsEditable = true;
+            });
+
+            // Hiển thị command
+            HienThiCommand = new RelayCommand<Object>((p) =>
+            {
+                return SelectedNhanVien == null ? false : true;
+            }, (p) =>
+            {
+                IsEditable = false;
+
+                HoTen = SelectedNhanVien.HOTEN_NV;
+                SelectedPhongBan = SelectedNhanVien.PHONGBAN;
+                SelectedGioiTinh = SelectedNhanVien.GIOITINH_NV == true ? "Nữ" : "Nam";
+                NgaySinh = SelectedNhanVien.NGAYSINH_NV;
+                ChucVu = SelectedNhanVien.CHUCVU_NV;
+                NgayVaoLam = SelectedNhanVien.NGAYVAOLAM_NV;
+                Email = SelectedNhanVien.EMAIL_NV;
+                SoDienThoai = SelectedNhanVien.SODIENTHOAI_NV;
+                DiaChi = SelectedNhanVien.DIACHI_NV;
+
+                NhanVienWindow nhanVienWindow = new NhanVienWindow();
+                nhanVienWindow.ShowDialog();
+            });
+
+            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListNhanVien);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+
+            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(SearchNhanVien))
+                {
+                    CollectionViewSource.GetDefaultView(ListNhanVien).Filter = (all) => { return true; };
+                }
+                else
+                {
+                    CollectionViewSource.GetDefaultView(ListNhanVien).Filter = (searchNhanVien) =>
+                    {
+                        return (searchNhanVien as NHANVIEN).HOTEN_NV.IndexOf(SearchNhanVien, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                               (searchNhanVien as NHANVIEN).CHUCVU_NV.IndexOf(SearchNhanVien, StringComparison.OrdinalIgnoreCase) >= 0;
+                    };
+                }
+
+            });
+        }
+
+        public void LoadListNhanVien()
+        {
+            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+        }
+
+        public void ResetControls()
+        {
+            SelectedNhanVien = null;
+            HoTen = null;
+            SelectedPhongBan = null;
+            SelectedGioiTinh = null;
+            NgaySinh = null;
+            ChucVu = null;
+            NgayVaoLam = null;
+            Email = null;
+            SoDienThoai = null;
+            DiaChi = null;
+        }
+    }
+}

@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class NHANVIEN : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,18 +20,16 @@ namespace QuanLyNhanSu.Model
         {
             this.BANGLUONG = new HashSet<BANGLUONG>();
             this.CHAMCONGNGAY = new HashSet<CHAMCONGNGAY>();
+            this.KHOANLUONG = new HashSet<KHOANLUONG>();
             this.KHOANNGHIPHEP = new HashSet<KHOANNGHIPHEP>();
             this.LICHSUNHANVIEN = new HashSet<LICHSUNHANVIEN>();
             this.NGHIPHEP = new HashSet<NGHIPHEP>();
             this.PHIEUCHI = new HashSet<PHIEUCHI>();
-            this.TAIKHOAN1 = new HashSet<TAIKHOAN>();
-            this.KHOANLUONG = new HashSet<KHOANLUONG>();
+            this.TAIKHOAN = new HashSet<TAIKHOAN>();
         }
 
         private int _MA_NV;
         public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
-        private Nullable<int> _MA_TK;
-        public Nullable<int> MA_TK { get => _MA_TK; set { _MA_TK = value; OnPropertyChanged(); } }
         private int _MA_PB;
         public int MA_PB { get => _MA_PB; set { _MA_PB = value; OnPropertyChanged(); } }
         private string _HOTEN_NV;
@@ -60,18 +58,17 @@ namespace QuanLyNhanSu.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHAMCONGNGAY> CHAMCONGNGAY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KHOANLUONG> KHOANLUONG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KHOANNGHIPHEP> KHOANNGHIPHEP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LICHSUNHANVIEN> LICHSUNHANVIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NGHIPHEP> NGHIPHEP { get; set; }
         public virtual PHONGBAN PHONGBAN { get; set; }
-        public virtual TAIKHOAN TAIKHOAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHIEUCHI> PHIEUCHI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TAIKHOAN> TAIKHOAN1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KHOANLUONG> KHOANLUONG { get; set; }
+        public virtual ICollection<TAIKHOAN> TAIKHOAN { get; set; }
     }
 }

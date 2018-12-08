@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QLNSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyNhanSuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BANGLUONG">
           <Key>
             <PropertyRef Name="MA_BL" />
@@ -118,7 +118,6 @@
             <PropertyRef Name="MA_NV" />
           </Key>
           <Property Name="MA_NV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MA_TK" Type="int" />
           <Property Name="MA_PB" Type="int" Nullable="false" />
           <Property Name="HOTEN_NV" Type="nvarchar" MaxLength="255" />
           <Property Name="GIOITINH_NV" Type="bit" />
@@ -327,18 +326,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NHANVIEN_TK_CO_NV_TAIKHOAN">
-          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
-          <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TAIKHOAN">
-              <PropertyRef Name="MA_TK" />
-            </Principal>
-            <Dependent Role="NHANVIEN">
-              <PropertyRef Name="MA_TK" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
           <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
           <End Role="PHIEUCHI" Type="Self.PHIEUCHI" Multiplicity="*" />
@@ -363,7 +350,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QLNSModelStoreContainer">
+        <EntityContainer Name="QuanLyNhanSuModelStoreContainer">
           <EntitySet Name="BANGLUONG" EntityType="Self.BANGLUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHAMCONGNGAY" EntityType="Self.CHAMCONGNGAY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHITIETPHIEUCHI" EntityType="Self.CHITIETPHIEUCHI" Schema="dbo" store:Type="Tables" />
@@ -433,10 +420,6 @@
             <End Role="PHONGBAN" EntitySet="PHONGBAN" />
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_NHANVIEN_TK_CO_NV_TAIKHOAN" Association="Self.FK_NHANVIEN_TK_CO_NV_TAIKHOAN">
-            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-          </AssociationSet>
           <AssociationSet Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" Association="Self.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="PHIEUCHI" EntitySet="PHIEUCHI" />
@@ -449,88 +432,84 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QLNSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="QLNSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BANGLUONG" EntityType="QLNSModel.BANGLUONG" />
-          <EntitySet Name="CHAMCONGNGAY" EntityType="QLNSModel.CHAMCONGNGAY" />
-          <EntitySet Name="CHITIETPHIEUCHI" EntityType="QLNSModel.CHITIETPHIEUCHI" />
-          <EntitySet Name="HOSOUNGTUYEN" EntityType="QLNSModel.HOSOUNGTUYEN" />
-          <EntitySet Name="KHOANNGHIPHEP" EntityType="QLNSModel.KHOANNGHIPHEP" />
-          <EntitySet Name="LICHSUNHANVIEN" EntityType="QLNSModel.LICHSUNHANVIEN" />
-          <EntitySet Name="LOAICHAMCONG" EntityType="QLNSModel.LOAICHAMCONG" />
-          <EntitySet Name="LOAILUONG" EntityType="QLNSModel.LOAILUONG" />
-          <EntitySet Name="LOAINGHIPHEP" EntityType="QLNSModel.LOAINGHIPHEP" />
-          <EntitySet Name="NGAYNGHILE" EntityType="QLNSModel.NGAYNGHILE" />
-          <EntitySet Name="NGHIPHEP" EntityType="QLNSModel.NGHIPHEP" />
-          <EntitySet Name="NHANVIEN" EntityType="QLNSModel.NHANVIEN" />
-          <EntitySet Name="PHIEUCHI" EntityType="QLNSModel.PHIEUCHI" />
-          <EntitySet Name="PHONGBAN" EntityType="QLNSModel.PHONGBAN" />
-          <EntitySet Name="TAIKHOAN" EntityType="QLNSModel.TAIKHOAN" />
-          <EntitySet Name="UNGVIEN" EntityType="QLNSModel.UNGVIEN" />
-          <AssociationSet Name="FK_BANGLUON_NV_CO_BL_NHANVIEN" Association="QLNSModel.FK_BANGLUON_NV_CO_BL_NHANVIEN">
+      <Schema Namespace="QuanLyNhanSuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QuanLyNhanSuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BANGLUONG" EntityType="QuanLyNhanSuModel.BANGLUONG" />
+          <EntitySet Name="CHAMCONGNGAY" EntityType="QuanLyNhanSuModel.CHAMCONGNGAY" />
+          <EntitySet Name="CHITIETPHIEUCHI" EntityType="QuanLyNhanSuModel.CHITIETPHIEUCHI" />
+          <EntitySet Name="HOSOUNGTUYEN" EntityType="QuanLyNhanSuModel.HOSOUNGTUYEN" />
+          <EntitySet Name="KHOANLUONG" EntityType="QuanLyNhanSuModel.KHOANLUONG" />
+          <EntitySet Name="KHOANNGHIPHEP" EntityType="QuanLyNhanSuModel.KHOANNGHIPHEP" />
+          <EntitySet Name="LICHSUNHANVIEN" EntityType="QuanLyNhanSuModel.LICHSUNHANVIEN" />
+          <EntitySet Name="LOAICHAMCONG" EntityType="QuanLyNhanSuModel.LOAICHAMCONG" />
+          <EntitySet Name="LOAILUONG" EntityType="QuanLyNhanSuModel.LOAILUONG" />
+          <EntitySet Name="LOAINGHIPHEP" EntityType="QuanLyNhanSuModel.LOAINGHIPHEP" />
+          <EntitySet Name="NGAYNGHILE" EntityType="QuanLyNhanSuModel.NGAYNGHILE" />
+          <EntitySet Name="NGHIPHEP" EntityType="QuanLyNhanSuModel.NGHIPHEP" />
+          <EntitySet Name="NHANVIEN" EntityType="QuanLyNhanSuModel.NHANVIEN" />
+          <EntitySet Name="PHIEUCHI" EntityType="QuanLyNhanSuModel.PHIEUCHI" />
+          <EntitySet Name="PHONGBAN" EntityType="QuanLyNhanSuModel.PHONGBAN" />
+          <EntitySet Name="TAIKHOAN" EntityType="QuanLyNhanSuModel.TAIKHOAN" />
+          <EntitySet Name="UNGVIEN" EntityType="QuanLyNhanSuModel.UNGVIEN" />
+          <AssociationSet Name="FK_BANGLUON_NV_CO_BL_NHANVIEN" Association="QuanLyNhanSuModel.FK_BANGLUON_NV_CO_BL_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="BANGLUONG" EntitySet="BANGLUONG" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHAMCONG_CTCC_CO_L_LOAICHAM" Association="QLNSModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM">
+          <AssociationSet Name="FK_CHAMCONG_CTCC_CO_L_LOAICHAM" Association="QuanLyNhanSuModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM">
             <End Role="LOAICHAMCONG" EntitySet="LOAICHAMCONG" />
             <End Role="CHAMCONGNGAY" EntitySet="CHAMCONGNGAY" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHAMCONG_NV_CO_CCN_NHANVIEN" Association="QLNSModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN">
+          <AssociationSet Name="FK_CHAMCONG_NV_CO_CCN_NHANVIEN" Association="QuanLyNhanSuModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="CHAMCONGNGAY" EntitySet="CHAMCONGNGAY" />
           </AssociationSet>
-          <AssociationSet Name="FK_CHITIETP_PC_CO_CTP_PHIEUCHI" Association="QLNSModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI">
+          <AssociationSet Name="FK_CHITIETP_PC_CO_CTP_PHIEUCHI" Association="QuanLyNhanSuModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI">
             <End Role="PHIEUCHI" EntitySet="PHIEUCHI" />
             <End Role="CHITIETPHIEUCHI" EntitySet="CHITIETPHIEUCHI" />
           </AssociationSet>
-          <AssociationSet Name="FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" Association="QLNSModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN">
+          <AssociationSet Name="FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" Association="QuanLyNhanSuModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN">
             <End Role="UNGVIEN" EntitySet="UNGVIEN" />
             <End Role="HOSOUNGTUYEN" EntitySet="HOSOUNGTUYEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_KHOANNGH_KNP_CO_LN_LOAINGHI" Association="QLNSModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI">
-            <End Role="LOAINGHIPHEP" EntitySet="LOAINGHIPHEP" />
-            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KHOANNGH_NV_CO_KNP_NHANVIEN" Association="QLNSModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" Association="QLNSModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH">
-            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
-            <End Role="NGHIPHEP" EntitySet="NGHIPHEP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LICHSUNH_NV_CO_LSN_NHANVIEN" Association="QLNSModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="LICHSUNHANVIEN" EntitySet="LICHSUNHANVIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NGHIPHEP_NV_CO_NP_NHANVIEN" Association="QLNSModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="NGHIPHEP" EntitySet="NGHIPHEP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NHANVIEN_PB_CO_NV_PHONGBAN" Association="QLNSModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN">
-            <End Role="PHONGBAN" EntitySet="PHONGBAN" />
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NHANVIEN_TK_CO_NV_TAIKHOAN" Association="QLNSModel.FK_NHANVIEN_TK_CO_NV_TAIKHOAN">
-            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" Association="QLNSModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="PHIEUCHI" EntitySet="PHIEUCHI" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" Association="QLNSModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN">
-            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
-            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
-          </AssociationSet>
-          <EntitySet Name="KHOANLUONG" EntityType="QLNSModel.KHOANLUONG" />
-          <AssociationSet Name="FK_KHOANLUO_KL_CO_LL_LOAILUON" Association="QLNSModel.FK_KHOANLUO_KL_CO_LL_LOAILUON">
+          <AssociationSet Name="FK_KHOANLUO_KL_CO_LL_LOAILUON" Association="QuanLyNhanSuModel.FK_KHOANLUO_KL_CO_LL_LOAILUON">
             <End Role="LOAILUONG" EntitySet="LOAILUONG" />
             <End Role="KHOANLUONG" EntitySet="KHOANLUONG" />
           </AssociationSet>
-          <AssociationSet Name="FK_KHOANLUO_NV_CO_KL_NHANVIEN" Association="QLNSModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN">
+          <AssociationSet Name="FK_KHOANLUO_NV_CO_KL_NHANVIEN" Association="QuanLyNhanSuModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN">
             <End Role="NHANVIEN" EntitySet="NHANVIEN" />
             <End Role="KHOANLUONG" EntitySet="KHOANLUONG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANNGH_KNP_CO_LN_LOAINGHI" Association="QuanLyNhanSuModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI">
+            <End Role="LOAINGHIPHEP" EntitySet="LOAINGHIPHEP" />
+            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANNGH_NV_CO_KNP_NHANVIEN" Association="QuanLyNhanSuModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" Association="QuanLyNhanSuModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH">
+            <End Role="KHOANNGHIPHEP" EntitySet="KHOANNGHIPHEP" />
+            <End Role="NGHIPHEP" EntitySet="NGHIPHEP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LICHSUNH_NV_CO_LSN_NHANVIEN" Association="QuanLyNhanSuModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="LICHSUNHANVIEN" EntitySet="LICHSUNHANVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NGHIPHEP_NV_CO_NP_NHANVIEN" Association="QuanLyNhanSuModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="NGHIPHEP" EntitySet="NGHIPHEP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NHANVIEN_PB_CO_NV_PHONGBAN" Association="QuanLyNhanSuModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN">
+            <End Role="PHONGBAN" EntitySet="PHONGBAN" />
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" Association="QuanLyNhanSuModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="PHIEUCHI" EntitySet="PHIEUCHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" Association="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN">
+            <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BANGLUONG">
@@ -541,7 +520,7 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="THANG_BL" Type="DateTime" Precision="0" />
           <Property Name="TONGLUONG_BL" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" FromRole="BANGLUONG" ToRole="NHANVIEN" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" FromRole="BANGLUONG" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="CHAMCONGNGAY">
           <Key>
@@ -552,8 +531,8 @@
           <Property Name="MA_LCC" Type="Int32" Nullable="false" />
           <Property Name="THOIGIANBATDAU_CCN" Type="DateTime" Precision="0" />
           <Property Name="THOIGIANKETTHUC_CCN" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="LOAICHAMCONG" Relationship="QLNSModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" FromRole="CHAMCONGNGAY" ToRole="LOAICHAMCONG" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" FromRole="CHAMCONGNGAY" ToRole="NHANVIEN" />
+          <NavigationProperty Name="LOAICHAMCONG" Relationship="QuanLyNhanSuModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" FromRole="CHAMCONGNGAY" ToRole="LOAICHAMCONG" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" FromRole="CHAMCONGNGAY" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="CHITIETPHIEUCHI">
           <Key>
@@ -563,7 +542,7 @@
           <Property Name="MA_PC" Type="Int32" Nullable="false" />
           <Property Name="NOIDUNG_CTPC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TRIGIA_CTPC" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="PHIEUCHI" Relationship="QLNSModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" FromRole="CHITIETPHIEUCHI" ToRole="PHIEUCHI" />
+          <NavigationProperty Name="PHIEUCHI" Relationship="QuanLyNhanSuModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" FromRole="CHITIETPHIEUCHI" ToRole="PHIEUCHI" />
         </EntityType>
         <EntityType Name="HOSOUNGTUYEN">
           <Key>
@@ -576,7 +555,18 @@
           <Property Name="NGAYNOP_HSUT" Type="DateTime" Precision="0" />
           <Property Name="TRANGTHAI_HSUT" Type="Boolean" />
           <Property Name="CV_HSUT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UNGVIEN" Relationship="QLNSModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" FromRole="HOSOUNGTUYEN" ToRole="UNGVIEN" />
+          <NavigationProperty Name="UNGVIEN" Relationship="QuanLyNhanSuModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" FromRole="HOSOUNGTUYEN" ToRole="UNGVIEN" />
+        </EntityType>
+        <EntityType Name="KHOANLUONG">
+          <Key>
+            <PropertyRef Name="MA_KL" />
+          </Key>
+          <Property Name="MA_KL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MA_LL" Type="Int32" Nullable="false" />
+          <Property Name="MA_NV" Type="Int32" Nullable="false" />
+          <Property Name="SOTIEN_KL" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="LOAILUONG" Relationship="QuanLyNhanSuModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" FromRole="KHOANLUONG" ToRole="LOAILUONG" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" FromRole="KHOANLUONG" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="KHOANNGHIPHEP">
           <Key>
@@ -586,9 +576,9 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="MA_LNP" Type="Int32" Nullable="false" />
           <Property Name="SONGAYNGHI_KNP" Type="Int32" />
-          <NavigationProperty Name="LOAINGHIPHEP" Relationship="QLNSModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" FromRole="KHOANNGHIPHEP" ToRole="LOAINGHIPHEP" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" FromRole="KHOANNGHIPHEP" ToRole="NHANVIEN" />
-          <NavigationProperty Name="NGHIPHEP" Relationship="QLNSModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" FromRole="KHOANNGHIPHEP" ToRole="NGHIPHEP" />
+          <NavigationProperty Name="LOAINGHIPHEP" Relationship="QuanLyNhanSuModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" FromRole="KHOANNGHIPHEP" ToRole="LOAINGHIPHEP" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" FromRole="KHOANNGHIPHEP" ToRole="NHANVIEN" />
+          <NavigationProperty Name="NGHIPHEP" Relationship="QuanLyNhanSuModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" FromRole="KHOANNGHIPHEP" ToRole="NGHIPHEP" />
         </EntityType>
         <EntityType Name="LICHSUNHANVIEN">
           <Key>
@@ -598,7 +588,7 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="MOTA_LSNV" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="THOIGIAN_LSNV" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" FromRole="LICHSUNHANVIEN" ToRole="NHANVIEN" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" FromRole="LICHSUNHANVIEN" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="LOAICHAMCONG">
           <Key>
@@ -606,7 +596,7 @@
           </Key>
           <Property Name="MA_LCC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TEN_LCC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CHAMCONGNGAY" Relationship="QLNSModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" FromRole="LOAICHAMCONG" ToRole="CHAMCONGNGAY" />
+          <NavigationProperty Name="CHAMCONGNGAY" Relationship="QuanLyNhanSuModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" FromRole="LOAICHAMCONG" ToRole="CHAMCONGNGAY" />
         </EntityType>
         <EntityType Name="LOAILUONG">
           <Key>
@@ -614,7 +604,7 @@
           </Key>
           <Property Name="MA_LL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TEN_LL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="KHOANLUONG" Relationship="QLNSModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" FromRole="LOAILUONG" ToRole="KHOANLUONG" />
+          <NavigationProperty Name="KHOANLUONG" Relationship="QuanLyNhanSuModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" FromRole="LOAILUONG" ToRole="KHOANLUONG" />
         </EntityType>
         <EntityType Name="LOAINGHIPHEP">
           <Key>
@@ -623,7 +613,7 @@
           <Property Name="MA_LNP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TEN_LNP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="COLUONG_LNP" Type="Boolean" />
-          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QLNSModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" FromRole="LOAINGHIPHEP" ToRole="KHOANNGHIPHEP" />
+          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QuanLyNhanSuModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" FromRole="LOAINGHIPHEP" ToRole="KHOANNGHIPHEP" />
         </EntityType>
         <EntityType Name="NGAYNGHILE">
           <Key>
@@ -643,15 +633,14 @@
           <Property Name="NGAYBATDAU_NP" Type="DateTime" Precision="0" />
           <Property Name="NGAYKETTHUC_NP" Type="DateTime" Precision="0" />
           <Property Name="LIDO_NP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QLNSModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" FromRole="NGHIPHEP" ToRole="KHOANNGHIPHEP" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" FromRole="NGHIPHEP" ToRole="NHANVIEN" />
+          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QuanLyNhanSuModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" FromRole="NGHIPHEP" ToRole="KHOANNGHIPHEP" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" FromRole="NGHIPHEP" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="NHANVIEN">
           <Key>
             <PropertyRef Name="MA_NV" />
           </Key>
           <Property Name="MA_NV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MA_TK" Type="Int32" />
           <Property Name="MA_PB" Type="Int32" Nullable="false" />
           <Property Name="HOTEN_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="GIOITINH_NV" Type="Boolean" />
@@ -663,16 +652,15 @@
           <Property Name="SODIENTHOAI_NV" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DIACHI_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AVATAR_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BANGLUONG" Relationship="QLNSModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" FromRole="NHANVIEN" ToRole="BANGLUONG" />
-          <NavigationProperty Name="CHAMCONGNGAY" Relationship="QLNSModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" FromRole="NHANVIEN" ToRole="CHAMCONGNGAY" />
-          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QLNSModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" FromRole="NHANVIEN" ToRole="KHOANNGHIPHEP" />
-          <NavigationProperty Name="LICHSUNHANVIEN" Relationship="QLNSModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" FromRole="NHANVIEN" ToRole="LICHSUNHANVIEN" />
-          <NavigationProperty Name="NGHIPHEP" Relationship="QLNSModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" FromRole="NHANVIEN" ToRole="NGHIPHEP" />
-          <NavigationProperty Name="PHONGBAN" Relationship="QLNSModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" FromRole="NHANVIEN" ToRole="PHONGBAN" />
-          <NavigationProperty Name="TAIKHOAN" Relationship="QLNSModel.FK_NHANVIEN_TK_CO_NV_TAIKHOAN" FromRole="NHANVIEN" ToRole="TAIKHOAN" />
-          <NavigationProperty Name="PHIEUCHI" Relationship="QLNSModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" FromRole="NHANVIEN" ToRole="PHIEUCHI" />
-          <NavigationProperty Name="TAIKHOAN1" Relationship="QLNSModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="NHANVIEN" ToRole="TAIKHOAN" />
-          <NavigationProperty Name="KHOANLUONG" Relationship="QLNSModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" FromRole="NHANVIEN" ToRole="KHOANLUONG" />
+          <NavigationProperty Name="BANGLUONG" Relationship="QuanLyNhanSuModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" FromRole="NHANVIEN" ToRole="BANGLUONG" />
+          <NavigationProperty Name="CHAMCONGNGAY" Relationship="QuanLyNhanSuModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" FromRole="NHANVIEN" ToRole="CHAMCONGNGAY" />
+          <NavigationProperty Name="KHOANLUONG" Relationship="QuanLyNhanSuModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" FromRole="NHANVIEN" ToRole="KHOANLUONG" />
+          <NavigationProperty Name="KHOANNGHIPHEP" Relationship="QuanLyNhanSuModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" FromRole="NHANVIEN" ToRole="KHOANNGHIPHEP" />
+          <NavigationProperty Name="LICHSUNHANVIEN" Relationship="QuanLyNhanSuModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" FromRole="NHANVIEN" ToRole="LICHSUNHANVIEN" />
+          <NavigationProperty Name="NGHIPHEP" Relationship="QuanLyNhanSuModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" FromRole="NHANVIEN" ToRole="NGHIPHEP" />
+          <NavigationProperty Name="PHONGBAN" Relationship="QuanLyNhanSuModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" FromRole="NHANVIEN" ToRole="PHONGBAN" />
+          <NavigationProperty Name="PHIEUCHI" Relationship="QuanLyNhanSuModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" FromRole="NHANVIEN" ToRole="PHIEUCHI" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="NHANVIEN" ToRole="TAIKHOAN" />
         </EntityType>
         <EntityType Name="PHIEUCHI">
           <Key>
@@ -682,8 +670,8 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="TRIGIA_PC" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="THOIGIANLAP_PC" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CHITIETPHIEUCHI" Relationship="QLNSModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" FromRole="PHIEUCHI" ToRole="CHITIETPHIEUCHI" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" FromRole="PHIEUCHI" ToRole="NHANVIEN" />
+          <NavigationProperty Name="CHITIETPHIEUCHI" Relationship="QuanLyNhanSuModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" FromRole="PHIEUCHI" ToRole="CHITIETPHIEUCHI" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" FromRole="PHIEUCHI" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="PHONGBAN">
           <Key>
@@ -694,7 +682,7 @@
           <Property Name="MATRUONGPHONG_PB" Type="Int32" />
           <Property Name="NGAYTHANHLAP_PB" Type="DateTime" Precision="0" />
           <Property Name="DIACHI_PB" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" FromRole="PHONGBAN" ToRole="NHANVIEN" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" FromRole="PHONGBAN" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="TAIKHOAN">
           <Key>
@@ -704,8 +692,7 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="TENDANGNHAP_TK" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="MATKHAU_TK" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_NHANVIEN_TK_CO_NV_TAIKHOAN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
-          <NavigationProperty Name="NHANVIEN1" Relationship="QLNSModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="UNGVIEN">
           <Key>
@@ -718,11 +705,11 @@
           <Property Name="EMAIL_UV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="SODIENTHOAI_UV" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DIACHI_UV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HOSOUNGTUYEN" Relationship="QLNSModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" FromRole="UNGVIEN" ToRole="HOSOUNGTUYEN" />
+          <NavigationProperty Name="HOSOUNGTUYEN" Relationship="QuanLyNhanSuModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" FromRole="UNGVIEN" ToRole="HOSOUNGTUYEN" />
         </EntityType>
         <Association Name="FK_BANGLUON_NV_CO_BL_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.BANGLUONG" Role="BANGLUONG" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.BANGLUONG" Role="BANGLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
               <PropertyRef Name="MA_NV" />
@@ -733,8 +720,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CHAMCONG_CTCC_CO_L_LOAICHAM">
-          <End Type="QLNSModel.LOAICHAMCONG" Role="LOAICHAMCONG" Multiplicity="1" />
-          <End Type="QLNSModel.CHAMCONGNGAY" Role="CHAMCONGNGAY" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.LOAICHAMCONG" Role="LOAICHAMCONG" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.CHAMCONGNGAY" Role="CHAMCONGNGAY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOAICHAMCONG">
               <PropertyRef Name="MA_LCC" />
@@ -745,8 +732,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CHAMCONG_NV_CO_CCN_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.CHAMCONGNGAY" Role="CHAMCONGNGAY" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.CHAMCONGNGAY" Role="CHAMCONGNGAY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
               <PropertyRef Name="MA_NV" />
@@ -757,8 +744,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CHITIETP_PC_CO_CTP_PHIEUCHI">
-          <End Type="QLNSModel.PHIEUCHI" Role="PHIEUCHI" Multiplicity="1" />
-          <End Type="QLNSModel.CHITIETPHIEUCHI" Role="CHITIETPHIEUCHI" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.PHIEUCHI" Role="PHIEUCHI" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.CHITIETPHIEUCHI" Role="CHITIETPHIEUCHI" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PHIEUCHI">
               <PropertyRef Name="MA_PC" />
@@ -769,8 +756,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOSOUNGT_UV_CO_HSU_UNGVIEN">
-          <End Type="QLNSModel.UNGVIEN" Role="UNGVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.HOSOUNGTUYEN" Role="HOSOUNGTUYEN" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.UNGVIEN" Role="UNGVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.HOSOUNGTUYEN" Role="HOSOUNGTUYEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UNGVIEN">
               <PropertyRef Name="MA_UV" />
@@ -780,128 +767,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_KHOANNGH_KNP_CO_LN_LOAINGHI">
-          <End Type="QLNSModel.LOAINGHIPHEP" Role="LOAINGHIPHEP" Multiplicity="1" />
-          <End Type="QLNSModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOAINGHIPHEP">
-              <PropertyRef Name="MA_LNP" />
-            </Principal>
-            <Dependent Role="KHOANNGHIPHEP">
-              <PropertyRef Name="MA_LNP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KHOANNGH_NV_CO_KNP_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Principal>
-            <Dependent Role="KHOANNGHIPHEP">
-              <PropertyRef Name="MA_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NGHIPHEP_NP_CO_KNP_KHOANNGH">
-          <End Type="QLNSModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="1" />
-          <End Type="QLNSModel.NGHIPHEP" Role="NGHIPHEP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KHOANNGHIPHEP">
-              <PropertyRef Name="MA_KNP" />
-            </Principal>
-            <Dependent Role="NGHIPHEP">
-              <PropertyRef Name="MA_KNP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LICHSUNH_NV_CO_LSN_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.LICHSUNHANVIEN" Role="LICHSUNHANVIEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Principal>
-            <Dependent Role="LICHSUNHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NGHIPHEP_NV_CO_NP_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.NGHIPHEP" Role="NGHIPHEP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Principal>
-            <Dependent Role="NGHIPHEP">
-              <PropertyRef Name="MA_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NHANVIEN_PB_CO_NV_PHONGBAN">
-          <End Type="QLNSModel.PHONGBAN" Role="PHONGBAN" Multiplicity="1" />
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PHONGBAN">
-              <PropertyRef Name="MA_PB" />
-            </Principal>
-            <Dependent Role="NHANVIEN">
-              <PropertyRef Name="MA_PB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NHANVIEN_TK_CO_NV_TAIKHOAN">
-          <End Type="QLNSModel.TAIKHOAN" Role="TAIKHOAN" Multiplicity="0..1" />
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TAIKHOAN">
-              <PropertyRef Name="MA_TK" />
-            </Principal>
-            <Dependent Role="NHANVIEN">
-              <PropertyRef Name="MA_TK" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.PHIEUCHI" Role="PHIEUCHI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Principal>
-            <Dependent Role="PHIEUCHI">
-              <PropertyRef Name="MA_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TAIKHOAN_TK_CO_NV2_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.TAIKHOAN" Role="TAIKHOAN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHANVIEN">
-              <PropertyRef Name="MA_NV" />
-            </Principal>
-            <Dependent Role="TAIKHOAN">
-              <PropertyRef Name="MA_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="KHOANLUONG">
-          <Key>
-            <PropertyRef Name="MA_KL" />
-          </Key>
-          <Property Name="MA_KL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MA_LL" Type="Int32" Nullable="false" />
-          <Property Name="MA_NV" Type="Int32" Nullable="false" />
-          <Property Name="SOTIEN_KL" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="LOAILUONG" Relationship="QLNSModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" FromRole="KHOANLUONG" ToRole="LOAILUONG" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QLNSModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" FromRole="KHOANLUONG" ToRole="NHANVIEN" />
-        </EntityType>
         <Association Name="FK_KHOANLUO_KL_CO_LL_LOAILUON">
-          <End Type="QLNSModel.LOAILUONG" Role="LOAILUONG" Multiplicity="1" />
-          <End Type="QLNSModel.KHOANLUONG" Role="KHOANLUONG" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.LOAILUONG" Role="LOAILUONG" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.KHOANLUONG" Role="KHOANLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOAILUONG">
               <PropertyRef Name="MA_LL" />
@@ -912,8 +780,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_KHOANLUO_NV_CO_KL_NHANVIEN">
-          <End Type="QLNSModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
-          <End Type="QLNSModel.KHOANLUONG" Role="KHOANLUONG" Multiplicity="*" />
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.KHOANLUONG" Role="KHOANLUONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHANVIEN">
               <PropertyRef Name="MA_NV" />
@@ -923,14 +791,110 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KHOANNGH_KNP_CO_LN_LOAINGHI">
+          <End Type="QuanLyNhanSuModel.LOAINGHIPHEP" Role="LOAINGHIPHEP" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAINGHIPHEP">
+              <PropertyRef Name="MA_LNP" />
+            </Principal>
+            <Dependent Role="KHOANNGHIPHEP">
+              <PropertyRef Name="MA_LNP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANNGH_NV_CO_KNP_NHANVIEN">
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="KHOANNGHIPHEP">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NGHIPHEP_NP_CO_KNP_KHOANNGH">
+          <End Type="QuanLyNhanSuModel.KHOANNGHIPHEP" Role="KHOANNGHIPHEP" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.NGHIPHEP" Role="NGHIPHEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOANNGHIPHEP">
+              <PropertyRef Name="MA_KNP" />
+            </Principal>
+            <Dependent Role="NGHIPHEP">
+              <PropertyRef Name="MA_KNP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LICHSUNH_NV_CO_LSN_NHANVIEN">
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.LICHSUNHANVIEN" Role="LICHSUNHANVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="LICHSUNHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NGHIPHEP_NV_CO_NP_NHANVIEN">
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.NGHIPHEP" Role="NGHIPHEP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="NGHIPHEP">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NHANVIEN_PB_CO_NV_PHONGBAN">
+          <End Type="QuanLyNhanSuModel.PHONGBAN" Role="PHONGBAN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHONGBAN">
+              <PropertyRef Name="MA_PB" />
+            </Principal>
+            <Dependent Role="NHANVIEN">
+              <PropertyRef Name="MA_PB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHIEUCHI_NV_CO_PCP_NHANVIEN">
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.PHIEUCHI" Role="PHIEUCHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="PHIEUCHI">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_TK_CO_NV2_NHANVIEN">
+          <End Type="QuanLyNhanSuModel.NHANVIEN" Role="NHANVIEN" Multiplicity="1" />
+          <End Type="QuanLyNhanSuModel.TAIKHOAN" Role="TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHANVIEN">
+              <PropertyRef Name="MA_NV" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MA_NV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QLNSModelStoreContainer" CdmEntityContainer="QLNSEntities">
+        <EntityContainerMapping StorageEntityContainer="QuanLyNhanSuModelStoreContainer" CdmEntityContainer="QuanLyNhanSuEntities">
           <EntitySetMapping Name="BANGLUONG">
-            <EntityTypeMapping TypeName="QLNSModel.BANGLUONG">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.BANGLUONG">
               <MappingFragment StoreEntitySet="BANGLUONG">
                 <ScalarProperty Name="TONGLUONG_BL" ColumnName="TONGLUONG_BL" />
                 <ScalarProperty Name="THANG_BL" ColumnName="THANG_BL" />
@@ -940,7 +904,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHAMCONGNGAY">
-            <EntityTypeMapping TypeName="QLNSModel.CHAMCONGNGAY">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.CHAMCONGNGAY">
               <MappingFragment StoreEntitySet="CHAMCONGNGAY">
                 <ScalarProperty Name="THOIGIANKETTHUC_CCN" ColumnName="THOIGIANKETTHUC_CCN" />
                 <ScalarProperty Name="THOIGIANBATDAU_CCN" ColumnName="THOIGIANBATDAU_CCN" />
@@ -951,7 +915,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHITIETPHIEUCHI">
-            <EntityTypeMapping TypeName="QLNSModel.CHITIETPHIEUCHI">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.CHITIETPHIEUCHI">
               <MappingFragment StoreEntitySet="CHITIETPHIEUCHI">
                 <ScalarProperty Name="TRIGIA_CTPC" ColumnName="TRIGIA_CTPC" />
                 <ScalarProperty Name="NOIDUNG_CTPC" ColumnName="NOIDUNG_CTPC" />
@@ -961,7 +925,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HOSOUNGTUYEN">
-            <EntityTypeMapping TypeName="QLNSModel.HOSOUNGTUYEN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.HOSOUNGTUYEN">
               <MappingFragment StoreEntitySet="HOSOUNGTUYEN">
                 <ScalarProperty Name="CV_HSUT" ColumnName="CV_HSUT" />
                 <ScalarProperty Name="TRANGTHAI_HSUT" ColumnName="TRANGTHAI_HSUT" />
@@ -973,8 +937,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="KHOANLUONG">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.KHOANLUONG">
+              <MappingFragment StoreEntitySet="KHOANLUONG">
+                <ScalarProperty Name="SOTIEN_KL" ColumnName="SOTIEN_KL" />
+                <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
+                <ScalarProperty Name="MA_LL" ColumnName="MA_LL" />
+                <ScalarProperty Name="MA_KL" ColumnName="MA_KL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="KHOANNGHIPHEP">
-            <EntityTypeMapping TypeName="QLNSModel.KHOANNGHIPHEP">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.KHOANNGHIPHEP">
               <MappingFragment StoreEntitySet="KHOANNGHIPHEP">
                 <ScalarProperty Name="SONGAYNGHI_KNP" ColumnName="SONGAYNGHI_KNP" />
                 <ScalarProperty Name="MA_LNP" ColumnName="MA_LNP" />
@@ -984,7 +958,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LICHSUNHANVIEN">
-            <EntityTypeMapping TypeName="QLNSModel.LICHSUNHANVIEN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.LICHSUNHANVIEN">
               <MappingFragment StoreEntitySet="LICHSUNHANVIEN">
                 <ScalarProperty Name="THOIGIAN_LSNV" ColumnName="THOIGIAN_LSNV" />
                 <ScalarProperty Name="MOTA_LSNV" ColumnName="MOTA_LSNV" />
@@ -994,7 +968,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOAICHAMCONG">
-            <EntityTypeMapping TypeName="QLNSModel.LOAICHAMCONG">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.LOAICHAMCONG">
               <MappingFragment StoreEntitySet="LOAICHAMCONG">
                 <ScalarProperty Name="TEN_LCC" ColumnName="TEN_LCC" />
                 <ScalarProperty Name="MA_LCC" ColumnName="MA_LCC" />
@@ -1002,7 +976,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOAILUONG">
-            <EntityTypeMapping TypeName="QLNSModel.LOAILUONG">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.LOAILUONG">
               <MappingFragment StoreEntitySet="LOAILUONG">
                 <ScalarProperty Name="TEN_LL" ColumnName="TEN_LL" />
                 <ScalarProperty Name="MA_LL" ColumnName="MA_LL" />
@@ -1010,7 +984,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOAINGHIPHEP">
-            <EntityTypeMapping TypeName="QLNSModel.LOAINGHIPHEP">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.LOAINGHIPHEP">
               <MappingFragment StoreEntitySet="LOAINGHIPHEP">
                 <ScalarProperty Name="COLUONG_LNP" ColumnName="COLUONG_LNP" />
                 <ScalarProperty Name="TEN_LNP" ColumnName="TEN_LNP" />
@@ -1019,7 +993,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NGAYNGHILE">
-            <EntityTypeMapping TypeName="QLNSModel.NGAYNGHILE">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.NGAYNGHILE">
               <MappingFragment StoreEntitySet="NGAYNGHILE">
                 <ScalarProperty Name="TEN_NNL" ColumnName="TEN_NNL" />
                 <ScalarProperty Name="NGAY_NNL" ColumnName="NGAY_NNL" />
@@ -1028,7 +1002,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NGHIPHEP">
-            <EntityTypeMapping TypeName="QLNSModel.NGHIPHEP">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.NGHIPHEP">
               <MappingFragment StoreEntitySet="NGHIPHEP">
                 <ScalarProperty Name="LIDO_NP" ColumnName="LIDO_NP" />
                 <ScalarProperty Name="NGAYKETTHUC_NP" ColumnName="NGAYKETTHUC_NP" />
@@ -1040,7 +1014,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NHANVIEN">
-            <EntityTypeMapping TypeName="QLNSModel.NHANVIEN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.NHANVIEN">
               <MappingFragment StoreEntitySet="NHANVIEN">
                 <ScalarProperty Name="AVATAR_NV" ColumnName="AVATAR_NV" />
                 <ScalarProperty Name="DIACHI_NV" ColumnName="DIACHI_NV" />
@@ -1053,13 +1027,12 @@
                 <ScalarProperty Name="GIOITINH_NV" ColumnName="GIOITINH_NV" />
                 <ScalarProperty Name="HOTEN_NV" ColumnName="HOTEN_NV" />
                 <ScalarProperty Name="MA_PB" ColumnName="MA_PB" />
-                <ScalarProperty Name="MA_TK" ColumnName="MA_TK" />
                 <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHIEUCHI">
-            <EntityTypeMapping TypeName="QLNSModel.PHIEUCHI">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.PHIEUCHI">
               <MappingFragment StoreEntitySet="PHIEUCHI">
                 <ScalarProperty Name="THOIGIANLAP_PC" ColumnName="THOIGIANLAP_PC" />
                 <ScalarProperty Name="TRIGIA_PC" ColumnName="TRIGIA_PC" />
@@ -1069,7 +1042,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHONGBAN">
-            <EntityTypeMapping TypeName="QLNSModel.PHONGBAN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.PHONGBAN">
               <MappingFragment StoreEntitySet="PHONGBAN">
                 <ScalarProperty Name="DIACHI_PB" ColumnName="DIACHI_PB" />
                 <ScalarProperty Name="NGAYTHANHLAP_PB" ColumnName="NGAYTHANHLAP_PB" />
@@ -1080,7 +1053,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAIKHOAN">
-            <EntityTypeMapping TypeName="QLNSModel.TAIKHOAN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.TAIKHOAN">
               <MappingFragment StoreEntitySet="TAIKHOAN">
                 <ScalarProperty Name="MATKHAU_TK" ColumnName="MATKHAU_TK" />
                 <ScalarProperty Name="TENDANGNHAP_TK" ColumnName="TENDANGNHAP_TK" />
@@ -1090,7 +1063,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UNGVIEN">
-            <EntityTypeMapping TypeName="QLNSModel.UNGVIEN">
+            <EntityTypeMapping TypeName="QuanLyNhanSuModel.UNGVIEN">
               <MappingFragment StoreEntitySet="UNGVIEN">
                 <ScalarProperty Name="DIACHI_UV" ColumnName="DIACHI_UV" />
                 <ScalarProperty Name="SODIENTHOAI_UV" ColumnName="SODIENTHOAI_UV" />
@@ -1099,16 +1072,6 @@
                 <ScalarProperty Name="GIOITINH_UV" ColumnName="GIOITINH_UV" />
                 <ScalarProperty Name="HOTEN_UV" ColumnName="HOTEN_UV" />
                 <ScalarProperty Name="MA_UV" ColumnName="MA_UV" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="KHOANLUONG">
-            <EntityTypeMapping TypeName="QLNSModel.KHOANLUONG">
-              <MappingFragment StoreEntitySet="KHOANLUONG">
-                <ScalarProperty Name="SOTIEN_KL" ColumnName="SOTIEN_KL" />
-                <ScalarProperty Name="MA_NV" ColumnName="MA_NV" />
-                <ScalarProperty Name="MA_LL" ColumnName="MA_LL" />
-                <ScalarProperty Name="MA_KL" ColumnName="MA_KL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

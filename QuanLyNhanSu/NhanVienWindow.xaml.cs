@@ -17,9 +17,9 @@ namespace QuanLyNhanSu
     /// <summary>
     /// Interaction logic for NhanVien.xaml
     /// </summary>
-    public partial class NhanVien : Window
+    public partial class NhanVienWindow : Window
     {
-        public NhanVien()
+        public NhanVienWindow()
         {
             InitializeComponent();
         }

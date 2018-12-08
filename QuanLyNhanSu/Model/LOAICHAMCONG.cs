@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class LOAICHAMCONG : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,7 +25,7 @@ namespace QuanLyNhanSu.Model
         public int MA_LCC { get => _MA_LCC; set { _MA_LCC = value; OnPropertyChanged(); } }
         private string _TEN_LCC;
         public string TEN_LCC { get => _TEN_LCC; set { _TEN_LCC = value; OnPropertyChanged(); } }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHAMCONGNGAY> CHAMCONGNGAY { get; set; }
     }

@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class KHOANNGHIPHEP : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,7 +29,7 @@ namespace QuanLyNhanSu.Model
         public int MA_LNP { get => _MA_LNP; set { _MA_LNP = value; OnPropertyChanged(); } }
         private Nullable<int> _SONGAYNGHI_KNP;
         public Nullable<int> SONGAYNGHI_KNP { get => _SONGAYNGHI_KNP; set { _SONGAYNGHI_KNP = value; OnPropertyChanged(); } }
-    
+
         public virtual LOAINGHIPHEP LOAINGHIPHEP { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\Phuc\TLHT\HuongDoiTuong\DoAn\SE100.J11-QuanLyNhanSu\QuanLyNhanSu\Model\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\HK7\Phương pháp phát triển phần mềm hướng đối tượng\Final Project\Source code\QuanLyNhanSu\QuanLyNhanSu\Model\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

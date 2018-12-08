@@ -12,7 +12,7 @@ namespace QuanLyNhanSu.Model
     using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class NGHIPHEP : BaseViewModel
     {
         private int _MA_NP;
@@ -27,7 +27,7 @@ namespace QuanLyNhanSu.Model
         public Nullable<System.DateTime> NGAYKETTHUC_NP { get => _NGAYKETTHUC_NP; set { _NGAYKETTHUC_NP = value; OnPropertyChanged(); } }
         private string _LIDO_NP;
         public string LIDO_NP { get => _LIDO_NP; set { _LIDO_NP = value; OnPropertyChanged(); } }
-    
+
         public virtual KHOANNGHIPHEP KHOANNGHIPHEP { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
     }

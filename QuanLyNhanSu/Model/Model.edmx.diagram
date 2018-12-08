@@ -4,40 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2deecd2cd90643fd99bd5352d2599c39" Name="Diagram1">
-        <EntityTypeShape EntityType="QLNSModel.BANGLUONG" Width="1.5" PointX="5.25" PointY="6.5" />
-        <EntityTypeShape EntityType="QLNSModel.CHAMCONGNGAY" Width="1.5" PointX="8.25" PointY="6.625" />
-        <EntityTypeShape EntityType="QLNSModel.CHITIETPHIEUCHI" Width="1.5" PointX="7.5" PointY="15.375" />
-        <EntityTypeShape EntityType="QLNSModel.HOSOUNGTUYEN" Width="1.5" PointX="11" PointY="1" />
-        <EntityTypeShape EntityType="QLNSModel.KHOANNGHIPHEP" Width="1.5" PointX="8.25" PointY="10.625" />
-        <EntityTypeShape EntityType="QLNSModel.LICHSUNHANVIEN" Width="1.5" PointX="5.25" PointY="21.25" />
-        <EntityTypeShape EntityType="QLNSModel.LOAICHAMCONG" Width="1.5" PointX="6" PointY="4" />
-        <EntityTypeShape EntityType="QLNSModel.LOAILUONG" Width="1.5" PointX="3" PointY="6" />
-        <EntityTypeShape EntityType="QLNSModel.LOAINGHIPHEP" Width="1.5" PointX="6" PointY="0.875" />
-        <EntityTypeShape EntityType="QLNSModel.NGAYNGHILE" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="QLNSModel.NGHIPHEP" Width="1.5" PointX="10.5" PointY="10.5" />
-        <EntityTypeShape EntityType="QLNSModel.NHANVIEN" Width="1.5" PointX="3" PointY="9" />
-        <EntityTypeShape EntityType="QLNSModel.PHIEUCHI" Width="1.5" PointX="5.25" PointY="15.25" />
-        <EntityTypeShape EntityType="QLNSModel.PHONGBAN" Width="1.5" PointX="0.75" PointY="10.625" />
-        <EntityTypeShape EntityType="QLNSModel.TAIKHOAN" Width="1.5" PointX="5.25" PointY="24" />
-        <EntityTypeShape EntityType="QLNSModel.UNGVIEN" Width="1.5" PointX="8.75" PointY="1" />
-        <AssociationConnector Association="QLNSModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" />
-        <AssociationConnector Association="QLNSModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" />
-        <AssociationConnector Association="QLNSModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" />
-        <AssociationConnector Association="QLNSModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" />
-        <AssociationConnector Association="QLNSModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" />
-        <AssociationConnector Association="QLNSModel.FK_NHANVIEN_TK_CO_NV_TAIKHOAN" />
-        <AssociationConnector Association="QLNSModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" />
-        <AssociationConnector Association="QLNSModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" />
-        <EntityTypeShape EntityType="QLNSModel.KHOANLUONG" Width="1.5" PointX="5.25" PointY="10.125" />
-        <AssociationConnector Association="QLNSModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" />
-        <AssociationConnector Association="QLNSModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" />
+      <Diagram DiagramId="73bc3d22734e4102819f5ca19a4ed18e" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.BANGLUONG" Width="1.5" PointX="5.25" PointY="18.375" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.CHAMCONGNGAY" Width="1.5" PointX="5.25" PointY="10.5" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.CHITIETPHIEUCHI" Width="1.5" PointX="7.5" PointY="23.875" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.HOSOUNGTUYEN" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.KHOANLUONG" Width="1.5" PointX="5.25" PointY="7.625" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.KHOANNGHIPHEP" Width="1.5" PointX="8.25" PointY="10.5" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.LICHSUNHANVIEN" Width="1.5" PointX="5.25" PointY="21.125" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.LOAICHAMCONG" Width="1.5" PointX="3" PointY="15.875" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.LOAILUONG" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.LOAINGHIPHEP" Width="1.5" PointX="6" PointY="4.75" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.NGAYNGHILE" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.NGHIPHEP" Width="1.5" PointX="10.5" PointY="10.375" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.NHANVIEN" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.PHIEUCHI" Width="1.5" PointX="5.25" PointY="23.875" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.PHONGBAN" Width="1.5" PointX="0.75" PointY="10.625" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.TAIKHOAN" Width="1.5" PointX="5.25" PointY="15.625" />
+        <EntityTypeShape EntityType="QuanLyNhanSuModel.UNGVIEN" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_BANGLUON_NV_CO_BL_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_CHAMCONG_CTCC_CO_L_LOAICHAM" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_CHAMCONG_NV_CO_CCN_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_CHITIETP_PC_CO_CTP_PHIEUCHI" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_KHOANLUO_KL_CO_LL_LOAILUON" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_KHOANLUO_NV_CO_KL_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_KHOANNGH_KNP_CO_LN_LOAINGHI" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_KHOANNGH_NV_CO_KNP_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_NGHIPHEP_NP_CO_KNP_KHOANNGH" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_LICHSUNH_NV_CO_LSN_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_NGHIPHEP_NV_CO_NP_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" />
+        <AssociationConnector Association="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

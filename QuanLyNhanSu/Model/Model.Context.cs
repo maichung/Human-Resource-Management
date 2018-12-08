@@ -13,10 +13,10 @@ namespace QuanLyNhanSu.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QLNSEntities : DbContext
+    public partial class QuanLyNhanSuEntities : DbContext
     {
-        public QLNSEntities()
-            : base("name=QLNSEntities")
+        public QuanLyNhanSuEntities()
+            : base("name=QuanLyNhanSuEntities")
         {
         }
     
@@ -29,6 +29,7 @@ namespace QuanLyNhanSu.Model
         public virtual DbSet<CHAMCONGNGAY> CHAMCONGNGAY { get; set; }
         public virtual DbSet<CHITIETPHIEUCHI> CHITIETPHIEUCHI { get; set; }
         public virtual DbSet<HOSOUNGTUYEN> HOSOUNGTUYEN { get; set; }
+        public virtual DbSet<KHOANLUONG> KHOANLUONG { get; set; }
         public virtual DbSet<KHOANNGHIPHEP> KHOANNGHIPHEP { get; set; }
         public virtual DbSet<LICHSUNHANVIEN> LICHSUNHANVIEN { get; set; }
         public virtual DbSet<LOAICHAMCONG> LOAICHAMCONG { get; set; }
@@ -41,6 +42,5 @@ namespace QuanLyNhanSu.Model
         public virtual DbSet<PHONGBAN> PHONGBAN { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOAN { get; set; }
         public virtual DbSet<UNGVIEN> UNGVIEN { get; set; }
-        public virtual DbSet<KHOANLUONG> KHOANLUONG { get; set; }
     }
 }
