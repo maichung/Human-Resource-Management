@@ -5,4 +5,5 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:NhanVienViewModel x:Key="NhanVienVM"></viewmodel:NhanVienViewModel>
     <viewmodel:UngVienViewModel x:Key="UngVienVM"></viewmodel:UngVienViewModel>
+    <viewmodel:PhongBanViewModel x:Key="PhongBanVM"></viewmodel:PhongBanViewModel>
 </ResourceDictionary>
