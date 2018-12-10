@@ -4,4 +4,5 @@
                     xmlns:viewmodel="clr-namespace:QuanLyNhanSu.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:NhanVienViewModel x:Key="NhanVienVM"></viewmodel:NhanVienViewModel>
+    <viewmodel:UngVienViewModel x:Key="UngVienVM"></viewmodel:UngVienViewModel>
 </ResourceDictionary>
