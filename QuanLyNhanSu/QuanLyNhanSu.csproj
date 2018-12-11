@@ -142,15 +142,16 @@
     <Compile Include="Model\UNGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-
+    <Compile Include="PhongBanWindow.xaml.cs">
+      <DependentUpon>PhongBanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\UngVienViewModel.cs" />
-	<Compile Include="ViewModel\PhongBanViewModel.cs" />
-
+    <Compile Include="ViewModel\PhongBanViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
