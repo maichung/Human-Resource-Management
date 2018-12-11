@@ -1,0 +1,430 @@
+﻿<UserControl x:Class="QuanLyNhanSu.UserControls.TrangChuUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyNhanSu.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             DataContext="{StaticResource MainVM}">
+    <!-- Trang chủ -->
+    <Grid Name="gridTrangChu">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Hidden"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ChucNangNS}" Value="0">
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề trang -->
+        <Grid Grid.Row="0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                <TextBlock Text="Trang chủ" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
+                <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Nội dung trang -->
+        <ScrollViewer Grid.Row="1" FontSize="16">
+            <WrapPanel Orientation="Horizontal">
+                <!-- Thẻ nghỉ phép -->
+                <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tiêu đề thẻ -->
+                        <Grid Grid.Row="0">
+                            <Rectangle VerticalAlignment="Top" Height="3" Fill="#D83556"></Rectangle>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                <TextBlock Text="Nghỉ phép" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                <Border  CornerRadius="8" Background="#D83556" Width="20" Height="20" Margin="5,0,0,0">
+                                    <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                </Border>
+                            </StackPanel>
+
+                            <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                        </Grid>
+
+                        <!-- Nội dung thẻ -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="20,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Hôm nay" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="0,5,0,0">
+                                    <WrapPanel Margin="0,5,0,0" >
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </WrapPanel>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="10,0,20,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0">7 ngày tới</TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="0,5,0,0">
+                                    <WrapPanel Margin="0,5,0,0" >
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="25" Height="25" Margin="0,0,5,5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </WrapPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <!-- Xem chi tiết -->
+                        <Grid Grid.Row="2">
+                            <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                Xem chi tiết
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Thẻ nhên viên mới -->
+                <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tiêu đề thẻ -->
+                        <Grid Grid.Row="0">
+                            <Rectangle VerticalAlignment="Top" Height="3" Fill="#45CC77"></Rectangle>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                <TextBlock Text="Nhân viên mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                <Border  CornerRadius="8" Background="#45CC77" Width="20" Height="20" Margin="5,0,0,0">
+                                    <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                </Border>
+                            </StackPanel>
+                            <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                        </Grid>
+
+                        <!-- Nội dung thẻ -->
+                        <Grid Grid.Row="1" Margin="20 10">
+                            <WrapPanel Margin="0,5,0,0">
+                                <Ellipse Width="40" Height="40" Margin="0,0,12,12">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Ellipse Width="40" Height="40" Margin="0,0,12,12">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Ellipse Width="40" Height="40" Margin="0,0,12,12">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Ellipse Width="40" Height="40" Margin="0,0,12,12">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </WrapPanel>
+                        </Grid>
+
+                        <!-- Xem chi tiết -->
+                        <Grid Grid.Row="2">
+                            <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                Xem chi tiết
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Thẻ sinh nhật trong tháng -->
+                <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tiêu đề thẻ -->
+                        <Grid Grid.Row="0">
+                            <Rectangle VerticalAlignment="Top" Height="3" Fill="#6F7A80"></Rectangle>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                <TextBlock Text="Sinh nhật trong tháng" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                <Border  CornerRadius="8" Background="#6F7A80" Width="20" Height="20" Margin="5,0,0,0">
+                                    <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                </Border>
+                            </StackPanel>
+                            <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                        </Grid>
+
+                        <!-- Nội dung thẻ -->
+                        <Grid Grid.Row="1" Margin="20 0">
+                            <ListView>
+                                <ListViewItem>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
+                                                    15/12
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
+                                                    21/12
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="../Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
+                                                    28/12
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ListViewItem>
+                            </ListView>
+                        </Grid>
+
+                        <!-- Xem chi tiết -->
+                        <Grid Grid.Row="2">
+                            <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                Xem chi tiết
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Thẻ tuyển dụng mới-->
+                <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tiêu đề thẻ -->
+                        <Grid Grid.Row="0">
+                            <Rectangle VerticalAlignment="Top" Height="3" Fill="#F0BC43"></Rectangle>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                <TextBlock Text="Tuyển dụng mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+
+                            </StackPanel>
+                            <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                        </Grid>
+
+                        <!-- Nội dung thẻ -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="20,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tuần này" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="0,5,0,0">
+                                    <TextBlock FontSize="72" FontFamily="Segoe UI Light" >
+                                                4
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="10,0,20,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tháng này" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="0,5,0,0">
+                                    <TextBlock FontSize="72" FontFamily="Segoe UI Light" >
+                                                12
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <!-- Xem chi tiết -->
+                        <Grid Grid.Row="2">
+                            <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                Xem chi tiết
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Thẻ ngày lễ tiếp theo -->
+                <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tiêu đề thẻ -->
+                        <Grid Grid.Row="0">
+                            <Rectangle VerticalAlignment="Top" Height="3" Fill="#D0AEBC"></Rectangle>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                <TextBlock Text="Ngày lễ tiếp theo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+
+                            </StackPanel>
+                            <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                        </Grid>
+
+                        <!-- Nội dung thẻ -->
+                        <Grid Grid.Row="1" Margin="20 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Height="60" Width="60">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
+                                        <Grid>
+                                            <TextBlock Text="DEC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                        </Grid>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
+                                        <Grid>
+                                            <TextBlock Text="25" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <TextBlock Text="Lễ Giáng sinh" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Height="60" Width="60">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
+                                        <Grid>
+                                            <TextBlock Text="JAN" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                        </Grid>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
+                                        <Grid>
+                                            <TextBlock Text="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <TextBlock Text="Tết Dương lịch" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <!-- Xem chi tiết -->
+                        <Grid Grid.Row="2">
+                            <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                Xem chi tiết
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+            </WrapPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -148,6 +148,18 @@
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\NhanVienUC.xaml.cs">
+      <DependentUpon>NhanVienUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PhongBanUC.xaml.cs">
+      <DependentUpon>PhongBanUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TrangChuUC.xaml.cs">
+      <DependentUpon>TrangChuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UngVienUC.xaml.cs">
+      <DependentUpon>UngVienUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\UngVienViewModel.cs" />
@@ -181,6 +193,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UngVienWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\NhanVienUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PhongBanUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TrangChuUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UngVienUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

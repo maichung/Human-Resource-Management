@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using QuanLyNhanSu.UserControls;
 
 namespace QuanLyNhanSu.ViewModel
 {
@@ -49,7 +50,9 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                ChucNangNS = (int)ChucNangNhanSu.NhanVien;
+                //ChucNangNS = (int)ChucNangNhanSu.NhanVien;
+                
+                
             });
 
             BtnPhongBanCommand = new RelayCommand<Grid>((p) =>
