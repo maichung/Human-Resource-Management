@@ -461,9 +461,9 @@
         </Grid>
 
         <!-- Nội dung -->
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="20 10">
             <!-- Trang chủ -->
-            <Grid Name="gridTrangChu" Margin="20 10">
+            <Grid Name="gridTrangChu">
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -482,7 +482,7 @@
 
                 <!-- Tiêu đề trang -->
                 <Grid Grid.Row="0">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock Text="Trang chủ" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
                         <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
                     </StackPanel>
@@ -882,7 +882,7 @@
             </Grid>
 
             <!-- Nhân viên -->
-            <Grid Name="gridNhanVien" Margin="20 10">
+            <Grid Name="gridNhanVien">
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -901,7 +901,7 @@
 
                 <!-- Tiêu đề trang -->
                 <Grid Grid.Row="0">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock Text="Nhân viên" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
                         <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
                     </StackPanel>
