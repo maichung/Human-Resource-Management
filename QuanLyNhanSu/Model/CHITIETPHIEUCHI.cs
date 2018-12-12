@@ -9,21 +9,16 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class CHITIETPHIEUCHI : BaseViewModel
+    
+    public partial class CHITIETPHIEUCHI
     {
-        private int _MA_CTPC;
-        public int MA_CTPC { get => _MA_CTPC; set { _MA_CTPC = value; OnPropertyChanged(); } }
-        private int _MA_PC;
-        public int MA_PC { get => _MA_PC; set { _MA_PC = value; OnPropertyChanged(); } }
-        private string _NOIDUNG_CTPC;
-        public string NOIDUNG_CTPC { get => _NOIDUNG_CTPC; set { _NOIDUNG_CTPC = value; OnPropertyChanged(); } }
-        private Nullable<decimal> _TRIGIA_CTPC;
-        public Nullable<decimal> TRIGIA_CTPC { get => _TRIGIA_CTPC; set { _TRIGIA_CTPC = value; OnPropertyChanged(); } }
-
+        public int MA_CTPC { get; set; }
+        public int MA_PC { get; set; }
+        public string NOIDUNG_CTPC { get; set; }
+        public Nullable<decimal> TRIGIA_CTPC { get; set; }
+    
         public virtual PHIEUCHI PHIEUCHI { get; set; }
     }
 }

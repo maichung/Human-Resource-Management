@@ -9,21 +9,16 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class LICHSUNHANVIEN : BaseViewModel
+    
+    public partial class LICHSUNHANVIEN
     {
-        private int _MA_LSNV;
-        public int MA_LSNV { get => _MA_LSNV; set { _MA_LSNV = value; OnPropertyChanged(); } }
-        private int _MA_NV;
-        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
-        private string _MOTA_LSNV;
-        public string MOTA_LSNV { get => _MOTA_LSNV; set { _MOTA_LSNV = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _THOIGIAN_LSNV;
-        public Nullable<System.DateTime> THOIGIAN_LSNV { get => _THOIGIAN_LSNV; set { _THOIGIAN_LSNV = value; OnPropertyChanged(); } }
-
+        public int MA_LSNV { get; set; }
+        public int MA_NV { get; set; }
+        public string MOTA_LSNV { get; set; }
+        public Nullable<System.DateTime> THOIGIAN_LSNV { get; set; }
+    
         public virtual NHANVIEN NHANVIEN { get; set; }
     }
 }

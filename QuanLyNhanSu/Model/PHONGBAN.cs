@@ -9,29 +9,23 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class PHONGBAN : BaseViewModel
+    
+    public partial class PHONGBAN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PHONGBAN()
         {
             this.NHANVIEN = new HashSet<NHANVIEN>();
         }
-
-        private int _MA_PB;
-        public int MA_PB { get => _MA_PB; set { _MA_PB = value; OnPropertyChanged(); } }
-        private string _TEN_PB;
-        public string TEN_PB { get => _TEN_PB; set { _TEN_PB = value; OnPropertyChanged(); } }
-        private Nullable<int> _MATRUONGPHONG_PB;
-        public Nullable<int> MATRUONGPHONG_PB { get => _MATRUONGPHONG_PB; set { _MATRUONGPHONG_PB = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYTHANHLAP_PB;
-        public Nullable<System.DateTime> NGAYTHANHLAP_PB { get => _NGAYTHANHLAP_PB; set { _NGAYTHANHLAP_PB = value; OnPropertyChanged(); } }
-        private string _DIACHI_PB;
-        public string DIACHI_PB { get => _DIACHI_PB; set { _DIACHI_PB = value; OnPropertyChanged(); } }
-
+    
+        public int MA_PB { get; set; }
+        public string TEN_PB { get; set; }
+        public Nullable<int> MATRUONGPHONG_PB { get; set; }
+        public Nullable<System.DateTime> NGAYTHANHLAP_PB { get; set; }
+        public string DIACHI_PB { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NHANVIEN> NHANVIEN { get; set; }
     }

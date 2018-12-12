@@ -9,23 +9,20 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class LOAILUONG : BaseViewModel
+    
+    public partial class LOAILUONG
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOAILUONG()
         {
             this.KHOANLUONG = new HashSet<KHOANLUONG>();
         }
-
-        private int _MA_LL;
-        public int MA_LL { get => _MA_LL; set { _MA_LL = value; OnPropertyChanged(); } }
-        private string _TEN_LL;
-        public string TEN_LL { get => _TEN_LL; set { _TEN_LL = value; OnPropertyChanged(); } }
-
+    
+        public int MA_LL { get; set; }
+        public string TEN_LL { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KHOANLUONG> KHOANLUONG { get; set; }
     }

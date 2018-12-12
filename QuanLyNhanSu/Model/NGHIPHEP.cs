@@ -9,25 +9,18 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class NGHIPHEP : BaseViewModel
+    
+    public partial class NGHIPHEP
     {
-        private int _MA_NP;
-        public int MA_NP { get => _MA_NP; set { _MA_NP = value; OnPropertyChanged(); } }
-        private int _MA_NV;
-        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
-        private int _MA_KNP;
-        public int MA_KNP { get => _MA_KNP; set { _MA_KNP = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYBATDAU_NP;
-        public Nullable<System.DateTime> NGAYBATDAU_NP { get => _NGAYBATDAU_NP; set { _NGAYBATDAU_NP = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYKETTHUC_NP;
-        public Nullable<System.DateTime> NGAYKETTHUC_NP { get => _NGAYKETTHUC_NP; set { _NGAYKETTHUC_NP = value; OnPropertyChanged(); } }
-        private string _LIDO_NP;
-        public string LIDO_NP { get => _LIDO_NP; set { _LIDO_NP = value; OnPropertyChanged(); } }
-
+        public int MA_NP { get; set; }
+        public int MA_NV { get; set; }
+        public int MA_KNP { get; set; }
+        public Nullable<System.DateTime> NGAYBATDAU_NP { get; set; }
+        public Nullable<System.DateTime> NGAYKETTHUC_NP { get; set; }
+        public string LIDO_NP { get; set; }
+    
         public virtual KHOANNGHIPHEP KHOANNGHIPHEP { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
     }

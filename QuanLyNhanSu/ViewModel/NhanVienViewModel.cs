@@ -1,8 +1,12 @@
-﻿using QuanLyNhanSu.Model;
+﻿using Microsoft.Win32;
+using QuanLyNhanSu.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace QuanLyNhanSu.ViewModel
 {
@@ -49,6 +54,9 @@ namespace QuanLyNhanSu.ViewModel
         public string DiaChi { get => _DiaChi; set { _DiaChi = value; OnPropertyChanged(); } }
         private string _Avatar;
         public string Avatar { get => _Avatar; set { _Avatar = value; OnPropertyChanged(); } }
+        private ImageSource _AvatarSource;
+        public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
+
         private NHANVIEN _SelectedNhanVien;
         public NHANVIEN SelectedNhanVien { get => _SelectedNhanVien; set { _SelectedNhanVien = value; OnPropertyChanged(); } }
         private bool _IsEditable;
@@ -69,6 +77,110 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand HienThiCommand { get; set; }
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand ThayAnhCommand { get; set; }
+        public ICommand XoaCommand { get; set; }
+        #endregion
+
+        #region Xử lý ảnh
+
+        // Hàm hiển thị hình ảnh từ một string
+        private BitmapImage GetImage(string imageSourceString)
+        {
+            var img = System.Drawing.Image.FromStream(new MemoryStream(Convert.FromBase64String(imageSourceString)));
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(img);
+            BitmapImage result = BitmapToImageSource(bmp);
+            return result;
+        }
+
+        // Hàm chuyển đổi image thành một string
+        private string ImageToString(string imagePath)
+        {
+            int width = 150;
+            int height = 150;
+
+            var source = Bitmap.FromFile(imagePath);
+            var result = (Bitmap)ResizeImageKeepAspectRatio(source, width, height);
+            result.Save("../../Resources/Icons/avatar.jpg");
+
+            byte[] imageArray = System.IO.File.ReadAllBytes("../../Resources/Icons/avatar.jpg");
+            return Convert.ToBase64String(imageArray);
+        }
+
+        // Hàm chuyển đổi bitmap thành image
+        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+
+                return bitmapimage;
+            }
+        }
+
+        // Hàm resize ảnh mà vẫn giữ tỉ lệ gốc
+        public System.Drawing.Image ResizeImageKeepAspectRatio(System.Drawing.Image source, int width, int height)
+        {
+            System.Drawing.Image result = null;
+            try
+            {
+                if (source.Width != width || source.Height != height)
+                {
+                    // Resize image
+                    float sourceRatio = (float)source.Width / source.Height;
+                    using (var target = new Bitmap(width, height))
+                    {
+                        using (var g = System.Drawing.Graphics.FromImage(target))
+                        {
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+                            // Scaling
+                            float scaling;
+                            float scalingY = (float)source.Height / height;
+                            float scalingX = (float)source.Width / width;
+                            if (scalingX < scalingY) scaling = scalingX; else scaling = scalingY;
+                            int newWidth = (int)(source.Width / scaling);
+                            int newHeight = (int)(source.Height / scaling);
+                            // Correct float to int rounding
+                            if (newWidth < width) newWidth = width;
+                            if (newHeight < height) newHeight = height;
+                            // See if image needs to be cropped
+                            int shiftX = 0;
+                            int shiftY = 0;
+                            if (newWidth > width)
+                            {
+                                shiftX = (newWidth - width) / 2;
+                            }
+
+                            if (newHeight > height)
+                            {
+                                shiftY = (newHeight - height) / 2;
+                            }
+                            // Draw image
+                            g.DrawImage(source, -shiftX, -shiftY, newWidth, newHeight);
+                        }
+                        result = (System.Drawing.Image)target.Clone();
+                    }
+                }
+                else
+                {
+                    // Image size matched the given size
+                    result = (System.Drawing.Image)source.Clone();
+                }
+            }
+            catch (Exception)
+            {
+                result = null;
+            }
+
+            return result;
+        }
         #endregion
 
         public NhanVienViewModel()
@@ -82,7 +194,13 @@ namespace QuanLyNhanSu.ViewModel
             // Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
               {
-                  return true;
+                  var listPhongBan = DataProvider.Ins.model.PHONGBAN.Count();
+                  if (listPhongBan != 0)
+                  {
+                      return true;
+                  }                  
+                  MessageBox.Show("Vui lòng tạo phòng ban trước khi thêm nhân viên.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                  return false;
               }, (p) =>
               {
                   IsEditable = true;
@@ -123,8 +241,11 @@ namespace QuanLyNhanSu.ViewModel
                         NGAYVAOLAM_NV = NgayVaoLam,
                         EMAIL_NV = Email,
                         SODIENTHOAI_NV = SoDienThoai,
-                        DIACHI_NV = DiaChi
+                        DIACHI_NV = DiaChi,
+                        AVATAR_NV = Avatar,
+                        TRANGTHAI_NV = true
                     };
+
                     DataProvider.Ins.model.NHANVIEN.Add(NhanVienMoi);
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -132,6 +253,7 @@ namespace QuanLyNhanSu.ViewModel
                 else
                 {
                     var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
+
                     NhanVienSua.HOTEN_NV = HoTen;
                     NhanVienSua.MA_PB = SelectedPhongBan.MA_PB;
                     NhanVienSua.GIOITINH_NV = SelectedGioiTinh == "Nữ" ? true : false;
@@ -141,6 +263,8 @@ namespace QuanLyNhanSu.ViewModel
                     NhanVienSua.EMAIL_NV = Email;
                     NhanVienSua.SODIENTHOAI_NV = SoDienThoai;
                     NhanVienSua.DIACHI_NV = DiaChi;
+                    NhanVienSua.AVATAR_NV = Avatar;
+                    NhanVienSua.TRANGTHAI_NV = true;
 
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -155,7 +279,7 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.OK)
                 {
                     IsEditable = false;
@@ -190,11 +314,14 @@ namespace QuanLyNhanSu.ViewModel
                 Email = SelectedNhanVien.EMAIL_NV;
                 SoDienThoai = SelectedNhanVien.SODIENTHOAI_NV;
                 DiaChi = SelectedNhanVien.DIACHI_NV;
+                Avatar = SelectedNhanVien.AVATAR_NV;
+                AvatarSource = GetImage(Avatar);
 
                 NhanVienWindow nhanVienWindow = new NhanVienWindow();
                 nhanVienWindow.ShowDialog();
             });
 
+            //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListNhanVien);
@@ -211,6 +338,7 @@ namespace QuanLyNhanSu.ViewModel
                 sort = !sort;
             });
 
+            //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchNhanVien))
@@ -227,11 +355,68 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+
+            // Thay ảnh command
+            ThayAnhCommand = new RelayCommand<Object>((p) =>
+            {
+                if (IsEditable == false)
+                {
+                    MessageBox.Show("Vui lòng nhất nút chỉnh sửa trước khi thay đổi ảnh đại diện!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    InitialDirectory = @"C:\",
+                    Title = "Chọn ảnh đại diện",
+
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+
+                    DefaultExt = "txt",
+                    Filter = "Images (*.JPG;*.PNG)|*.JPG;*.PNG",
+                    RestoreDirectory = true,
+
+                    ReadOnlyChecked = true,
+                    ShowReadOnly = true
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    AvatarSource=GetImage(ImageToString(openFileDialog.FileName));
+                    Avatar=ImageToString(openFileDialog.FileName);
+                }
+            });
+
+            // Xoá command
+            XoaCommand = new RelayCommand<Window>((p) =>
+            {
+                if( SelectedNhanVien == null)
+                {
+                    MessageBox.Show("Vui lòng chọn nhân viên trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá nhân viên này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
+                    NhanVienSua.TRANGTHAI_NV = false;
+                    DataProvider.Ins.model.SaveChanges();
+                    LoadListNhanVien();
+                    p.Close();
+                }
+                
+            });
         }
 
         public void LoadListNhanVien()
         {
-            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
         }
 
         public void ResetControls()
@@ -246,6 +431,8 @@ namespace QuanLyNhanSu.ViewModel
             Email = null;
             SoDienThoai = null;
             DiaChi = null;
-        }
+            AvatarSource = GetImage(ImageToString("../../Resources/Icons/default_user.png"));
+            Avatar = ImageToString("../../Resources/Icons/default_user.png");
+        }       
     }
 }

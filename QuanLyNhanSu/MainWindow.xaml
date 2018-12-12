@@ -26,7 +26,7 @@
             <!-- Thông tin tài khoản -->
             <Grid Grid.Row="0">
                 <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Ellipse Width="60" Height="60" Margin="0 10" HorizontalAlignment="Left">
+                    <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
                         </Ellipse.Fill>
@@ -967,14 +967,7 @@
                             </i:Interaction.Triggers>
                             
                             <ListView.View>
-                                <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding AVATAR_NV}" >
-                                        <GridViewColumnHeader Tag="AVATAR_NV" 
-                                                              Command="{Binding SortCommand}" 
-                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Avatar" Width="100">
-                                        </GridViewColumnHeader>
-                                    </GridViewColumn>
+                                <GridView>                                    
                                     <GridViewColumn DisplayMemberBinding="{Binding MA_NV}" >
                                         <GridViewColumnHeader Tag="MA_NV" 
                                                               Command="{Binding SortCommand}" 
@@ -1121,7 +1114,7 @@
                                                               VerticalAlignment="Center" Content="Mã trưởng phòng" Width="100">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYTHANHLAP_PB}">
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYTHANHLAP_PB, StringFormat=dd/MM/yyyy}">
                                         <GridViewColumnHeader Tag="NGAYTHANHLAP_PB" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 

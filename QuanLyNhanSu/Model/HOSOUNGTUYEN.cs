@@ -9,27 +9,19 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class HOSOUNGTUYEN : BaseViewModel
+    
+    public partial class HOSOUNGTUYEN
     {
-        private int _MA_HSUT;
-        public int MA_HSUT { get => _MA_HSUT; set { _MA_HSUT = value; OnPropertyChanged(); } }
-        private int _MA_UV;
-        public int MA_UV { get => _MA_UV; set { _MA_UV = value; OnPropertyChanged(); } }
-        private string _VITRICONGVIEC_HSUT;
-        public string VITRICONGVIEC_HSUT { get => _VITRICONGVIEC_HSUT; set { _VITRICONGVIEC_HSUT = value; OnPropertyChanged(); } }
-        private string _CHUCVU_HSU;
-        public string CHUCVU_HSUT { get => _CHUCVU_HSU; set { _CHUCVU_HSU = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYNOP_HSUT;
-        public Nullable<System.DateTime> NGAYNOP_HSUT { get => _NGAYNOP_HSUT; set { _NGAYNOP_HSUT = value; OnPropertyChanged(); } }
-        private Nullable<bool> _TRANGTHAI_HSUT;
-        public Nullable<bool> TRANGTHAI_HSUT { get => _TRANGTHAI_HSUT; set { _TRANGTHAI_HSUT = value; OnPropertyChanged(); } }
-        private string _CV_HSUT;
-        public string CV_HSUT { get => _CV_HSUT; set { _CV_HSUT = value; OnPropertyChanged(); } }
-
+        public int MA_HSUT { get; set; }
+        public int MA_UV { get; set; }
+        public string VITRICONGVIEC_HSUT { get; set; }
+        public string CHUCVU_HSUT { get; set; }
+        public Nullable<System.DateTime> NGAYNOP_HSUT { get; set; }
+        public Nullable<bool> TRANGTHAI_HSUT { get; set; }
+        public string CV_HSUT { get; set; }
+    
         public virtual UNGVIEN UNGVIEN { get; set; }
     }
 }

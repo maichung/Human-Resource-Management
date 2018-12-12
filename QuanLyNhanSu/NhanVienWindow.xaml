@@ -30,7 +30,7 @@
                 <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
                     <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                            <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Text="{Binding HoTen}" FontSize="22" HorizontalAlignment="Left"
@@ -43,6 +43,13 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
                     <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Thay đổi ảnh đại diện">
                         <Image Stretch="None" Source="Resources\Icons\btnThayDoiAnh.png"></Image>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ThayAnhCommand}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </Button>
                     <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
                         <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
@@ -56,6 +63,14 @@
                     </Button>
                     <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
                         <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                                                      CommandParameter="{Binding ElementName=nhanVienWindow}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </Button>
                 </StackPanel>
 

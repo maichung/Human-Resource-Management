@@ -9,11 +9,10 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class NHANVIEN : BaseViewModel
+    
+    public partial class NHANVIEN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NHANVIEN()
@@ -27,32 +26,20 @@ namespace QuanLyNhanSu.Model
             this.PHIEUCHI = new HashSet<PHIEUCHI>();
             this.TAIKHOAN = new HashSet<TAIKHOAN>();
         }
-
-        private int _MA_NV;
-        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
-        private int _MA_PB;
-        public int MA_PB { get => _MA_PB; set { _MA_PB = value; OnPropertyChanged(); } }
-        private string _HOTEN_NV;
-        public string HOTEN_NV { get => _HOTEN_NV; set { _HOTEN_NV = value; OnPropertyChanged(); } }
-        private Nullable<bool> _GIOITINH_NV;
-        public Nullable<bool> GIOITINH_NV { get => _GIOITINH_NV; set { _GIOITINH_NV = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYSINH_NV;
-        public Nullable<System.DateTime> NGAYSINH_NV { get => _NGAYSINH_NV; set { _NGAYSINH_NV = value; OnPropertyChanged(); } }
-        private string _VITRICONGVIEC_NV;
-        public string VITRICONGVIEC_NV { get => _VITRICONGVIEC_NV; set { _VITRICONGVIEC_NV = value; OnPropertyChanged(); } }
-        private string _CHUCVU_NV;
-        public string CHUCVU_NV { get => _CHUCVU_NV; set { _CHUCVU_NV = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAYVAOLAM_NV;
-        public Nullable<System.DateTime> NGAYVAOLAM_NV { get => _NGAYVAOLAM_NV; set { _NGAYVAOLAM_NV = value; OnPropertyChanged(); } }
-        private string _EMAIL_NV;
-        public string EMAIL_NV { get => _EMAIL_NV; set { _EMAIL_NV = value; OnPropertyChanged(); } }
-        private string _SODIENTHOAI_NV;
-        public string SODIENTHOAI_NV { get => _SODIENTHOAI_NV; set { _SODIENTHOAI_NV = value; OnPropertyChanged(); } }
-        private string _DIACHI_NV;
-        public string DIACHI_NV { get => _DIACHI_NV; set { _DIACHI_NV = value; OnPropertyChanged(); } }
-        private string _AVATAR_NV;
-        public string AVATAR_NV { get => _AVATAR_NV; set { _AVATAR_NV = value; OnPropertyChanged(); } }
-
+    
+        public int MA_NV { get; set; }
+        public int MA_PB { get; set; }
+        public string HOTEN_NV { get; set; }
+        public Nullable<bool> GIOITINH_NV { get; set; }
+        public Nullable<System.DateTime> NGAYSINH_NV { get; set; }
+        public string CHUCVU_NV { get; set; }
+        public Nullable<System.DateTime> NGAYVAOLAM_NV { get; set; }
+        public string EMAIL_NV { get; set; }
+        public string SODIENTHOAI_NV { get; set; }
+        public string DIACHI_NV { get; set; }
+        public string AVATAR_NV { get; set; }
+        public Nullable<bool> TRANGTHAI_NV { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BANGLUONG> BANGLUONG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -9,21 +9,16 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class KHOANLUONG : BaseViewModel
+    
+    public partial class KHOANLUONG
     {
-        private int _MA_KL;
-        public int MA_KL { get => _MA_KL; set { _MA_KL = value; OnPropertyChanged(); } }
-        private int _MA_LL;
-        public int MA_LL { get => _MA_LL; set { _MA_LL = value; OnPropertyChanged(); } }
-        private int _MA_NV;
-        public int MA_NV { get => _MA_NV; set { _MA_NV = value; OnPropertyChanged(); } }
-        private Nullable<decimal> _SOTIEN_KL;
-        public Nullable<decimal> SOTIEN_KL { get => _SOTIEN_KL; set { _SOTIEN_KL = value; OnPropertyChanged(); } }
-
+        public int MA_KL { get; set; }
+        public int MA_LL { get; set; }
+        public int MA_NV { get; set; }
+        public Nullable<decimal> SOTIEN_KL { get; set; }
+    
         public virtual LOAILUONG LOAILUONG { get; set; }
         public virtual NHANVIEN NHANVIEN { get; set; }
     }

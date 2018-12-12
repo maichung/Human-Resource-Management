@@ -9,17 +9,13 @@
 
 namespace QuanLyNhanSu.Model
 {
-    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
-
-    public partial class NGAYNGHILE : BaseViewModel
+    
+    public partial class NGAYNGHILE
     {
-        private int _MA_NNL;
-        public int MA_NNL { get => _MA_NNL; set { _MA_NNL = value; OnPropertyChanged(); } }
-        private Nullable<System.DateTime> _NGAY_NNL;
-        public Nullable<System.DateTime> NGAY_NNL { get => _NGAY_NNL; set { _NGAY_NNL = value; OnPropertyChanged(); } }
-        private string _TEN_NNL;
-        public string TEN_NNL { get => _TEN_NNL; set { _TEN_NNL = value; OnPropertyChanged(); } }
+        public int MA_NNL { get; set; }
+        public Nullable<System.DateTime> NGAY_NNL { get; set; }
+        public string TEN_NNL { get; set; }
     }
 }
