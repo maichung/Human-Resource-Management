@@ -134,11 +134,13 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="450" >
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Trưởng phòng"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListNhanVienPhongBan}" SelectedItem="{Binding SelectedTruongPhong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0"/>
+                            <ComboBox Height="30" Margin="5" 
+                                      ItemsSource="{Binding ListNhanVienPhongBan}" SelectedItem="{Binding SelectedTruongPhong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      DisplayMemberPath="HOTEN_NV" 
+                                      HorizontalContentAlignment="Stretch"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem>

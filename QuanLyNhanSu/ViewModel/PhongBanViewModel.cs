@@ -29,10 +29,8 @@ namespace QuanLyNhanSu.ViewModel
         #region Thuộc tính binding
         private string _TenPhongBan;
         public string TenPhongBan { get => _TenPhongBan; set { _TenPhongBan = value; OnPropertyChanged(); } }
-        private Nullable<Int32> _SelectedTruongPhong;
-        public Nullable<Int32> SelectedTruongPhong { get => _SelectedTruongPhong; set { _SelectedTruongPhong = value; OnPropertyChanged(); } }
-        private string _SelectedGioiTinh;
-        public string SelectedGioiTinh { get => _SelectedGioiTinh; set { _SelectedGioiTinh = value; OnPropertyChanged(); } }
+        private NHANVIEN _SelectedTruongPhong;
+        public NHANVIEN SelectedTruongPhong { get => _SelectedTruongPhong; set { _SelectedTruongPhong = value; OnPropertyChanged(); } }
         private DateTime? _NgayThanhLap;
         public DateTime? NgayThanhLap { get => _NgayThanhLap; set { _NgayThanhLap = value; OnPropertyChanged(); } }
         private string _DiaChi;
@@ -62,7 +60,7 @@ namespace QuanLyNhanSu.ViewModel
         public PhongBanViewModel()
         {
             LoadListPhongBan();
-            ListNhanVienPhongBan = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+
             IsEditable = false;
 
             // Tạo mới command
@@ -100,7 +98,6 @@ namespace QuanLyNhanSu.ViewModel
                     var PhongBanMoi = new PHONGBAN()
                     {
                         TEN_PB = TenPhongBan,
-                        MATRUONGPHONG_PB = SelectedTruongPhong,
                         NGAYTHANHLAP_PB = NgayThanhLap,
                         DIACHI_PB = DiaChi
                     };
@@ -110,10 +107,11 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else
                 {
+                    ListNhanVienPhongBan = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_PB == SelectedPhongBan.MA_PB));
                     var PhongBanSua = DataProvider.Ins.model.PHONGBAN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).SingleOrDefault();
                     PhongBanSua.TEN_PB = TenPhongBan;
                     PhongBanSua.MA_PB = SelectedPhongBan.MA_PB;
-                    PhongBanSua.MATRUONGPHONG_PB = SelectedTruongPhong;
+                    PhongBanSua.MATRUONGPHONG_PB = SelectedTruongPhong.MA_NV;
                     PhongBanSua.NGAYTHANHLAP_PB = NgayThanhLap;
                     PhongBanSua.DIACHI_PB = DiaChi;
 
@@ -154,10 +152,12 @@ namespace QuanLyNhanSu.ViewModel
                 return SelectedPhongBan == null ? false : true;
             }, (p) =>
             {
+                ListNhanVienPhongBan = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_PB == SelectedPhongBan.MA_PB));
+
                 IsEditable = false;
 
                 TenPhongBan = SelectedPhongBan.TEN_PB;
-                //SelectedTruongPhong = SelectedPhongBan.MATRUONGPHONG_PB;
+                SelectedTruongPhong = DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_NV == SelectedPhongBan.MATRUONGPHONG_PB).SingleOrDefault();
                 NgayThanhLap = SelectedPhongBan.NGAYTHANHLAP_PB;
                 DiaChi = SelectedPhongBan.DIACHI_PB;
 
