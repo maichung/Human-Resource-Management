@@ -140,6 +140,7 @@ namespace QuanLyNhanSu.ViewModel
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+
                             // Scaling
                             float scaling;
                             float scalingY = (float)source.Height / height;
@@ -147,9 +148,11 @@ namespace QuanLyNhanSu.ViewModel
                             if (scalingX < scalingY) scaling = scalingX; else scaling = scalingY;
                             int newWidth = (int)(source.Width / scaling);
                             int newHeight = (int)(source.Height / scaling);
+
                             // Correct float to int rounding
                             if (newWidth < width) newWidth = width;
                             if (newHeight < height) newHeight = height;
+
                             // See if image needs to be cropped
                             int shiftX = 0;
                             int shiftY = 0;
@@ -162,6 +165,7 @@ namespace QuanLyNhanSu.ViewModel
                             {
                                 shiftY = (newHeight - height) / 2;
                             }
+
                             // Draw image
                             g.DrawImage(source, -shiftX, -shiftY, newWidth, newHeight);
                         }
@@ -195,7 +199,7 @@ namespace QuanLyNhanSu.ViewModel
             TaoMoiCommand = new RelayCommand<Object>((p) =>
               {
                   var listPhongBan = DataProvider.Ins.model.PHONGBAN.Count();
-                  if (listPhongBan != 0)
+                  if (listPhongBan > 0)
                   {
                       return true;
                   }                  
