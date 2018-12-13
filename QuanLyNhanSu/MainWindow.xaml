@@ -28,7 +28,7 @@
                 <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                            <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Text="Phạm Phong Phú" HorizontalAlignment="Left" FontSize="22" 
@@ -463,7 +463,7 @@
         <!-- Nội dung -->
         <Grid Grid.Column="1" Margin="20 10">
             <!-- Trang chủ -->
-            <Grid Name="gridTrangChu">
+            <Grid Name="gridTrangChu" Visibility="Hidden">
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -532,12 +532,12 @@
                                             <WrapPanel Margin="0,5,0,0" >
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </WrapPanel>
@@ -555,27 +555,27 @@
                                             <WrapPanel Margin="0,5,0,0" >
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <Ellipse Width="25" Height="25" Margin="0,0,5,5">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </WrapPanel>
@@ -619,22 +619,22 @@
                                     <WrapPanel Margin="0,5,0,0">
                                         <Ellipse Width="40" Height="40" Margin="0,0,12,12">
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <Ellipse Width="40" Height="40" Margin="0,0,12,12">
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <Ellipse Width="40" Height="40" Margin="0,0,12,12">
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <Ellipse Width="40" Height="40" Margin="0,0,12,12">
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                             </Ellipse.Fill>
                                         </Ellipse>
                                     </WrapPanel>
@@ -678,7 +678,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
@@ -690,7 +690,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
@@ -702,7 +702,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/avatar.jpg" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                                 <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
@@ -1136,10 +1136,10 @@
             </Grid>
 
             <!-- Ứng viên -->
-            <Grid Name="gridUngVien">
+            <Grid Name="gridTuyenDung">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Setter Property="Visibility" Value="Visible"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="6">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1156,8 +1156,8 @@
                 <!-- Tiêu đề trang -->
                 <Grid Grid.Row="0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
-                        <TextBlock Text="Ứng viên" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
-                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                        <TextBlock Text="Tuyển dụng" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
+                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>                        
                     </StackPanel>
                 </Grid>
 
@@ -1237,8 +1237,8 @@
                                                               VerticalAlignment="Center" Content="Họ tên" Width="220">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-             
-                                    <GridViewColumn DisplayMemberBinding="{Binding NgaySinh}">
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYSINH_UV, StringFormat=dd/MM/yyyy}">
                                         <GridViewColumnHeader Tag="NGAYSINH_UV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 

@@ -13,13 +13,13 @@
         Name="ungVienWindow">
     <Grid Margin="20 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0" Margin="0 0 0 20">
+        <Grid Grid.Row="0" Margin="0 0 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -28,15 +28,27 @@
             <!-- Tên ứng viên -->
             <Grid Grid.Column="0">
                 <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
-                    
-                    <TextBlock Text="{Binding HoTen}" FontSize="22" HorizontalAlignment="Left"
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding HoTen}" FontSize="28" HorizontalAlignment="Left"
+                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                    <TextBlock Text="Vị trí apply" FontSize="14" HorizontalAlignment="Left"
+                               TextWrapping="Wrap" Foreground="#FF6F7A80"/>
                 </StackPanel>
             </Grid>
 
             <!-- Thanh công cụ -->
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
+                    <!-- Tạo hồ sơ ứng tuyển -->
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
+                        <Image Stretch="None" Source="Resources\Icons\btnThemHSUT.png"></Image>
+                        
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding TaoHSUTCommand}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
                     <!-- Sửa thông tin -->
                     <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
                         <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
@@ -63,6 +75,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
             <!-- Thông tin cá nhân-->
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -70,7 +83,7 @@
                     <RowDefinition Height="4*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
+                <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock Text="Thông tin cá nhân" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
                     <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
                 </StackPanel>
@@ -156,22 +169,7 @@
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
-                </ListView>
-            </Grid>
-
-            <!--- Thông tin cá nhân-->
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
-                    <TextBlock Text="" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
-                </StackPanel>
-
-                <ListView Grid.Row="1">
+                    <!-- Email -->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
@@ -191,7 +189,7 @@
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    
+                    <!-- Số điện thoại-->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
@@ -212,7 +210,59 @@
 
                         </StackPanel>
                     </ListViewItem>
-                
+                </ListView>
+            </Grid>
+
+            <!--- Hồ sơ ứng tuyển-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
+                    <TextBlock Text="Hồ sơ ứng tuyển" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
+                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1" Name="listHSUT"
+                              ItemsSource="{Binding ListHSUT}" 
+                              SelectedItem="{Binding SelectedHSUT, Mode=OneWayToSource}" 
+                              Margin="0,8,0,0" FontSize="14">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding HienThiCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
+                                <GridViewColumnHeader Tag="MA_UV" 
+                                                      Command="{Binding SortCommand}" 
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                      VerticalAlignment="Center" Content="ID" Width="80">
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding HOTEN_UV}" >
+                                <GridViewColumnHeader Tag="HOTEN_UV" 
+                                                      Command="{Binding SortCommand}" 
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                      VerticalAlignment="Center" Content="Ngày nộp" Width="220">
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding NgaySinh}">
+                                <GridViewColumnHeader Tag="NGAYSINH_UV" 
+                                                      Command="{Binding SortCommand}" 
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                      VerticalAlignment="Center" Content="Trạng thái" Width="100">
+                                </GridViewColumnHeader>
+                            </GridViewColumn>                            
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </Grid>
         </Grid>
@@ -241,7 +291,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                
+
             </StackPanel>
         </Grid>
     </Grid>
