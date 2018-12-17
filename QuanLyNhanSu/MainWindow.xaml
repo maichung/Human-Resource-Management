@@ -39,7 +39,7 @@
             </Grid>
 
             <!-- Menu chính -->
-            <StackPanel Name="menuArea" Grid.Row="1" Width="270" HorizontalAlignment="center" 
+            <StackPanel Name="menuArea" Grid.Row="1" Width="270" HorizontalAlignment="Center" 
                         VerticalAlignment="Top" Margin="0,20,0,0">
                 <Button Name="btnTrangChu" Height="45" BorderBrush="{x:Null}" Margin="0,5" >
                     <Button.Style>
@@ -923,7 +923,7 @@
 
                         <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
                                  Text="{Binding SearchNhanVien, UpdateSourceTrigger=PropertyChanged}">
-                            
+
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="TextChanged">
                                     <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
@@ -965,9 +965,9 @@
                                     </i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            
+
                             <ListView.View>
-                                <GridView>                                    
+                                <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding MA_NV}" >
                                         <GridViewColumnHeader Tag="MA_NV" 
                                                               Command="{Binding SortCommand}" 
@@ -999,6 +999,166 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Nghỉ phép -->
+            <Grid Name="gridNghiPhep" Visibility="Visible">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ChucNangNS}" Value="3">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="130"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Tiêu đề trang -->
+                <Grid Grid.Row="0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Text="Nghỉ phép" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
+                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Nội dung trang -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!-- Tiêu đề các tab -->
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+                            <!-- Ngày nghỉ phép -->
+                            <StackPanel>
+                                <Button Name="btnNgayNghiPhep" Content="Ngày nghỉ phép" Height="35" BorderBrush="{x:Null}" 
+                                    Background="{x:Null}" Foreground="#232C3A">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                            <Setter Property="FontWeight" Value="Normal"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="0">
+                                                    <Setter Property="FontWeight" Value="DemiBold"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding TabNgayNghiPhepCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Rectangle Height="3" Margin="15 0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Fill" Value="{x:Null}"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="0">
+                                                    <Setter Property="Fill" Value="#232C3A"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </StackPanel>
+
+                            <!-- Loại nghỉ phép -->
+                            <StackPanel>
+                                <Button Name="btnLoaiNghiPhep" Content="Loại nghỉ phép" Height="35" BorderBrush="{x:Null}" 
+                                    Background="{x:Null}" Foreground="#232C3A">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                            <Setter Property="FontWeight" Value="Normal"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="1">
+                                                    <Setter Property="FontWeight" Value="DemiBold"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding TabLoaiNghiPhepCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Rectangle Height="3" Margin="15 0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Fill" Value="{x:Null}"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="1">
+                                                    <Setter Property="Fill" Value="#232C3A"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </StackPanel>
+
+                            <!-- Khoản nghỉ phép -->
+                            <StackPanel>
+                                <Button Name="btnKhoanNghiPhep" Content="Khoản nghỉ phép" Height="35" BorderBrush="{x:Null}" 
+                                    Background="{x:Null}" Foreground="#232C3A">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                            <Setter Property="FontWeight" Value="Normal"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="2">
+                                                    <Setter Property="FontWeight" Value="DemiBold"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding TabKhoanNghiPhepCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Rectangle Height="3" Margin="15 0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Fill" Value="{x:Null}"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangNS}" Value="2">
+                                                    <Setter Property="Fill" Value="#232C3A"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Nội dung tab -->
+                    <Grid Grid.Row="1">
+                        <!-- Tab Ngày nghỉ phép -->
+                        <Grid></Grid>
+
+                        <!-- Tab Loại nghỉ phép -->
+                        <Grid></Grid>
+
+                        <!-- Tab Khoản nghỉ phép -->
+                        <Grid></Grid>
                     </Grid>
                 </Grid>
             </Grid>
@@ -1139,7 +1299,7 @@
             <Grid Name="gridTuyenDung">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="6">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1157,7 +1317,7 @@
                 <Grid Grid.Row="0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
                         <TextBlock Text="Tuyển dụng" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
-                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>                        
+                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
                     </StackPanel>
                 </Grid>
 
@@ -1273,7 +1433,7 @@
                 </Grid>
             </Grid>
 
-            
+
         </Grid>
     </Grid>
 </Window>
