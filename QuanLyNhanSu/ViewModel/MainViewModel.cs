@@ -21,6 +21,9 @@ namespace QuanLyNhanSu.ViewModel
         private int _ChucNangNS;
         public int ChucNangNS { get => _ChucNangNS; set { _ChucNangNS = value; OnPropertyChanged(); } }
 
+        private NHANVIEN _NhanVien;
+        public NHANVIEN NhanVien { get => _NhanVien; set { _NhanVien = value; OnPropertyChanged(); } }
+
         public ICommand BtnTrangChuCommand { get; set; }
         public ICommand BtnNhanVienCommand { get; set; }
         public ICommand BtnPhongBanCommand { get; set; }
@@ -33,6 +36,7 @@ namespace QuanLyNhanSu.ViewModel
 
         public MainViewModel()
         {
+           
             #region Xử lý ẩn hiện Grid
             BtnTrangChuCommand = new RelayCommand<Object>((p) =>
             {

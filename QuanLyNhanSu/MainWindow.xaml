@@ -31,9 +31,9 @@
                             <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <TextBlock Text="Phạm Phong Phú" HorizontalAlignment="Left" FontSize="22" 
+                    <TextBlock Text="{Binding NhanVien.HOTEN_NV}" HorizontalAlignment="Left" FontSize="22" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
-                    <TextBlock Text="Trưởng bộ phận Hành chính - Nhân sự" HorizontalAlignment="Left" 
+                    <TextBlock Text="{Binding NhanVien.CHUCVU_NV}" HorizontalAlignment="Left" 
                                Foreground="#6F7A80" TextWrapping="Wrap" FontSize="12"></TextBlock>
                 </StackPanel>
             </Grid>
@@ -463,7 +463,7 @@
         <!-- Nội dung -->
         <Grid Grid.Column="1" Margin="20 10">
             <!-- Trang chủ -->
-            <Grid Name="gridTrangChu" Visibility="Hidden">
+            <Grid Name="gridTrangChu" >
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -1135,11 +1135,11 @@
                 </Grid>
             </Grid>
 
-            <!-- Ứng viên -->
+            <!-- Tuyển dụng -->
             <Grid Name="gridTuyenDung">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="6">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1270,10 +1270,132 @@
                             </ListView.View>
                         </ListView>
                     </Grid>
+                    
+                   
+                   
+                    
                 </Grid>
             </Grid>
 
-            
+            <!-- Tài khoản -->
+            <Grid Name="gridTaiKhoan">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ChucNangNS}" Value="8">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="130"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Tiêu đề trang -->
+                <Grid Grid.Row="0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0">
+                        <TextBlock Text="Tài khoản" FontFamily="Segoe UI Semibold" FontSize="36" ></TextBlock>
+                        <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Nội dung trang -->
+                <Grid Grid.Row="1" DataContext="{StaticResource TaiKhoanVM}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!-- Thanh chức năng -->
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
+                                 Text="{Binding SearchTaiKhoan, UpdateSourceTrigger=PropertyChanged}">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding SearchTaiKhoanCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <Button Grid.Column="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE">
+                            <Grid Width="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Image Stretch="None" Source="Resources\Icons\btnThem_white.png"></Image>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <TextBlock Text="Tạo mới" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                       FontSize="16" Margin="5,0,0,0" FontWeight="Normal" ></TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding ThemTaiKhoanCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </Grid>
+
+                    <!-- Danh sách tài khoản -->
+                    <Grid Grid.Row="1">
+                        <ListView Name="listTaiKhoan"
+                                  ItemsSource="{Binding ListTaiKhoan}" 
+                                  SelectedItem="{Binding SelectedThongTinTaiKhoan, Mode=OneWayToSource}" Margin="0,10,0,0" FontSize="14">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding HienThiTaiKhoanCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TaiKhoan.TENDANGNHAP_TK}" >
+                                        <GridViewColumnHeader Tag="TENDANGNHAP_TK" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên tài khoản" Width="250">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TaiKhoan.QUYEN_TK}" >
+                                        <GridViewColumnHeader Tag="QUYEN_TK" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Quyền hạn" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_NV" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                    
+
+
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
