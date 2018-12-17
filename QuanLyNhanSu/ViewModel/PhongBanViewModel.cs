@@ -19,6 +19,8 @@ namespace QuanLyNhanSu.ViewModel
         #region DataContext
         private ObservableCollection<PHONGBAN> _ListPhongBan;
         public ObservableCollection<PHONGBAN> ListPhongBan { get => _ListPhongBan; set { _ListPhongBan = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _ListTenTruongPhong;
+        public ObservableCollection<string> ListTenTruongPhong { get => _ListTenTruongPhong; set { _ListTenTruongPhong = value; OnPropertyChanged(); } }
         #endregion
 
         #region Combobox item source
@@ -201,6 +203,15 @@ namespace QuanLyNhanSu.ViewModel
         public void LoadListPhongBan()
         {
             ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
+            ListTenTruongPhong = new ObservableCollection<string>();
+            var listTenTruongPhong = from pb in DataProvider.Ins.model.PHONGBAN
+                                     join nv in DataProvider.Ins.model.NHANVIEN
+                                     on pb.MATRUONGPHONG_PB equals nv.MA_NV
+                                     select nv.HOTEN_NV;
+            foreach (string s in listTenTruongPhong)
+            {
+                ListTenTruongPhong.Add(s);
+            }
         }
 
         public void ResetControls()
@@ -210,6 +221,7 @@ namespace QuanLyNhanSu.ViewModel
             SelectedTruongPhong = null;
             NgayThanhLap = null;
             DiaChi = null;
+            ListNhanVienPhongBan = null;
         }
     }
 }
