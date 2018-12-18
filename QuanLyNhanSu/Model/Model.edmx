@@ -40,10 +40,9 @@
           <Property Name="MA_HSUT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MA_UV" Type="int" Nullable="false" />
           <Property Name="VITRICONGVIEC_HSUT" Type="nvarchar" MaxLength="255" />
-          <Property Name="CHUCVU_HSUT" Type="nvarchar" MaxLength="255" />
           <Property Name="NGAYNOP_HSUT" Type="date" />
-          <Property Name="TRANGTHAI_HSUT" Type="bit" />
-          <Property Name="CV_HSUT" Type="nvarchar" MaxLength="255" />
+          <Property Name="TRANGTHAI_HSUT" Type="nvarchar" MaxLength="255" />
+          <Property Name="CV_HSUT" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="KHOANLUONG">
           <Key>
@@ -552,10 +551,9 @@
           <Property Name="MA_HSUT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MA_UV" Type="Int32" Nullable="false" />
           <Property Name="VITRICONGVIEC_HSUT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CHUCVU_HSUT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="NGAYNOP_HSUT" Type="DateTime" Precision="0" />
-          <Property Name="TRANGTHAI_HSUT" Type="Boolean" />
-          <Property Name="CV_HSUT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TRANGTHAI_HSUT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CV_HSUT" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="UNGVIEN" Relationship="QuanLyNhanSuModel.FK_HOSOUNGT_UV_CO_HSU_UNGVIEN" FromRole="HOSOUNGTUYEN" ToRole="UNGVIEN" />
         </EntityType>
         <EntityType Name="KHOANLUONG">
@@ -646,6 +644,7 @@
           <Property Name="HOTEN_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="GIOITINH_NV" Type="Boolean" />
           <Property Name="NGAYSINH_NV" Type="DateTime" Precision="0" />
+          <Property Name="TRANGTHAI_NV" Type="Boolean" />
           <Property Name="CHUCVU_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="NGAYVAOLAM_NV" Type="DateTime" Precision="0" />
           <Property Name="EMAIL_NV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -661,7 +660,6 @@
           <NavigationProperty Name="PHONGBAN" Relationship="QuanLyNhanSuModel.FK_NHANVIEN_PB_CO_NV_PHONGBAN" FromRole="NHANVIEN" ToRole="PHONGBAN" />
           <NavigationProperty Name="PHIEUCHI" Relationship="QuanLyNhanSuModel.FK_PHIEUCHI_NV_CO_PCP_NHANVIEN" FromRole="NHANVIEN" ToRole="PHIEUCHI" />
           <NavigationProperty Name="TAIKHOAN" Relationship="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="NHANVIEN" ToRole="TAIKHOAN" />
-          <Property Name="TRANGTHAI_NV" Type="Boolean" />
         </EntityType>
         <EntityType Name="PHIEUCHI">
           <Key>
@@ -693,8 +691,8 @@
           <Property Name="MA_NV" Type="Int32" Nullable="false" />
           <Property Name="TENDANGNHAP_TK" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="MATKHAU_TK" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
           <Property Name="QUYEN_TK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NHANVIEN" Relationship="QuanLyNhanSuModel.FK_TAIKHOAN_TK_CO_NV2_NHANVIEN" FromRole="TAIKHOAN" ToRole="NHANVIEN" />
         </EntityType>
         <EntityType Name="UNGVIEN">
           <Key>
@@ -889,7 +887,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -932,7 +930,6 @@
                 <ScalarProperty Name="CV_HSUT" ColumnName="CV_HSUT" />
                 <ScalarProperty Name="TRANGTHAI_HSUT" ColumnName="TRANGTHAI_HSUT" />
                 <ScalarProperty Name="NGAYNOP_HSUT" ColumnName="NGAYNOP_HSUT" />
-                <ScalarProperty Name="CHUCVU_HSUT" ColumnName="CHUCVU_HSUT" />
                 <ScalarProperty Name="VITRICONGVIEC_HSUT" ColumnName="VITRICONGVIEC_HSUT" />
                 <ScalarProperty Name="MA_UV" ColumnName="MA_UV" />
                 <ScalarProperty Name="MA_HSUT" ColumnName="MA_HSUT" />
@@ -1018,13 +1015,13 @@
           <EntitySetMapping Name="NHANVIEN">
             <EntityTypeMapping TypeName="QuanLyNhanSuModel.NHANVIEN">
               <MappingFragment StoreEntitySet="NHANVIEN">
-                <ScalarProperty Name="TRANGTHAI_NV" ColumnName="TRANGTHAI_NV" />
                 <ScalarProperty Name="AVATAR_NV" ColumnName="AVATAR_NV" />
                 <ScalarProperty Name="DIACHI_NV" ColumnName="DIACHI_NV" />
                 <ScalarProperty Name="SODIENTHOAI_NV" ColumnName="SODIENTHOAI_NV" />
                 <ScalarProperty Name="EMAIL_NV" ColumnName="EMAIL_NV" />
                 <ScalarProperty Name="NGAYVAOLAM_NV" ColumnName="NGAYVAOLAM_NV" />
                 <ScalarProperty Name="CHUCVU_NV" ColumnName="CHUCVU_NV" />
+                <ScalarProperty Name="TRANGTHAI_NV" ColumnName="TRANGTHAI_NV" />
                 <ScalarProperty Name="NGAYSINH_NV" ColumnName="NGAYSINH_NV" />
                 <ScalarProperty Name="GIOITINH_NV" ColumnName="GIOITINH_NV" />
                 <ScalarProperty Name="HOTEN_NV" ColumnName="HOTEN_NV" />

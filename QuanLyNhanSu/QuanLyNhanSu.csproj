@@ -76,6 +76,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HoSoUngTuyen.xaml.cs">
+      <DependentUpon>HoSoUngTuyen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\BANGLUONG.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -140,19 +146,34 @@
     <Compile Include="Model\TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ThongTinTaikhoan.cs" />
     <Compile Include="Model\UNGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="PhongBanWindow.xaml.cs">
       <DependentUpon>PhongBanWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TaiKhoanWindow.xaml.cs">
+      <DependentUpon>TaiKhoanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\HoSoUngTuyenViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
+    <Compile Include="ViewModel\TaiKhoanViewModel.cs" />
     <Compile Include="ViewModel\UngVienViewModel.cs" />
     <Compile Include="ViewModel\PhongBanViewModel.cs" />
+    <Page Include="HoSoUngTuyen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\MainResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaiKhoanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +305,9 @@
     <Resource Include="Resources\Icons\avatar.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\TempFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

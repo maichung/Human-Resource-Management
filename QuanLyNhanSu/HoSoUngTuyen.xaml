@@ -1,4 +1,4 @@
-﻿<Window x:Class="QuanLyNhanSu.UngVienWindow"
+﻿<Window x:Class="QuanLyNhanSu.HoSoUngTuyen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin nhân viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin hồ sơ ứng tuyển" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
-         ResizeMode="CanMinimize"
-        Name="ungVienWindow">
+        DataContext="{StaticResource HoSoUngTuyenVM}" ResizeMode="CanMinimize"
+        Name="hoSoUngTuyen">
     <Grid Margin="20 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0"  Margin="0 0 0 0">
+        <Grid Grid.Row="0" Margin="0 0 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -28,7 +28,7 @@
             <!-- Tên ứng viên -->
             <Grid Grid.Column="0">
                 <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
-                    <TextBlock Text="{Binding HoTen}" FontSize="28" HorizontalAlignment="Left"
+                    <TextBlock Text="" FontSize="28" HorizontalAlignment="Left"
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap" Margin="0,0,0,5"/>
                     <TextBlock Text="Vị trí apply" FontSize="14" HorizontalAlignment="Left"
                                TextWrapping="Wrap" Foreground="#FF6F7A80"/>
@@ -36,12 +36,12 @@
             </Grid>
 
             <!-- Thanh công cụ -->
-            <Grid Grid.Column="1" >
+            <Grid Grid.Column="1">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
                     <!-- Tạo hồ sơ ứng tuyển -->
-                    <Button DataContext="{StaticResource HoSoUngTuyenVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
                         <Image Stretch="None" Source="Resources\Icons\btnThemHSUT.png"></Image>
-                        
+
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding TaoHSUTCommand}">
@@ -50,7 +50,7 @@
                         </i:Interaction.Triggers>
                     </Button>
                     <!-- Sửa thông tin -->
-                    <Button DataContext="{StaticResource UngVienVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
                         <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
 
                         <i:Interaction.Triggers>
@@ -61,12 +61,12 @@
                         </i:Interaction.Triggers>
                     </Button>
                     <!-- Xóa thông tin -->
-                    <Button DataContext="{StaticResource UngVienVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
                         <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding XoaUngVienCommand}"
-                                                       CommandParameter="{Binding ElementName=ungVienWindow}">
+                                <i:InvokeCommandAction Command="{Binding XoaHoSoUngTuyenCommand}"
+                                                        CommandParameter="{Binding ElementName=hoSoUngTuyen}">
                                 </i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
@@ -79,12 +79,13 @@
         <!-- Thông tin ứng viên -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="477*"></ColumnDefinition>
+                <ColumnDefinition Width="450*"></ColumnDefinition>
+                <ColumnDefinition Width="28*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Thông tin cá nhân-->
-            <Grid Grid.Column="0" DataContext="{StaticResource UngVienVM}">
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="4*"></RowDefinition>
@@ -111,12 +112,13 @@
 
                         <StackPanel Width="450">
                             <TextBlock Foreground="#6F7A80" 
-                                       Text="Họ tên"></TextBlock>
-                            <TextBox Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="Vị trí công việc"></TextBlock>
+                            <TextBox Text="{Binding ViTriCongViec, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <!-- Ngày sinh-->
+                   
+                    <!-- Ngày nộp-->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
@@ -131,12 +133,12 @@
 
                         <StackPanel Width="450">
                             <TextBlock Foreground="#6F7A80" 
-                                       Text="Ngày sinh"></TextBlock>
-                            <DatePicker SelectedDate="{Binding NgaySinh, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="Ngày nộp"></TextBlock>
+                            <DatePicker SelectedDate="{Binding NgayNop, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <!-- Giới tính-->
+                    <!-- Trạng thái-->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
@@ -151,12 +153,12 @@
 
                         <StackPanel Width="450">
                             <TextBlock Foreground="#6F7A80" 
-                                       Text="Giới tính"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListGioiTinh}" SelectedItem="{Binding SelectedGioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0"/>
+                                       Text="Trạng thái"></TextBlock>
+                            <ComboBox ItemsSource="{Binding ListTrangThai}" SelectedItem="{Binding SelectedTrangThai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0" SelectedIndex="0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <!-- Địa chỉ-->
+                    <!-- CV-->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
@@ -171,118 +173,50 @@
 
                         <StackPanel Width="450">
                             <TextBlock Foreground="#6F7A80" 
-                                       Text="Địa chỉ"></TextBlock>
-                            <TextBox Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="CV"></TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBox Grid.Column="0" Text="{Binding TenFile, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
+                                <Button Grid.Column="1" Content="Chọn file" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF232C3A" Margin="5,0,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ChonFileCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button Grid.Column="2" Content="Xem file" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF232C3A" Margin="5,0,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding XemFileCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                            
                         </StackPanel>
                     </ListViewItem>
-                    <!-- Email -->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
 
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
-                                       Text="Email"></TextBlock>
-                            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
-                                     FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Số điện thoại-->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
-
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
-                                       Text="Số điện thoại"></TextBlock>
-                            <TextBox Text="{Binding SDT,UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="16" Margin="0,5,0,0"/>
-
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-            </Grid>
-
-            <!--- Hồ sơ ứng tuyển-->
-            <Grid Grid.Column="1" DataContext="{StaticResource HoSoUngTuyenVM}" Name="gridHoSoUngTuyen" >
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
-                    <TextBlock Text="Hồ sơ ứng tuyển" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
-                </StackPanel>
-
-                <ListView Grid.Row="1" Name="listHSUT"
-                              ItemsSource="{Binding ListHSUT}" 
-                              SelectedItem="{Binding SelectedHSUT, Mode=OneWayToSource}" 
-                              Margin="0,8,0,0" FontSize="14">
-
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding HienThiCommand}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
-                                <GridViewColumnHeader Tag="MA_UV" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="ID" Width="80">
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding VITRICONGVIEC_HSUT}" >
-                                <GridViewColumnHeader Tag="VITRICONGVIEC_HSUT" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Vị trí công việc" Width="220">
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn DisplayMemberBinding="{Binding CHUCVU_HSUT}">
-                                <GridViewColumnHeader Tag="CHUCVU_HSUT" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Chức vụ" Width="100">
-                                </GridViewColumnHeader>
-                            </GridViewColumn>                            
-                        </GridView>
-                    </ListView.View>
                 </ListView>
             </Grid>
         </Grid>
 
         <!-- Lưu và huỷ -->
-        <Grid Grid.Row="2" Margin="20 10" DataContext="{StaticResource UngVienVM}">
+        <Grid Grid.Row="2" Margin="20 10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <!-- Lưu  -->
                 <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=ungVienWindow}">
+                                                   CommandParameter="{Binding ElementName=hoSoUngTuyen}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -293,7 +227,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=ungVienWindow}">
+                                                   CommandParameter="{Binding ElementName=hoSoUngTuyen}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

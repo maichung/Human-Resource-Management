@@ -20,6 +20,9 @@ namespace QuanLyNhanSu.ViewModel
         #region DataContext
         private ObservableCollection<UNGVIEN> _ListUngVien;
         public ObservableCollection<UNGVIEN> ListUngVien { get => _ListUngVien; set { _ListUngVien = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<HOSOUNGTUYEN> _ListHSUT;
+        public ObservableCollection<HOSOUNGTUYEN> ListHSUT { get => _ListHSUT; set { _ListHSUT = value; OnPropertyChanged(); } }
         #endregion 
 
         #region Combobox item sources
@@ -69,6 +72,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand HienThiCommand { get; set; }
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand XoaUngVienCommand { get; set; }
         #endregion
 
         public UngVienViewModel()
@@ -86,10 +90,59 @@ namespace QuanLyNhanSu.ViewModel
              {
                  IsEditable = true;
                  ResetControls();
+                 SelectedUngVien = null;
 
+                 HoSoUngTuyen hoSoUngTuyen = new HoSoUngTuyen();
+                 var hoSoUngTuyenVM = hoSoUngTuyen.DataContext as HoSoUngTuyenViewModel;
+                 hoSoUngTuyenVM.SelectedUngVien = SelectedUngVien;
+                 // MessageBox.Show(hoSoUngTuyenVM.SelectedUngVien.HOTEN_UV);
                  UngVienWindow ungVienWindow = new UngVienWindow();
+                 hoSoUngTuyenVM.ReloadListHSUT();
+                 hoSoUngTuyen.Close();
                  ungVienWindow.ShowDialog();
              });
+
+
+            //Ứng viên
+            XoaUngVienCommand = new RelayCommand<Window>((p) =>
+            {
+
+                if (SelectedUngVien == null)
+                {
+                    return false;
+                }
+                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa tài khoản", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }, (p) =>
+            {
+                using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var uv = DataProvider.Ins.model.UNGVIEN.Where(x => x.MA_UV == SelectedUngVien.MA_UV).FirstOrDefault();
+                        DataProvider.Ins.model.UNGVIEN.Remove(uv);
+                        DataProvider.Ins.model.SaveChanges();
+                        transactions.Commit();
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        p.Close();
+
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        transactions.Rollback();
+                    }
+                    LoadListUngVien();
+
+                }
+            });
 
             //Lưu Command
             LuuCommand = new RelayCommand<Window>((p) =>
@@ -109,6 +162,7 @@ namespace QuanLyNhanSu.ViewModel
                       MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
+                 
                   return true;
               },(p)=>
               {
@@ -211,9 +265,16 @@ namespace QuanLyNhanSu.ViewModel
                  Email=SelectedUngVien.EMAIL_UV;
                  SDT=SelectedUngVien.SODIENTHOAI_UV;
                  DiaChi = SelectedUngVien.DIACHI_UV;
-                 UngVienWindow ungVienWindow = new UngVienWindow();
-                 ungVienWindow.ShowDialog();
 
+
+                HoSoUngTuyen hoSoUngTuyen = new HoSoUngTuyen();     
+                 var hoSoUngTuyenVM = hoSoUngTuyen.DataContext as HoSoUngTuyenViewModel;
+                 hoSoUngTuyenVM.SelectedUngVien = SelectedUngVien;
+                // MessageBox.Show(hoSoUngTuyenVM.SelectedUngVien.HOTEN_UV);
+                 UngVienWindow ungVienWindow = new UngVienWindow();
+                 hoSoUngTuyenVM.ReloadListHSUT();
+                 hoSoUngTuyen.Close();
+                 ungVienWindow.ShowDialog();
              });
 
         }
@@ -232,5 +293,7 @@ namespace QuanLyNhanSu.ViewModel
             SDT = null;         
             DiaChi = null;
         }
+
+
     }
 }

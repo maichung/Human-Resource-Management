@@ -100,9 +100,9 @@ namespace QuanLyNhanSu.ViewModel
 
             var source = Bitmap.FromFile(imagePath);
             var result = (Bitmap)ResizeImageKeepAspectRatio(source, width, height);
-            result.Save("../../Resources/Icons/avatar.jpg");
+            result.Save("../../Resources/TempFiles/avatar.jpg");
 
-            byte[] imageArray = System.IO.File.ReadAllBytes("../../Resources/Icons/avatar.jpg");
+            byte[] imageArray = System.IO.File.ReadAllBytes("../../Resources/TempFiles/avatar.jpg");
             return Convert.ToBase64String(imageArray);
         }
 

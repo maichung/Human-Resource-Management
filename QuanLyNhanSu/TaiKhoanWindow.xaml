@@ -1,0 +1,219 @@
+﻿<Window x:Class="QuanLyNhanSu.TaiKhoanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyNhanSu"
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Thông tin phòng ban" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
+        DataContext="{StaticResource TaiKhoanVM}" ResizeMode="CanMinimize"
+        Name="themTaiKhoan">
+    <Grid Margin="20 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Hình ảnh và thanh công cụ-->
+        <Grid Grid.Row="0" Margin="0 0 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--  -->
+            <Grid Grid.Column="0">
+                <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
+                    <TextBlock Text="" FontSize="22" HorizontalAlignment="Left"
+                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Thanh công cụ -->
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
+                    <!-- Sửa thông tin -->
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                        <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding SuaTaiKhoanCommand}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                        <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding XoaTaiKhoanCommand}"
+                                                       CommandParameter="{Binding ElementName=themTaiKhoan}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+
+        <!-- Thông tin tài khoản -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Cột 1-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
+                    <TextBlock Text="Thông tin tài khoản" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
+                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1">
+                    <ListViewItem>
+                        <ListViewItem.Style>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <StackPanel Width="450">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Tên đăng nhập"></TextBlock>
+                            <TextBox Text="{Binding TenTaiKhoan, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="16" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <ListViewItem.Style>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <StackPanel Width="450">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Mật khẩu"></TextBlock>
+                            <PasswordBox Name="pbxMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center" HorizontalAlignment="Stretch"  VerticalContentAlignment="Center" BorderBrush="#FFD6D6D6" Background="{x:Null}" SelectionBrush="#FF0078D7" FontSize="14">
+                                    <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Nhập lại mật khẩu"></TextBlock>
+                            <PasswordBox Name="pbxNhapLaiMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center" HorizontalAlignment="Stretch"  VerticalContentAlignment="Center" BorderBrush="#FFD6D6D6" Background="{x:Null}" SelectionBrush="#FF0078D7" FontSize="14">
+                                  <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding RepeatPasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxNhapLaiMatKhau}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                
+                            </PasswordBox>
+                        </StackPanel>
+                        
+                    </ListViewItem>
+                    <ListViewItem>
+                        <ListViewItem.Style>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <StackPanel Width="450">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Quyền hạn"></TextBlock>
+                            <ComboBox ItemsSource="{Binding ListQuyenHan}" SelectedItem="{Binding SelectedQuyenHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <ListViewItem.Style>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <StackPanel Width="450">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Nhân viên"></TextBlock>
+                            <ComboBox ItemsSource="{Binding ListNhanVien}" SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      DisplayMemberPath="HOTEN_NV" FontSize="16" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+
+            <!--- Cột 2 -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Row="1">
+                    
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <!-- Lưu và huỷ -->
+        <Grid Grid.Row="2" Margin="20 10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding LuuCommand}"
+                                                   CommandParameter="{Binding ElementName=themTaiKhoan}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Height="40" Width="100" Content="Huỷ"  BorderBrush="{x:Null}"
+                        Background="WhiteSmoke" Foreground="#FF232C3A" Margin="10,0,0,0" FontSize="16" FontWeight="Normal">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding HuyCommand}"
+                                                   CommandParameter="{Binding ElementName=themTaiKhoan}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

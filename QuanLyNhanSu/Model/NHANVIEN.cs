@@ -32,13 +32,13 @@ namespace QuanLyNhanSu.Model
         public string HOTEN_NV { get; set; }
         public Nullable<bool> GIOITINH_NV { get; set; }
         public Nullable<System.DateTime> NGAYSINH_NV { get; set; }
+        public Nullable<bool> TRANGTHAI_NV { get; set; }
         public string CHUCVU_NV { get; set; }
         public Nullable<System.DateTime> NGAYVAOLAM_NV { get; set; }
         public string EMAIL_NV { get; set; }
         public string SODIENTHOAI_NV { get; set; }
         public string DIACHI_NV { get; set; }
         public string AVATAR_NV { get; set; }
-        public Nullable<bool> TRANGTHAI_NV { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BANGLUONG> BANGLUONG { get; set; }

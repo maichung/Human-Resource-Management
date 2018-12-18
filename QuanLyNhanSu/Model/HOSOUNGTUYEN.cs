@@ -17,10 +17,9 @@ namespace QuanLyNhanSu.Model
         public int MA_HSUT { get; set; }
         public int MA_UV { get; set; }
         public string VITRICONGVIEC_HSUT { get; set; }
-        public string CHUCVU_HSUT { get; set; }
         public Nullable<System.DateTime> NGAYNOP_HSUT { get; set; }
-        public Nullable<bool> TRANGTHAI_HSUT { get; set; }
-        public string CV_HSUT { get; set; }
+        public string TRANGTHAI_HSUT { get; set; }
+        public byte[] CV_HSUT { get; set; }
     
         public virtual UNGVIEN UNGVIEN { get; set; }
     }
