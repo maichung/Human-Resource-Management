@@ -9,4 +9,7 @@
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:TaiKhoanViewModel x:Key="TaiKhoanVM"></viewmodel:TaiKhoanViewModel>
     <viewmodel:HoSoUngTuyenViewModel x:Key="HoSoUngTuyenVM"></viewmodel:HoSoUngTuyenViewModel>
+    <viewmodel:NghiPhepViewModel x:Key="NghiPhepVM"></viewmodel:NghiPhepViewModel>
+    <viewmodel:KhoanNghiPhepViewModel x:Key="KhoanNghiPhepVM"></viewmodel:KhoanNghiPhepViewModel>
+    <viewmodel:LoaiNghiPhepViewModel x:Key="LoaiNghiPhepVM"></viewmodel:LoaiNghiPhepViewModel>
 </ResourceDictionary>

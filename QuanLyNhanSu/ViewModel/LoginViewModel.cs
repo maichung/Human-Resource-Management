@@ -29,8 +29,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public LoginViewModel()
         {
-           // 9b0550b1bb8c4323f4f5f2f8e386302b            -      phu
-//MessageBox.Show(MD5Hash(Base64Encode("phu")));
             ktDangNhap = false;
             TenDangNhap = "";
             MatKhau = "";

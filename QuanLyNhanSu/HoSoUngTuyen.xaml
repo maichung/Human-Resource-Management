@@ -7,205 +7,159 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin hồ sơ ứng tuyển" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin hồ sơ ứng tuyển" Height="650" Width="700" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         DataContext="{StaticResource HoSoUngTuyenVM}" ResizeMode="CanMinimize"
         Name="hoSoUngTuyen">
-    <Grid Margin="20 10">
+    <Grid Margin="20 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0" Margin="0 0 0 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <!-- Thanh công cụ -->
+        <Grid Grid.Row="0" Margin="0 0 -20 10">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                    <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
 
-            <!-- Tên ứng viên -->
-            <Grid Grid.Column="0">
-                <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
-                    <TextBlock Text="" FontSize="28" HorizontalAlignment="Left"
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap" Margin="0,0,0,5"/>
-                    <TextBlock Text="Vị trí apply" FontSize="14" HorizontalAlignment="Left"
-                               TextWrapping="Wrap" Foreground="#FF6F7A80"/>
-                </StackPanel>
-            </Grid>
-
-            <!-- Thanh công cụ -->
-            <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
-                    <!-- Tạo hồ sơ ứng tuyển -->
-                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
-                        <Image Stretch="None" Source="Resources\Icons\btnThemHSUT.png"></Image>
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding TaoHSUTCommand}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <!-- Sửa thông tin -->
-                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
-                        <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding SuaCommand}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <!-- Xóa thông tin -->
-                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
-                        <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding XoaHoSoUngTuyenCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SuaCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                    <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding XoaHoSoUngTuyenCommand}"
                                                         CommandParameter="{Binding ElementName=hoSoUngTuyen}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                </StackPanel>
-
-            </Grid>
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!-- Thông tin ứng viên -->
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="477*"></ColumnDefinition>
-                <ColumnDefinition Width="450*"></ColumnDefinition>
-                <ColumnDefinition Width="28*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-            <!-- Thông tin cá nhân-->
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Thông tin hồ sơ ứng tuyển" FontFamily="Segoe UI Semibold" FontSize="22" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
+            <ListView Grid.Row="1">
+                <!-- Họ tên-->
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListViewItem.Style>
 
-                <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock Text="Thông tin cá nhân" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
-                </StackPanel>
-
-                <ListView Grid.Row="1">
-                    <!-- Họ tên-->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
-
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Vị trí công việc"></TextBlock>
-                            <TextBox Text="{Binding ViTriCongViec, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding ViTriCongViec, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                   
-                    <!-- Ngày nộp-->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                    </StackPanel>
+                </ListViewItem>
 
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
+                <!-- Ngày nộp-->
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListViewItem.Style>
+
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày nộp"></TextBlock>
-                            <DatePicker SelectedDate="{Binding NgayNop, UpdateSourceTrigger=PropertyChanged}"
+                        <DatePicker SelectedDate="{Binding NgayNop, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Trạng thái-->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                    </StackPanel>
+                </ListViewItem>
+                <!-- Trạng thái-->
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListViewItem.Style>
 
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Trạng thái"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListTrangThai}" SelectedItem="{Binding SelectedTrangThai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <ComboBox ItemsSource="{Binding ListTrangThai}" SelectedItem="{Binding SelectedTrangThai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontSize="16" Margin="0,5,0,0" SelectedIndex="0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- CV-->
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                    </StackPanel>
+                </ListViewItem>
+                <!-- CV-->
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListViewItem.Style>
 
-                        <StackPanel Width="450">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="CV"></TextBlock>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBox Grid.Column="0" Text="{Binding TenFile, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding TenFileCV, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                                <Button Grid.Column="1" Content="Chọn file" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF232C3A" Margin="5,0,0,0">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding ChonFileCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button Grid.Column="2" Content="Xem file" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF232C3A" Margin="5,0,0,0">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding XemFileCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </Grid>
-                            
+                        <StackPanel Orientation="Horizontal" Margin="-15 10 0 0">
+                            <Button Content="Chọn file" BorderBrush="{x:Null}" Foreground="#8062FE" 
+                                    Background="{x:Null}" FontWeight="Normal">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding ChonFileCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                            <Button Content="Xem file" BorderBrush="{x:Null}" Foreground="#8062FE" 
+                                    Background="{x:Null}" FontWeight="Normal">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding XemFileCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
                         </StackPanel>
-                    </ListViewItem>
+                    </StackPanel>
+                </ListViewItem>
 
-                </ListView>
-            </Grid>
+            </ListView>
         </Grid>
 
         <!-- Lưu và huỷ -->

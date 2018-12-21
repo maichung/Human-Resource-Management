@@ -79,7 +79,7 @@
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
                     <TextBlock Text="Thông tin tài khoản" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                    
                 </StackPanel>
 
                 <ListView Grid.Row="1">

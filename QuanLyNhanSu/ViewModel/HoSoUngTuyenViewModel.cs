@@ -51,8 +51,8 @@ namespace QuanLyNhanSu.ViewModel
         private byte[] _CV;
         public byte[] CV { get => _CV; set { _CV = value; OnPropertyChanged(); } }
 
-        private string _TenFile;
-        public string TenFile { get => _TenFile; set { _TenFile = value; OnPropertyChanged(); } }
+        private string _TenFileCV;
+        public string TenFileCV { get => _TenFileCV; set { _TenFileCV = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -326,7 +326,7 @@ namespace QuanLyNhanSu.ViewModel
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    TenFile = System.IO.Path.GetFileName(openFileDialog.FileName);
+                    TenFileCV = System.IO.Path.GetFileName(openFileDialog.FileName);
                     CV = FileToBinaryString(openFileDialog.FileName);
                 }
             });
@@ -337,7 +337,14 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                Process.Start(BinaryStringToFile(SelectedHSUT.CV_HSUT));
+                try
+                {
+                    Process.Start(BinaryStringToFile(SelectedHSUT.CV_HSUT));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Đã xảy ra lỗi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
 
             });
         }

@@ -16,7 +16,7 @@ namespace QuanLyNhanSu.ViewModel
     {
         public enum ChucNangNhanSu
         {
-            TrangChu, NhanVien, PhongBan, NghiPhep, ChamCong, Luong, TuyenDung, BaoCao, CaiDat
+            TrangChu, NhanVien, PhongBan, NghiPhep, ChamCong, Luong, TuyenDung, ChiPhi, BaoCao, CaiDat
         };
         private int _ChucNangNS;
         public int ChucNangNS { get => _ChucNangNS; set { _ChucNangNS = value; OnPropertyChanged(); } }
@@ -31,6 +31,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand BtnChamCongCommand { get; set; }
         public ICommand BtnLuongCommand { get; set; }
         public ICommand BtnTuyenDungCommand { get; set; }
+        public ICommand BtnChiPhiCommand { get; set; }
         public ICommand BtnBaoCaoCommand { get; set; }
         public ICommand BtnCaiDatCommand { get; set; }
 
@@ -58,8 +59,6 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnPhongBanCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
@@ -68,8 +67,6 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnNghiPhepCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
@@ -78,8 +75,6 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnChamCongCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
@@ -88,8 +83,6 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnLuongCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
@@ -98,18 +91,22 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnTuyenDungCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
                 ChucNangNS = (int)ChucNangNhanSu.TuyenDung;
             });
 
+            BtnChiPhiCommand = new RelayCommand<Grid>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangNS = (int)ChucNangNhanSu.ChiPhi;
+            });
+
             BtnBaoCaoCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {
@@ -118,8 +115,6 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnCaiDatCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
                 return true;
             }, (p) =>
             {

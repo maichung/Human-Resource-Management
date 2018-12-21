@@ -11,7 +11,7 @@
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         DataContext="{StaticResource NhanVienVM}" ResizeMode="CanMinimize"
         Name="nhanVienWindow">
-    <Grid Margin="20 10">
+    <Grid Margin="20 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
@@ -19,7 +19,10 @@
         </Grid.RowDefinitions>
 
         <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0" Margin="0 0 0 20">
+        <Grid Grid.Row="0" Margin="0 0 -20 10">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -27,7 +30,7 @@
 
             <!-- Ảnh đại diện và tên nhân viên -->
             <Grid Grid.Column="0">
-                <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
+                <StackPanel Grid.Row="0">
                     <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
@@ -40,7 +43,7 @@
 
             <!-- Thanh công cụ -->
             <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0">
                     <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Thay đổi ảnh đại diện">
                         <Image Stretch="None" Source="Resources\Icons\btnThayDoiAnh.png"></Image>
 
@@ -92,7 +95,7 @@
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
                     <TextBlock Text="Thông tin cá nhân" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                    
                 </StackPanel>
 
                 <ListView Grid.Row="1">
@@ -184,7 +187,7 @@
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
                     <TextBlock Text="Thông tin công việc" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
-                    <Rectangle Width="50" Height="3" Fill="#8062FE" HorizontalAlignment="Left" Margin="5 10 0 0"/>
+                    
                 </StackPanel>
 
                 <ListView Grid.Row="1">
