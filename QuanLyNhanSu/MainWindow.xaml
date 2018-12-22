@@ -1070,7 +1070,7 @@
             <Grid Name="gridNghiPhep">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="3">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1093,14 +1093,14 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" DataContext="{StaticResource NghiPhepVM}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <!-- Tiêu đề các tab -->
-                    <Grid Grid.Row="0"  DataContext="{StaticResource NghiPhepVM}">
+                    <Grid Grid.Row="0">
                         <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
                             <!-- Ngày nghỉ phép -->
                             <StackPanel>
@@ -1222,7 +1222,7 @@
                     <!-- Nội dung tab -->
                     <Grid Grid.Row="1">
                         <!-- Tab Ngày nghỉ phép -->
-                        <Grid  DataContext="{StaticResource NghiPhepVM}">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -1239,7 +1239,7 @@
                         </Grid>
 
                         <!-- Tab Khoản nghỉ phép -->
-                        <Grid DataContext="{StaticResource NghiPhepVM}">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>

@@ -36,6 +36,14 @@
                 </Button>
                 <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
                     <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                                                   CommandParameter="{Binding ElementName=loaiNghiPhepWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Button>
             </StackPanel>
         </Grid>

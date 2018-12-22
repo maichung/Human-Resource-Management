@@ -53,6 +53,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand TaoMoiCommand { get; set; }
         public ICommand LuuCommand { get; set; }
         public ICommand HuyCommand { get; set; }
+        public ICommand XoaCommand { get; set; }
         public ICommand SuaCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
         public ICommand SortCommand { get; set; }
@@ -137,6 +138,45 @@ namespace QuanLyNhanSu.ViewModel
                     p.Close();
                 }
 
+            });
+
+            // Xóa command
+            XoaCommand = new RelayCommand<Window>((p) =>
+            {
+
+                if (SelectedPhongBan == null)
+                {
+                    return false;
+                }
+                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa phòng ban", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }, (p) =>
+            {
+                using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var pb = DataProvider.Ins.model.PHONGBAN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).FirstOrDefault();
+                        DataProvider.Ins.model.PHONGBAN.Remove(pb);
+                        DataProvider.Ins.model.SaveChanges();
+                        transactions.Commit();
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        p.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        transactions.Rollback();
+                    }
+                    LoadListPhongBan();
+                }
             });
 
             // Sửa command
