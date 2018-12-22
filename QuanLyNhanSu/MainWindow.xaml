@@ -1093,14 +1093,14 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <Grid Grid.Row="1" DataContext="{StaticResource NghiPhepVM}">
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <!-- Tiêu đề các tab -->
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0"  DataContext="{StaticResource NghiPhepVM}">
                         <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
                             <!-- Ngày nghỉ phép -->
                             <StackPanel>
@@ -1222,7 +1222,7 @@
                     <!-- Nội dung tab -->
                     <Grid Grid.Row="1">
                         <!-- Tab Ngày nghỉ phép -->
-                        <Grid>
+                        <Grid  DataContext="{StaticResource NghiPhepVM}">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -1239,7 +1239,7 @@
                         </Grid>
 
                         <!-- Tab Khoản nghỉ phép -->
-                        <Grid>
+                        <Grid DataContext="{StaticResource NghiPhepVM}">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -1342,10 +1342,10 @@
                         </Grid>
 
                         <!-- Tab Loại nghỉ phép -->
-                        <Grid>
+                        <Grid DataContext="{StaticResource LoaiNghiPhepVM}">
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="2">
                                             <Setter Property="Visibility" Value="Visible"></Setter>

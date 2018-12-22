@@ -40,7 +40,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- Thông tin phòng ban -->
+        <!-- Thông tin loại nghỉ phép -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -65,7 +65,7 @@
                     <StackPanel Width="600">
                         <TextBlock Foreground="#6F7A80" 
                                        Text="Tên loại nghỉ phép"></TextBlock>
-                        <TextBox Text="{Binding TenPhongBan, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding TenLoaiNghiPhep, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                     </StackPanel>
                 </ListViewItem>                
@@ -84,9 +84,8 @@
                     <StackPanel Width="600" >
                         <TextBlock Foreground="#6F7A80" 
                                        Text="Có lương?"></TextBlock>
-                        <ComboBox Margin="0 5 0 0" ItemsSource="{Binding ListNhanVienPhongBan}" 
-                                  SelectedItem="{Binding SelectedTruongPhong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  DisplayMemberPath="HOTEN_NV" />
+                        <ComboBox Margin="0 5 0 0" ItemsSource="{Binding ListCoLuong}" 
+                                  SelectedItem="{Binding SelectedCoLuong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </ListViewItem>
                 
@@ -99,7 +98,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=phongBanWindow}">
+                                                   CommandParameter="{Binding ElementName=loaiNghiPhepWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -109,7 +108,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=phongBanWindow}">
+                                                   CommandParameter="{Binding ElementName=loaiNghiPhepWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
