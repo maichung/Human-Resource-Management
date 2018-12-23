@@ -1070,7 +1070,7 @@
             <Grid Name="gridNghiPhep">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="3">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1361,10 +1361,10 @@
                         </Grid>
 
                         <!-- Tab Loại nghỉ phép -->
-                        <Grid>
+                        <Grid DataContext="{StaticResource LoaiNghiPhepVM}">
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="2">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
