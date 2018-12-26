@@ -24,6 +24,9 @@ namespace QuanLyNhanSu.ViewModel
         private NHANVIEN _NhanVien;
         public NHANVIEN NhanVien { get => _NhanVien; set { _NhanVien = value; OnPropertyChanged(); } }
 
+        private ImageSource _AvatarSource;
+        public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
+
         public ICommand BtnTrangChuCommand { get; set; }
         public ICommand BtnNhanVienCommand { get; set; }
         public ICommand BtnPhongBanCommand { get; set; }

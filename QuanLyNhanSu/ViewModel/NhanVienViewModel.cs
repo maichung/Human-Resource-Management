@@ -84,7 +84,7 @@ namespace QuanLyNhanSu.ViewModel
         #region Xử lý ảnh
 
         // Hàm hiển thị hình ảnh từ một string
-        private BitmapImage GetImage(string imageSourceString)
+        public static BitmapImage GetImage(string imageSourceString)
         {
             var img = System.Drawing.Image.FromStream(new MemoryStream(Convert.FromBase64String(imageSourceString)));
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(img);
@@ -93,7 +93,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm chuyển đổi image thành một string
-        private string ImageToString(string imagePath)
+        public static string ImageToString(string imagePath)
         {
             int width = 150;
             int height = 150;
@@ -107,7 +107,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm chuyển đổi bitmap thành image
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+      public static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {
@@ -124,7 +124,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm resize ảnh mà vẫn giữ tỉ lệ gốc
-        public System.Drawing.Image ResizeImageKeepAspectRatio(System.Drawing.Image source, int width, int height)
+        public static System.Drawing.Image ResizeImageKeepAspectRatio(System.Drawing.Image source, int width, int height)
         {
             System.Drawing.Image result = null;
             try
