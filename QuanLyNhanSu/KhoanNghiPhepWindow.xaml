@@ -43,22 +43,29 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <ComboBox Grid.Row="0" materialDesign:HintAssist.Hint="Chọn nhân viên" IsEditable="True" 
                       materialDesign:HintAssist.HintOpacity=".26" FontFamily="Segoe UI Semibold" 
-                      FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                <ComboBoxItem>
-                    Apple
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Banana
-                </ComboBoxItem>
+                      FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding ListNhanVien}" DisplayMemberPath="HOTEN_NV" 
+                      SelectedItem="{Binding SelectedCmbNV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            >
+                <ComboBox.Style>
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelectNV}" Value="true">
+                                <Setter Property="IsEnabled" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
             </ComboBox>
 
             <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding ListKhoanNghiPhepNV, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl ItemsSource="{Binding ListTTKhoanNghiPhep_KNPWD, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.Resources>
-                        <Style TargetType="StackPanel">
+                        <Style TargetType="ItemsControl">
                             <Setter Property="IsEnabled" Value="False"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsEditable}" Value="true">
@@ -78,9 +85,9 @@
                         <DataTemplate>
                             <StackPanel Width="600">
                                 <TextBlock Foreground="#6F7A80" 
-                                       Text="{Binding TenLoaiNghiPhep}"></TextBlock>
-                                <TextBox Text="{Binding SoNgayNghi, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="16" Margin="0,5,0,0"/>
+                                    Text="{Binding LoaiNghiPhep.TEN_LNP}"></TextBlock>
+                                <TextBox Text="{Binding SoNgayNghi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    FontSize="16" Margin="0,5,0,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

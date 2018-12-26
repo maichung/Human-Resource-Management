@@ -319,7 +319,7 @@ namespace QuanLyNhanSu.ViewModel
                          where
                                (from tk in DataProvider.Ins.model.TAIKHOAN
                                 where
-                      nv.MA_NV == tk.MA_NV
+                                    nv.MA_NV == tk.MA_NV
                                 select
                                     tk
                                 ).FirstOrDefault() == null
