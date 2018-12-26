@@ -1228,13 +1228,12 @@
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <TextBlock VerticalAlignment="Center">Đây là Grid Ngày nghỉ phép, sử dụng thuộc tính Visible 
-                                giống bên menu để hiện 2 tab bên cạnh lúc code</TextBlock>
+                            
 
                         </Grid>
 
@@ -1242,7 +1241,7 @@
                         <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="1">
                                             <Setter Property="Visibility" Value="Visible"></Setter>

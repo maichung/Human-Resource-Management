@@ -91,6 +91,7 @@ namespace QuanLyNhanSu.ViewModel
             ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
             LoadListNhanVien();
             IsEditable = true;
+
             XoaTaiKhoanCommand = new RelayCommand<Window>((p) =>
             {
 
