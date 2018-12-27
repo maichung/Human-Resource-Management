@@ -28,7 +28,7 @@
                 <StackPanel Margin="30 0 0 0" VerticalAlignment="Center">
                     <Ellipse Width="60" Height="60" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="Resources/TempFiles/avatar.jpg" Stretch="Uniform" />
+                            <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Text="{Binding NhanVien.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 

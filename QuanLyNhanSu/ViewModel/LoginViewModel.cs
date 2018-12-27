@@ -65,6 +65,7 @@ namespace QuanLyNhanSu.ViewModel
                     return;
                 var mainVM = mainWindow.DataContext as MainViewModel;
                 mainVM.ChucNangNS = (int)MainViewModel.ChucNangNhanSu.TrangChu;
+                mainVM.AvatarSource = NhanVienViewModel.GetImage(NVDangNhap.AVATAR_NV);
                 mainVM.NhanVien = NVDangNhap;
                 mainWindow.ShowDialog();
                 p.Close();

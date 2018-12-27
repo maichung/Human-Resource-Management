@@ -126,6 +126,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedHSUT == null)
                 {
+                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
                 return true;
@@ -151,12 +152,13 @@ namespace QuanLyNhanSu.ViewModel
                             MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                             transactions.Rollback();
                         }
-                        LoadListHSUT();
+                        ReloadListHSUT();
 
                     }
                 }
 
             });
+
             //Tạo mới command
             TaoHSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -219,8 +221,7 @@ namespace QuanLyNhanSu.ViewModel
                     HSUTSua.TRANGTHAI_HSUT = SelectedTrangThai;
                     HSUTSua.NGAYNOP_HSUT = NgayNop;
                     HSUTSua.CV_HSUT = CV;
-                    // HSUTSua.MA_UV = SDT;
-                    // HSUTSua.CV_HSUT = DiaChi;
+
 
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -229,6 +230,7 @@ namespace QuanLyNhanSu.ViewModel
                 p.Close();
             });
 
+            //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListHSUT);
@@ -245,6 +247,7 @@ namespace QuanLyNhanSu.ViewModel
                 sort = !sort;
             });
 
+            //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchHSUT))
@@ -260,6 +263,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+
             //Hủy command
             HuyCommand = new RelayCommand<Window>((p) =>
             {
@@ -276,6 +280,11 @@ namespace QuanLyNhanSu.ViewModel
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
             {
+                if (SelectedHSUT==null)
+                {
+                    MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+                }
                 return true;
             }, (p) =>
             {
@@ -293,7 +302,7 @@ namespace QuanLyNhanSu.ViewModel
                 ViTriCongViec = SelectedHSUT.VITRICONGVIEC_HSUT;
                 SelectedTrangThai = SelectedHSUT.TRANGTHAI_HSUT;
                 NgayNop = SelectedHSUT.NGAYNOP_HSUT;
-                //CV = SelectedHSUT.CV_HSUT;
+                CV = SelectedHSUT.CV_HSUT;
 
                 HoSoUngTuyen hoSoUngTuyenWindow = new HoSoUngTuyen();
                 hoSoUngTuyenWindow.ShowDialog();
@@ -339,7 +348,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 try
                 {
-                    Process.Start(BinaryStringToFile(SelectedHSUT.CV_HSUT));
+                    Process.Start(BinaryStringToFile(CV));
                 }
                 catch (Exception)
                 {

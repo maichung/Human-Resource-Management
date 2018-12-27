@@ -23,8 +23,8 @@
             </Grid.Background>
             <TextBlock Text="Đăng nhập" VerticalAlignment="Bottom" FontFamily="Segoe UI SemiBold" FontSize="28" Foreground="#232C3A"></TextBlock>
         </Grid>
-        
-        <TextBox Name="tboxUserName" Grid.Row="1" materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Text="{Binding TenDangNhap}"/>
+
+        <TextBox Name="tboxUserName" Grid.Row="1" materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"/>
         <PasswordBox Grid.Row="2" Name="pbxMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
