@@ -84,7 +84,7 @@ namespace QuanLyNhanSu.ViewModel
         #region Xử lý ảnh
 
         // Hàm hiển thị hình ảnh từ một string
-        private BitmapImage GetImage(string imageSourceString)
+        public static BitmapImage GetImage(string imageSourceString)
         {
             var img = System.Drawing.Image.FromStream(new MemoryStream(Convert.FromBase64String(imageSourceString)));
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(img);
@@ -107,7 +107,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm chuyển đổi bitmap thành image
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {

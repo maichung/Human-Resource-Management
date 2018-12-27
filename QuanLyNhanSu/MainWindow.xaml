@@ -403,7 +403,7 @@
                         <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="0">
-                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Setter Property="Visibility" Value="Visible"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -423,7 +423,7 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <ScrollViewer Grid.Row="1" FontSize="16">
+                <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}">
                     <WrapPanel Orientation="Horizontal">
                         <!-- Thẻ nghỉ phép -->
                         <materialDesign:Card Width="250" Height="250" Margin="5,0,30,30">
@@ -440,7 +440,7 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
                                         <TextBlock Text="Nghỉ phép" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
                                         <Border  CornerRadius="8" Background="#D83556" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                            <TextBlock Text="{Binding SoLuongNghiPhep}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
                                         </Border>
                                     </StackPanel>
 
@@ -461,20 +461,25 @@
                                         <Grid Grid.Row="0">
                                             <TextBlock Text="Hôm nay" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
                                         </Grid>
-                                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <WrapPanel Margin="0,5,0,0" >
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                            </WrapPanel>
-                                        </Grid>
+                                        <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding ListAVTNhanVienNP1}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Margin="0,5,0,0" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Ellipse Width="40" Height="40" Margin="0,0,5,5">
+                                                            <Ellipse.Fill>
+                                                                <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                            </Ellipse.Fill>
+                                                        </Ellipse>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="10,0,20,0">
                                         <Grid.RowDefinitions>
@@ -484,43 +489,39 @@
                                         <Grid Grid.Row="0">
                                             <TextBlock Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0">7 ngày tới</TextBlock>
                                         </Grid>
-                                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <WrapPanel Margin="0,5,0,0" >
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <Ellipse Width="25" Height="25" Margin="0,0,5,5">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                            </WrapPanel>
-                                        </Grid>
+
+                                        <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding ListAVTNhanVienNP7}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Margin="0,5,0,0" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Ellipse Width="40" Height="40" Margin="0,0,5,5">
+                                                            <Ellipse.Fill>
+                                                                <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                            </Ellipse.Fill>
+                                                        </Ellipse>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
                                     </Grid>
                                 </Grid>
 
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
                                     <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        Xem chi tiết
+                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -541,43 +542,43 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
                                         <TextBlock Text="Nhân viên mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
                                         <Border  CornerRadius="8" Background="#45CC77" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                            <TextBlock Text="{Binding SoLuongNhanVienMoi}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
                                         </Border>
                                     </StackPanel>
                                     <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
-                                <Grid Grid.Row="1" Margin="20 10">
-                                    <WrapPanel Margin="0,5,0,0">
-                                        <Ellipse Width="40" Height="40" Margin="0,0,12,12">
-                                            <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="40" Height="40" Margin="0,0,12,12">
-                                            <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="40" Height="40" Margin="0,0,12,12">
-                                            <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="40" Height="40" Margin="0,0,12,12">
-                                            <Ellipse.Fill>
-                                                <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                    </WrapPanel>
-                                </Grid>
+                                <ScrollViewer  Grid.Row="1" Margin="20,15,20,10" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding ListAVTNhanVienMoi}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Margin="0,5,0,0" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Ellipse Width="40" Height="40" Margin="0,0,5,5">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
 
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
                                     <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        Xem chi tiết
+                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -598,59 +599,45 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
                                         <TextBlock Text="Sinh nhật trong tháng" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
                                         <Border  CornerRadius="8" Background="#6F7A80" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
+                                            <TextBlock Text="{Binding SoLuongSinhNhatThang}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14"></TextBlock>
                                         </Border>
                                     </StackPanel>
                                     <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
-                                <Grid Grid.Row="1" Margin="20 0">
-                                    <ListView>
-                                        <ListViewItem>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
-                                                    15/12
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </ListViewItem>
-                                        <ListViewItem>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
-                                                    21/12
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </ListViewItem>
-                                        <ListViewItem>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="Resources/Icons/default_user.png" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80">
-                                                    28/12
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </ListViewItem>
+                                <ScrollViewer  Grid.Row="1" Margin="20 0" VerticalScrollBarVisibility="Auto">
+                                    <ListView Margin="0,15,0,10" ItemsSource="{Binding ListNhanVienSinhNhatThang}">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Ellipse Width="25" Height="25" HorizontalAlignment="Left">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush ImageSource="{Binding Key.}" Stretch="Uniform" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                    <TextBlock Text="{Binding Value}" Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
                                     </ListView>
-                                </Grid>
+                                </ScrollViewer>
 
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
                                     <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        Xem chi tiết
+                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -690,9 +677,7 @@
                                             <TextBlock Text="Tuần này" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <TextBlock FontSize="72" FontFamily="Segoe UI Light" >
-                                                4
-                                            </TextBlock>
+                                            <TextBlock Text="{Binding SoLuongTuyenDungTuan}" FontSize="72" FontFamily="Segoe UI Light" />
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="10,0,20,0">
@@ -704,9 +689,7 @@
                                             <TextBlock Text="Tháng này" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <TextBlock FontSize="72" FontFamily="Segoe UI Light" >
-                                                12
-                                            </TextBlock>
+                                            <TextBlock Text="{Binding SoLuongTuyenDungThang}" FontSize="72" FontFamily="Segoe UI Light" />
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -714,8 +697,13 @@
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
                                     <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        Xem chi tiết
+                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding BtnTuyenDungCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -804,8 +792,13 @@
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
                                     <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        Xem chi tiết
+                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -1222,13 +1215,13 @@
                     <!-- Nội dung tab -->
                     <Grid Grid.Row="1">
                         <!-- Tab Ngày nghỉ phép -->
-                        <Grid Visibility="Hidden">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -1239,7 +1232,7 @@
                         </Grid>
 
                         <!-- Tab Khoản nghỉ phép -->
-                        <Grid DataContext="{StaticResource KhoanNghiPhepVM}" Visibility="Visible">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -1257,7 +1250,7 @@
                             </Grid.RowDefinitions>
 
                             <!-- Thanh chức năng-->
-                            <Grid Grid.Row="0" Margin="0,0,0,20">
+                            <Grid Grid.Row="0" Margin="0,0,0,20" DataContext="{StaticResource KhoanNghiPhepVM}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
@@ -1296,7 +1289,7 @@
                             </Grid>
 
                             <!-- Nội dung -->
-                            <ListView Grid.Row="1" Name="listKhoanNghiPhep" 
+                            <ListView Grid.Row="1" Name="listKhoanNghiPhep" DataContext="{StaticResource KhoanNghiPhepVM}"
                                   ItemsSource="{Binding ListTTKhoanNghiPhep_MainWD}" 
                                   SelectedItem="{Binding SelectedTTKhoanNghiPhep, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
@@ -1361,10 +1354,10 @@
                         </Grid>
 
                         <!-- Tab Loại nghỉ phép -->
-                        <Grid DataContext="{StaticResource LoaiNghiPhepVM}">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangNP}" Value="2">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
@@ -1379,7 +1372,7 @@
                             </Grid.RowDefinitions>
 
                             <!-- Thanh chức năng-->
-                            <Grid Grid.Row="0" Margin="0,0,0,20">
+                            <Grid Grid.Row="0" Margin="0,0,0,20" DataContext="{StaticResource LoaiNghiPhepVM}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
@@ -1418,7 +1411,7 @@
                             </Grid>
 
                             <!-- Nội dung -->
-                            <ListView Grid.Row="1" Name="listLoaiNghiPhep" 
+                            <ListView Grid.Row="1" Name="listLoaiNghiPhep" DataContext="{StaticResource LoaiNghiPhepVM}"
                                   ItemsSource="{Binding ListLoaiNghiPhep}" 
                                   SelectedItem="{Binding SelectedLoaiNghiPhep, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
