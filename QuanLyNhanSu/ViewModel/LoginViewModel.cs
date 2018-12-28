@@ -39,6 +39,7 @@ namespace QuanLyNhanSu.ViewModel
             { return p == null ? false : true; }, (p) =>
                 { MatKhau = p.Password; });
         }
+
         void DangNhap(Window p)
         {
             string matKhauMaHoa = MD5Hash(Base64Encode(MatKhau));

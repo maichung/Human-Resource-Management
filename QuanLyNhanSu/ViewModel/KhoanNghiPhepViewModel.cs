@@ -15,12 +15,15 @@ namespace QuanLyNhanSu.ViewModel
 {
     class KhoanNghiPhepViewModel : BaseViewModel
     {
+        #region List item source
         private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_MainWD;
         public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_MainWD { get => _ListTTKhoanNghiPhep_MainWD; set { _ListTTKhoanNghiPhep_MainWD = value; OnPropertyChanged(); } }
         private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_KNPWD;
         public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_KNPWD { get => _ListTTKhoanNghiPhep_KNPWD; set { _ListTTKhoanNghiPhep_KNPWD = value; OnPropertyChanged(); } }
         private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_CapNhat;
         public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_CapNhat { get => _ListTTKhoanNghiPhep_CapNhat; set { _ListTTKhoanNghiPhep_CapNhat = value; OnPropertyChanged(); } }
+        #endregion
+
         #region Combobox item source
         private ObservableCollection<NHANVIEN> _ListNhanVien;
         public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }

@@ -51,6 +51,8 @@ namespace QuanLyNhanSu.ViewModel
         public int SoLuongTuyenDungTuan { get => _SoLuongTuyenDungTuan; set { _SoLuongTuyenDungTuan = value; OnPropertyChanged(); } }
         private int _SoLuongTuyenDungThang;
         public int SoLuongTuyenDungThang { get => _SoLuongTuyenDungThang; set { _SoLuongTuyenDungThang = value; OnPropertyChanged(); } }
+        private ImageSource _AvatarSource;
+        public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
         #endregion
 
         public ICommand BtnTrangChuCommand { get; set; }
