@@ -435,8 +435,8 @@ namespace QuanLyNhanSu.ViewModel
             Email = null;
             SoDienThoai = null;
             DiaChi = null;
-            AvatarSource = GetImage(ImageToString("../../Resources/Icons/default_user.png"));
             Avatar = ImageToString("../../Resources/Icons/default_user.png");
+            AvatarSource = GetImage(Avatar);            
         }       
     }
 }

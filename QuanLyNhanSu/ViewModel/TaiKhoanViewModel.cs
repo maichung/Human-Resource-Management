@@ -23,6 +23,7 @@ namespace QuanLyNhanSu.ViewModel
         public ObservableCollection<ThongTinTaikhoan> ListTaiKhoan { get => _ListTaiKhoan; set { _ListTaiKhoan = value; OnPropertyChanged(); } }
 
         #endregion
+
         #region Thuộc tính Binding
         private string _TenTaiKhoan;
         public string TenTaiKhoan { get => _TenTaiKhoan; set { _TenTaiKhoan = value; OnPropertyChanged(); } }
@@ -60,6 +61,7 @@ namespace QuanLyNhanSu.ViewModel
  
 
         #endregion
+
         #region Thuộc tính khác
         private bool _IsEditable;
         public bool IsEditable { get => _IsEditable; set { _IsEditable = value; OnPropertyChanged(); } }
@@ -68,6 +70,7 @@ namespace QuanLyNhanSu.ViewModel
         public string SearchTaiKhoan { get => _SearchTaiKhoan; set { _SearchTaiKhoan = value; OnPropertyChanged(); } }
 
         #endregion
+
         #region Binding Command
         public ICommand ThemTaiKhoanCommand { get; set; }
         public ICommand ThoatCommand { get; set; }
@@ -81,7 +84,6 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SuaTaiKhoanCommand { get; set; }
         public ICommand HienThiTaiKhoanCommand { get; set; }
         #endregion
-
      
         public TaiKhoanViewModel()
         {
@@ -292,7 +294,7 @@ namespace QuanLyNhanSu.ViewModel
                          where
                                (from tk in DataProvider.Ins.model.TAIKHOAN
                                 where
-                      nv.MA_NV == tk.MA_NV
+                                    nv.MA_NV == tk.MA_NV
                                 select
                                     tk
                                 ).FirstOrDefault() == null
