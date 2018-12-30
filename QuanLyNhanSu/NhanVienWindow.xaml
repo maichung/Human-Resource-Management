@@ -7,41 +7,41 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin nhân viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin nhân viên" Height="760" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         DataContext="{StaticResource NhanVienVM}" ResizeMode="CanMinimize"
         Name="nhanVienWindow">
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0" Margin="0 0 -20 10">
+        <!-- Tiêu đề trang -->
+        <Grid Grid.Row="0" Margin="0 0 -20 0">
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
 
-            <!-- Ảnh đại diện và tên nhân viên -->
-            <Grid Grid.Column="0">
-                <StackPanel Grid.Row="0">
-                    <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <TextBlock Text="{Binding HoTen}" FontSize="22" HorizontalAlignment="Left"
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel Grid.Row="0">
+                <Ellipse Width="80" Height="80" Margin="0 10" HorizontalAlignment="Left">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Thay đổi ảnh đại diện" Margin="-10 0 0 0"
+                        Content="Thay đổi ảnh" Height="Auto" FontSize="12" HorizontalAlignment="Left" Foreground="#232C3A" FontWeight="Normal">   
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ThayAnhCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
         </Grid>
 
+        <!-- Nội dung trang -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
@@ -75,7 +75,7 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-                        <Rectangle Height="5" Margin="15 0">
+                        <Rectangle Height="3" Margin="15 0">
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
                                     <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -113,7 +113,7 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-                        <Rectangle Height="5" Margin="15 0">
+                        <Rectangle Height="3" Margin="15 0">
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
                                     <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -146,54 +146,35 @@
                     </Grid.Style>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition Height="70"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <!-- Thanh chức năng -->
-                    <Grid Grid.Row="0" Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0">
+                        <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                            <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
 
-                        <!-- Thanh công cụ -->
-                        <Grid Grid.Column="1">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0">
-                                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Thay đổi ảnh đại diện">
-                                    <Image Stretch="None" Source="Resources\Icons\btnThayDoiAnh.png"></Image>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding SuaCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                            <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
 
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding ThayAnhCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
-                                    <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
-
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding SuaCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
-                                    <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
-
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XoaCommand}"
                                                       CommandParameter="{Binding ElementName=nhanVienWindow}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </StackPanel>
 
                     <!-- Thông tin nhân viên -->
                     <Grid Grid.Row="1">
@@ -205,7 +186,7 @@
                         <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
-                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="6*"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
@@ -297,7 +278,7 @@
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
-                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="6*"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
@@ -404,6 +385,31 @@
                             </ListView>
                         </Grid>
                     </Grid>
+
+                    <!-- Lưu và huỷ -->
+                    <Grid Grid.Row="2" Margin="20 10">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding LuuCommand}"
+                                                   CommandParameter="{Binding ElementName=nhanVienWindow}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                            <Button Height="40" Width="100" Content="Huỷ"  BorderBrush="{x:Null}"
+                        Background="WhiteSmoke" Foreground="#FF232C3A" Margin="10,0,0,0" FontSize="16" FontWeight="Normal">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding HuyCommand}"
+                                                   CommandParameter="{Binding ElementName=nhanVienWindow}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
 
                 <!-- Tab Lịch sử nhân viên -->
@@ -442,7 +448,7 @@
                     </Grid>
 
                     <!-- Nội dung -->
-                    <ListView Grid.Row="1" Name="listLichSuNhanVien"
+                    <ListView Grid.Row="1" Name="listLichSuNhanVien" Margin="0 0 0 20"
                                   ItemsSource="{Binding ListLichSuNhanVien}">
 
                         <ListView.View>
@@ -473,31 +479,8 @@
                     </ListView>
                 </Grid>
             </Grid>
-        </Grid>        
-
-        <!-- Lưu và huỷ -->
-        <Grid Grid.Row="2" Margin="20 10">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=nhanVienWindow}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Height="40" Width="100" Content="Huỷ"  BorderBrush="{x:Null}"
-                        Background="WhiteSmoke" Foreground="#FF232C3A" Margin="10,0,0,0" FontSize="16" FontWeight="Normal">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=nhanVienWindow}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </StackPanel>
         </Grid>
+
+
     </Grid>
 </Window>

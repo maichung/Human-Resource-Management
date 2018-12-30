@@ -253,7 +253,7 @@ namespace QuanLyNhanSu.ViewModel
                     return false;
                 }
 
-                TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays+1;
+                TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
 
                 if (TongNgayNghi > SelectedTTKhoanNghiPhep.SoNgayNghi)
                 {
@@ -263,7 +263,7 @@ namespace QuanLyNhanSu.ViewModel
 
                 return true;
             }, (p) =>
-            {
+            {               
                 if (SelectedNghiPhep == null)
                 {
                     var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
@@ -295,6 +295,7 @@ namespace QuanLyNhanSu.ViewModel
 
                     // Thay đổi thông tin nghỉ phép
                     var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
+
                     nghiPhepSua.MA_KNP = tempKNP.MA_KNP;
                     nghiPhepSua.NGAYBATDAU_NP = NgayBatDau;
                     nghiPhepSua.NGAYKETTHUC_NP = NgayKetThuc;
