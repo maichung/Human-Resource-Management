@@ -39,6 +39,7 @@ namespace QuanLyNhanSu.ViewModel
             { return p == null ? false : true; }, (p) =>
                 { MatKhau = p.Password; });
         }
+
         void DangNhap(Window p)
         {
             string matKhauMaHoa = MD5Hash(Base64Encode(MatKhau));
@@ -65,7 +66,7 @@ namespace QuanLyNhanSu.ViewModel
                     return;
                 var mainVM = mainWindow.DataContext as MainViewModel;
                 mainVM.ChucNangNS = (int)MainViewModel.ChucNangNhanSu.TrangChu;
-
+                mainVM.AvatarSource = NhanVienViewModel.GetImage(NVDangNhap.AVATAR_NV);
                 mainVM.NhanVien = NVDangNhap;
                 mainWindow.ShowDialog();
                 p.Close();

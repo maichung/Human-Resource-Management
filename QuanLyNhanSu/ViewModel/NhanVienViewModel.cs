@@ -21,9 +21,18 @@ namespace QuanLyNhanSu.ViewModel
 {
     public class NhanVienViewModel : BaseViewModel
     {
+        public enum ChucNangNhanVien
+        {
+            ThongTinNhanVien, LichSuNhanVien
+        };
+        private int _ChucNangNV;
+        public int ChucNangNV { get => _ChucNangNV; set { _ChucNangNV = value; OnPropertyChanged(); } }
+
         #region DataContext
         private ObservableCollection<NHANVIEN> _ListNhanVien;
         public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
+        private ObservableCollection<LICHSUNHANVIEN> _ListLichSuNhanVien;
+        public ObservableCollection<LICHSUNHANVIEN> ListLichSuNhanVien { get => _ListLichSuNhanVien; set { _ListLichSuNhanVien = value; OnPropertyChanged(); } }
         #endregion
 
         #region Combobox item source
@@ -66,17 +75,23 @@ namespace QuanLyNhanSu.ViewModel
         #region Thuộc tính khác
         private string _SearchNhanVien;
         public string SearchNhanVien { get => _SearchNhanVien; set { _SearchNhanVien = value; OnPropertyChanged(); } }
+        private string _SearchLichSuNV;
+        public string SearchLichSuNV { get => _SearchLichSuNV; set { _SearchLichSuNV = value; OnPropertyChanged(); } }
         public bool sort;
         #endregion
 
         #region Command binding
+        public ICommand TabThongTinNhanVienCommand { get; set; }
+        public ICommand TabLichSuNhanVienCommand { get; set; }
         public ICommand TaoMoiCommand { get; set; }
         public ICommand LuuCommand { get; set; }
         public ICommand HuyCommand { get; set; }
         public ICommand SuaCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
         public ICommand SortCommand { get; set; }
+        public ICommand SortLichSuNVCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand SearchLichSuNVCommand { get; set; }
         public ICommand ThayAnhCommand { get; set; }
         public ICommand XoaCommand { get; set; }
         #endregion
@@ -84,7 +99,7 @@ namespace QuanLyNhanSu.ViewModel
         #region Xử lý ảnh
 
         // Hàm hiển thị hình ảnh từ một string
-        private BitmapImage GetImage(string imageSourceString)
+        public static BitmapImage GetImage(string imageSourceString)
         {
             var img = System.Drawing.Image.FromStream(new MemoryStream(Convert.FromBase64String(imageSourceString)));
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(img);
@@ -93,7 +108,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm chuyển đổi image thành một string
-        private string ImageToString(string imagePath)
+        public static string ImageToString(string imagePath)
         {
             int width = 150;
             int height = 150;
@@ -107,7 +122,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm chuyển đổi bitmap thành image
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        public static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {
@@ -124,7 +139,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         // Hàm resize ảnh mà vẫn giữ tỉ lệ gốc
-        public System.Drawing.Image ResizeImageKeepAspectRatio(System.Drawing.Image source, int width, int height)
+        public static System.Drawing.Image ResizeImageKeepAspectRatio(System.Drawing.Image source, int width, int height)
         {
             System.Drawing.Image result = null;
             try
@@ -195,6 +210,24 @@ namespace QuanLyNhanSu.ViewModel
             ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
             IsEditable = false;
 
+            #region Xử lý ẩn hiện Grid
+            TabThongTinNhanVienCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangNV = (int)ChucNangNhanVien.ThongTinNhanVien;
+            });
+
+            TabLichSuNhanVienCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangNV = (int)ChucNangNhanVien.LichSuNhanVien;
+            });
+            #endregion
+
             // Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
               {
@@ -202,7 +235,7 @@ namespace QuanLyNhanSu.ViewModel
                   if (listPhongBan > 0)
                   {
                       return true;
-                  }                  
+                  }
                   MessageBox.Show("Vui lòng tạo phòng ban trước khi thêm nhân viên.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                   return false;
               }, (p) =>
@@ -258,6 +291,8 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
 
+                    AddLichSuNhanVien(NhanVienSua);
+
                     NhanVienSua.HOTEN_NV = HoTen;
                     NhanVienSua.MA_PB = SelectedPhongBan.MA_PB;
                     NhanVienSua.GIOITINH_NV = SelectedGioiTinh == "Nữ" ? true : false;
@@ -274,6 +309,7 @@ namespace QuanLyNhanSu.ViewModel
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 LoadListNhanVien();
+                LoadListLichSuNhanVien();
                 p.Close();
             });
 
@@ -307,6 +343,7 @@ namespace QuanLyNhanSu.ViewModel
                 return SelectedNhanVien == null ? false : true;
             }, (p) =>
             {
+                LoadListLichSuNhanVien();
                 IsEditable = false;
 
                 HoTen = SelectedNhanVien.HOTEN_NV;
@@ -389,15 +426,15 @@ namespace QuanLyNhanSu.ViewModel
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    AvatarSource=GetImage(ImageToString(openFileDialog.FileName));
-                    Avatar=ImageToString(openFileDialog.FileName);
+                    AvatarSource = GetImage(ImageToString(openFileDialog.FileName));
+                    Avatar = ImageToString(openFileDialog.FileName);
                 }
             });
 
             // Xoá command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
-                if( SelectedNhanVien == null)
+                if (SelectedNhanVien == null)
                 {
                     MessageBox.Show("Vui lòng chọn nhân viên trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
@@ -414,13 +451,96 @@ namespace QuanLyNhanSu.ViewModel
                     LoadListNhanVien();
                     p.Close();
                 }
-                
+
             });
+
+            #region Lịch sử nhân viên
+            //SortLichSuNV command
+            SortLichSuNVCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListLichSuNhanVien);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+
+            //SearchLichSuNV command
+            SearchLichSuNVCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(SearchLichSuNV))
+                {
+                    CollectionViewSource.GetDefaultView(ListLichSuNhanVien).Filter = (all) => { return true; };
+                }
+                else
+                {
+                    CollectionViewSource.GetDefaultView(ListLichSuNhanVien).Filter = (searchLichSuNV) =>
+                    {
+                        return (searchLichSuNV as LICHSUNHANVIEN).MOTA_LSNV.IndexOf(SearchLichSuNV, StringComparison.OrdinalIgnoreCase) >= 0;
+                    };
+                }
+
+            });
+            #endregion
+
         }
 
         public void LoadListNhanVien()
         {
             ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
+        }
+
+        public void LoadListLichSuNhanVien()
+        {
+            ListLichSuNhanVien = new ObservableCollection<LICHSUNHANVIEN>(DataProvider.Ins.model.LICHSUNHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV));
+        }
+
+        public void AddLichSuNhanVien(NHANVIEN nv)
+        {
+            //Thêm lịch sử chức vụ
+            string mota = "";
+            if (nv.CHUCVU_NV != ChucVu)
+                mota = "Thay đổi chức vụ từ " + nv.CHUCVU_NV + " thành " + ChucVu;
+
+            if (mota != "")
+            {
+                var LichSuNhanVienMoi = new LICHSUNHANVIEN()
+                {
+                    MA_NV = nv.MA_NV,
+                    MOTA_LSNV = mota,
+                    THOIGIAN_LSNV = DateTime.Now
+                };
+
+                DataProvider.Ins.model.LICHSUNHANVIEN.Add(LichSuNhanVienMoi);
+                DataProvider.Ins.model.SaveChanges();
+            }
+
+            mota = "";
+            //Thêm lịch sử phòng ban
+            if (nv.MA_PB != SelectedPhongBan.MA_PB)
+                mota = "Thay đổi phòng ban từ " + nv.PHONGBAN.TEN_PB + " thành " + SelectedPhongBan.TEN_PB;
+
+            if (mota != "")
+            {
+                var LichSuNhanVienMoi = new LICHSUNHANVIEN()
+                {
+                    MA_NV = nv.MA_NV,
+                    MOTA_LSNV = mota,
+                    THOIGIAN_LSNV = DateTime.Now
+                };
+
+                DataProvider.Ins.model.LICHSUNHANVIEN.Add(LichSuNhanVienMoi);
+                DataProvider.Ins.model.SaveChanges();
+            }
+
+
         }
 
         public void ResetControls()
@@ -436,7 +556,8 @@ namespace QuanLyNhanSu.ViewModel
             SoDienThoai = null;
             DiaChi = null;
             Avatar = ImageToString("../../Resources/Icons/default_user.png");
-            AvatarSource = GetImage(Avatar);            
-        }       
+            AvatarSource = GetImage(Avatar);
+        }
     }
 }
+

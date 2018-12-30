@@ -94,61 +94,76 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVien();
             IsEditable = true;
 
+
+            //Xóa tài khoản command
             XoaTaiKhoanCommand = new RelayCommand<Window>((p) =>
             {
 
                 if ( SelectedThongTinTaiKhoan.TaiKhoan == null)
-                {                 
+                {
+                     MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     return false;
                 }
+                return true;
+               
+            }, (p) =>
+            {
                 MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa tài khoản", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    return true;
+
+
+                    using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var tk = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedThongTinTaiKhoan.TaiKhoan.MA_TK).FirstOrDefault();
+                            DataProvider.Ins.model.TAIKHOAN.Remove(tk);
+                            DataProvider.Ins.model.SaveChanges();
+                            transactions.Commit();
+                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ResetControl();
+                            p.Close();
+
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            transactions.Rollback();
+                        }
+                        LoadListTaiKhoan();
+                    }
                 }
                 else
                 {
-                    return false;
-                }       
-            }, (p) =>
-            {
-                using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        var tk = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedThongTinTaiKhoan.TaiKhoan.MA_TK).FirstOrDefault();
-                        DataProvider.Ins.model.TAIKHOAN.Remove(tk);
-                        DataProvider.Ins.model.SaveChanges();
-                        transactions.Commit();
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        ResetControl();
-                        p.Close();
-                       
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        transactions.Rollback();
-                    }
-                    LoadListTaiKhoan();
-                    
+                    return;
                 }
+                    
+                
             });
 
+            //Thêm tài khoản command
             ThemTaiKhoanCommand = new RelayCommand<Object>(
                 (p) =>
                 {
+                    LoadListNhanVien();
+                    if (ListNhanVien.Count == 0)
+                    {
+                        MessageBox.Show("Không có nhân viên chưa có tài khoản.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return false;
+                    }
                     return true;
                 }, (p) =>
                 {
                     IsEditable = true;
                     ResetControl();
-                    LoadListNhanVien();
+                   // LoadListNhanVien();
 
                     TaiKhoanWindow taiKhoanWindow = new TaiKhoanWindow();
                     taiKhoanWindow.ShowDialog();
                 });
 
+            //Hiển thị tài khoản command
             HienThiTaiKhoanCommand = new RelayCommand<Window>(
                 (p) =>
                 {
@@ -165,6 +180,7 @@ namespace QuanLyNhanSu.ViewModel
                      taiKhoanWindow.ShowDialog();
                  });
 
+            //Password changed command
             PasswordChangedCommand = new RelayCommand<PasswordBox>(
                 (p) =>
                 {
@@ -183,6 +199,7 @@ namespace QuanLyNhanSu.ViewModel
                          _NhapLaiMatKhauMaHoa = LoginViewModel.MD5Hash(LoginViewModel.Base64Encode(p.Password));
                      });
 
+            //Lưu command
             LuuCommand = new RelayCommand<Window>(
                 (p) =>
                 {
@@ -236,14 +253,22 @@ namespace QuanLyNhanSu.ViewModel
                      LoadListNhanVien();
                      p.Close();
                  });
+
+            //Sửa tài khoản command
             SuaTaiKhoanCommand = new RelayCommand<Object>((p) =>
               {
+                  if (SelectedThongTinTaiKhoan==null)
+                  {
+                      MessageBox.Show("Vui lòng thêm tài khoản trước khi chỉnh sửa", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      return false;
+                  }
                   return true;
               }, (p) =>
              {
                  IsEditable = true;
              });
 
+            //Search tài khoản command
             SearchTaiKhoanCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchTaiKhoan))
