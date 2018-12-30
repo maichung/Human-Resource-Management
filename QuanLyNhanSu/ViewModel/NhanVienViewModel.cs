@@ -289,6 +289,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else
                 {
+                    LoadListLichSuNhanVien();
                     var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
 
                     AddLichSuNhanVien(NhanVienSua);
@@ -308,8 +309,7 @@ namespace QuanLyNhanSu.ViewModel
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                LoadListNhanVien();
-                LoadListLichSuNhanVien();
+                LoadListNhanVien();                
                 p.Close();
             });
 
