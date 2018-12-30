@@ -9,10 +9,11 @@
 
 namespace QuanLyNhanSu.Model
 {
+    using QuanLyNhanSu.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class LOAINGHIPHEP
+    public partial class LOAINGHIPHEP : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOAINGHIPHEP()
@@ -20,10 +21,13 @@ namespace QuanLyNhanSu.Model
             this.KHOANNGHIPHEP = new HashSet<KHOANNGHIPHEP>();
         }
     
-        public int MA_LNP { get; set; }
-        public string TEN_LNP { get; set; }
-        public Nullable<bool> COLUONG_LNP { get; set; }
-    
+        private int _MA_LNP;
+        public int MA_LNP { get => _MA_LNP; set { _MA_LNP = value; OnPropertyChanged(); } }
+        private string _TEN_LNP;
+        public string TEN_LNP { get => _TEN_LNP; set { _TEN_LNP = value; OnPropertyChanged(); } }
+        private Nullable<bool> _COLUONG_LNP;
+        public Nullable<bool> COLUONG_LNP { get => _COLUONG_LNP; set { _COLUONG_LNP = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KHOANNGHIPHEP> KHOANNGHIPHEP { get; set; }
     }
