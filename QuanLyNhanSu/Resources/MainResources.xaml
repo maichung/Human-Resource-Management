@@ -12,4 +12,7 @@
     <viewmodel:NghiPhepViewModel x:Key="NghiPhepVM"></viewmodel:NghiPhepViewModel>
     <viewmodel:KhoanNghiPhepViewModel x:Key="KhoanNghiPhepVM"></viewmodel:KhoanNghiPhepViewModel>
     <viewmodel:LoaiNghiPhepViewModel x:Key="LoaiNghiPhepVM"></viewmodel:LoaiNghiPhepViewModel>
+    <viewmodel:LuongViewModel x:Key="LuongVM"></viewmodel:LuongViewModel>
+    <viewmodel:LoaiLuongViewModel x:Key="LoaiLuongVM"></viewmodel:LoaiLuongViewModel>
+    <viewmodel:KhoanLuongViewModel x:Key="KhoanLuongVM"></viewmodel:KhoanLuongViewModel>
 </ResourceDictionary>
