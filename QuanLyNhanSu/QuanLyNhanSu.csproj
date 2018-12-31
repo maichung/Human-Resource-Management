@@ -76,6 +76,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChiTietPhieuChiWindow.xaml.cs">
+      <DependentUpon>ChiTietPhieuChiWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HoSoUngTuyen.xaml.cs">
       <DependentUpon>HoSoUngTuyen.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ThongTinKhoanNghiPhep.cs" />
+    <Compile Include="Model\ThongTinPhieuChi.cs" />
     <Compile Include="Model\ThongTinTaikhoan.cs" />
     <Compile Include="Model\UNGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -166,9 +170,13 @@
     <Compile Include="TaiKhoanWindow.xaml.cs">
       <DependentUpon>TaiKhoanWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PhieuChiWindow.xaml.cs">
+      <DependentUpon>PhieuChiWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ChiTietPhieuChiViewModel.cs" />
     <Compile Include="ViewModel\HoSoUngTuyenViewModel.cs" />
     <Compile Include="ViewModel\KhoanNghiPhepViewModel.cs" />
     <Compile Include="ViewModel\LoaiNghiPhepViewModel.cs" />
@@ -177,8 +185,13 @@
     <Compile Include="ViewModel\NghiPhepViewModel.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
     <Compile Include="ViewModel\TaiKhoanViewModel.cs" />
+    <Compile Include="ViewModel\ChiPhiViewModel.cs" />
     <Compile Include="ViewModel\UngVienViewModel.cs" />
     <Compile Include="ViewModel\PhongBanViewModel.cs" />
+    <Page Include="ChiTietPhieuChiWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="HoSoUngTuyen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -230,6 +243,10 @@
     <Page Include="TaiKhoanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PhieuChiWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UngVienWindow.xaml">
       <SubType>Designer</SubType>

@@ -12,4 +12,6 @@
     <viewmodel:NghiPhepViewModel x:Key="NghiPhepVM"></viewmodel:NghiPhepViewModel>
     <viewmodel:KhoanNghiPhepViewModel x:Key="KhoanNghiPhepVM"></viewmodel:KhoanNghiPhepViewModel>
     <viewmodel:LoaiNghiPhepViewModel x:Key="LoaiNghiPhepVM"></viewmodel:LoaiNghiPhepViewModel>
+    <viewmodel:ChiPhiViewModel x:Key="ChiPhiVM"></viewmodel:ChiPhiViewModel>
+    <viewmodel:ChiTietPhieuChiViewModel x:Key="ChiTietPhieuChiVM"></viewmodel:ChiTietPhieuChiViewModel>
 </ResourceDictionary>
