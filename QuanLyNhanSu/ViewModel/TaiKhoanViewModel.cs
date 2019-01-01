@@ -84,9 +84,39 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SuaTaiKhoanCommand { get; set; }
         public ICommand HienThiTaiKhoanCommand { get; set; }
         #endregion
-     
+
+        #region Thuộc tính ẩn hiện tab
+        public enum ChucNangCaiDat
+        {
+            TaiKhoan, NgayNghiLe
+        };
+        private int _ChucNangCD;
+        public int ChucNangCD { get => _ChucNangCD; set { _ChucNangCD = value; OnPropertyChanged(); } }
+
+        public ICommand TabTaiKhoanCommand { get; set; }
+        public ICommand TabNgayNghiLeCommand { get; set; }
+        #endregion
+
         public TaiKhoanViewModel()
         {
+            #region Xử lý ẩn hiện tab
+            TabTaiKhoanCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangCD = (int)ChucNangCaiDat.TaiKhoan;
+            });
+
+            TabNgayNghiLeCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangCD = (int)ChucNangCaiDat.NgayNghiLe;
+            });
+            #endregion
+
             LoadListTaiKhoan();
             string[] DSQuyenHan = new string[] { "Trưởng bộ phận Hành chính-Nhân sự", "Quản trị hệ thống", "Trưởng các bộ phận khác", "Nhân viên hành chính nhân sự" };
             ListQuyenHan = new ObservableCollection<string>(DSQuyenHan);

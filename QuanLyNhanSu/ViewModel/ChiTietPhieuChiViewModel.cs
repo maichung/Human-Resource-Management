@@ -87,33 +87,23 @@ namespace QuanLyNhanSu.ViewModel
                 MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa chi tiết phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                   
                     {
                         try
                         {
-                            var ctpc = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).FirstOrDefault();
-                          
-                            // update trị giá của phiếu chi đang chọn.
-                            var PhieuChiSua = DataProvider.Ins.model.PHIEUCHI.Where(x => x.MA_PC == SelectedThongTinPhieuChi.PhieuChi.MA_PC).SingleOrDefault();
-                            PhieuChiSua.TRIGIA_PC = PhieuChiSua.TRIGIA_PC - ctpc.TRIGIA_CTPC;                            
+                            //var ctpc = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).FirstOrDefault();
+                            ListChiTietPhieuChi.Remove(SelectedChiTietPhieuChi);
 
-                            //xóa chi tiết phiếu chi đang chọn
-                            DataProvider.Ins.model.CHITIETPHIEUCHI.Remove(ctpc);
-
-                           // DataProvider.Ins.model.SaveChanges();
-                            transactions.Commit();
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        
+                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);                        
                             p.Close();
 
                         }
                         catch (Exception e)
                         {
                             MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            transactions.Rollback();
+                           
                         }
-                        ReloadListChiTietPhieuChi();
+                      //  ReloadListChiTietPhieuChi();
 
                     }
                 }
@@ -123,11 +113,7 @@ namespace QuanLyNhanSu.ViewModel
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
             {
-                if (SelectedThongTinPhieuChi == null)
-                {
-                    MessageBox.Show("Vui lòng thêm phiếu chi trước!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return false;
-                }
+              
                 return true;
             }, (p) =>
             {
@@ -165,26 +151,22 @@ namespace QuanLyNhanSu.ViewModel
                     {
                         NOIDUNG_CTPC = NoiDung,
                         TRIGIA_CTPC = TriGia,
-                        MA_PC = SelectedThongTinPhieuChi.PhieuChi.MA_PC,
-                    };
-                    DataProvider.Ins.model.CHITIETPHIEUCHI.Add(CTPCMoi);
-                    
-                    var PhieuChiSua = DataProvider.Ins.model.PHIEUCHI.Where(x => x.MA_PC == SelectedThongTinPhieuChi.PhieuChi.MA_PC).SingleOrDefault();
-                    PhieuChiSua.TRIGIA_PC = PhieuChiSua.TRIGIA_PC + CTPCMoi.TRIGIA_CTPC;
-
-                   // DataProvider.Ins.model.SaveChanges();
-                    MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                    
+                        MA_PC = SelectedThongTinPhieuChi!=null ? SelectedThongTinPhieuChi.PhieuChi.MA_PC : -1,
+                    };  
+                    ListChiTietPhieuChi.Add(CTPCMoi);                
+                    MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);                    
                 }
                 else
                 {
-                    var CTPCSua = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).SingleOrDefault();
-                    CTPCSua.NOIDUNG_CTPC = NoiDung;
+                     var CTPCSua = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).SingleOrDefault();
+                   
+
+                   CTPCSua.NOIDUNG_CTPC = NoiDung;
                     CTPCSua.TRIGIA_CTPC = TriGia;
-                   // DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
-                ReloadListChiTietPhieuChi();
+              
                 p.Close();
             });
 
@@ -254,19 +236,20 @@ namespace QuanLyNhanSu.ViewModel
 
         void LoadListChiTietPhieuChi()
         {
-            ListChiTietPhieuChi = new ObservableCollection<CHITIETPHIEUCHI>(DataProvider.Ins.model.CHITIETPHIEUCHI);
+            ListChiTietPhieuChi = new ObservableCollection<CHITIETPHIEUCHI>(DataProvider.Ins.model.CHITIETPHIEUCHI.Where(p=>p.MA_PC!=-2));
 
         }
         public void ReloadListChiTietPhieuChi()
         {
             if (SelectedThongTinPhieuChi == null)
             {
-                ListChiTietPhieuChi = null;
+                ListChiTietPhieuChi = new ObservableCollection<CHITIETPHIEUCHI>();
                 return;
 
             }
             else
                 ListChiTietPhieuChi = new ObservableCollection<CHITIETPHIEUCHI>(DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_PC == SelectedThongTinPhieuChi.PhieuChi.MA_PC));
+            int t = 0;
         }
 
         public void ResetControls()

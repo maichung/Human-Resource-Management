@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin hồ sơ ứng tuyển" Height="650" Width="700" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin chi tiết phiếu chi" Height="650" Width="700" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
-        DataContext="{StaticResource ChiTietPhieuChiVM}" ResizeMode="CanMinimize"
+        DataContext="{StaticResource ChiPhiVM}" ResizeMode="CanMinimize"
         Name="chiTietPhieuChiWindow">
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
@@ -29,7 +29,7 @@
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding SuaCommand}">
+                            <i:InvokeCommandAction Command="{Binding Sua_CTPCCommand}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -38,7 +38,7 @@
                     <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                            <i:InvokeCommandAction Command="{Binding Xoa_CTPCCommand}"
                                                         CommandParameter="{Binding ElementName=chiTietPhieuChiWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
@@ -63,7 +63,7 @@
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                             <Setter Property="IsEnabled" Value="False"></Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                <DataTrigger Binding="{Binding IsEditable_CTPC}" Value="true">
                                     <Setter Property="IsEnabled" Value="True"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -73,7 +73,7 @@
                     <StackPanel Width="600">
                         <TextBlock Foreground="#6F7A80" 
                                        Text="Nội dung"></TextBlock>
-                        <TextBox Text="{Binding NoiDung, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding NoiDung_CTPC, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                     </StackPanel>
                 </ListViewItem>
@@ -84,7 +84,7 @@
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                             <Setter Property="IsEnabled" Value="False"></Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                <DataTrigger Binding="{Binding IsEditable_CTPC}" Value="true">
                                     <Setter Property="IsEnabled" Value="True"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -94,7 +94,7 @@
                     <StackPanel Width="600">
                         <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
-                        <TextBox Text="{Binding TriGia, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding TriGia_CTPC, StringFormat='0', UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                     </StackPanel>
                 </ListViewItem>
@@ -110,7 +110,7 @@
                 <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding LuuCommand}"
+                            <i:InvokeCommandAction Command="{Binding Luu_CTPCCommand}"
                                                    CommandParameter="{Binding ElementName=chiTietPhieuChiWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
@@ -121,7 +121,7 @@
                         Background="WhiteSmoke" Foreground="#FF232C3A" Margin="10,0,0,0" FontSize="16" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding HuyCommand}"
+                            <i:InvokeCommandAction Command="{Binding Huy_CTPCCommand}"
                                                    CommandParameter="{Binding ElementName=chiTietPhieuChiWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>

@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin nhân viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin phiếu chi" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
          ResizeMode="CanMinimize"
+        DataContext="{StaticResource ChiPhiVM}"
         Name="phieuChiWindow">
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
@@ -25,12 +26,13 @@
             </Grid.Background>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 0">
                 <!-- Tạo Chi tiết phiếu chi -->
-                <Button DataContext="{StaticResource ChiTietPhieuChiVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
+                <Button DataContext="{StaticResource ChiPhiVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo chi tiết phiếu chi mới">
                     <Image Stretch="None" Source="Resources\Icons\btnThemHSUT.png"></Image>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding TaoMoiCommand}">
+                            <i:InvokeCommandAction Command="{Binding TaoMoi_CTPCCommand}"
+                             >
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -108,7 +110,7 @@
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                                 <Setter Property="IsEnabled" Value="False"></Setter>
-                          
+
                             </Style>
                         </ListViewItem.Style>
 
@@ -118,21 +120,21 @@
                             <TextBox Text="{Binding ThoiGianLap, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
-                        
+
                     </ListViewItem>
                     <!-- Trị giá-->
                     <ListViewItem>
                         <ListViewItem.Style>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                                 <Setter Property="IsEnabled" Value="False"></Setter>
-                      
+
                             </Style>
                         </ListViewItem.Style>
 
                         <StackPanel Width="450">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
-                            <TextBox Text="{Binding TriGia, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding TriGia, StringFormat='0', UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
 
@@ -141,9 +143,10 @@
             </Grid>
 
             <!--- Chi tiết phiếu chi-->
-            <Grid Grid.Column="1" DataContext="{StaticResource ChiTietPhieuChiVM}" Name="gridHoSoUngTuyen" >
+            <Grid Grid.Column="1" Name="gridHoSoUngTuyen" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="446*"/>
+                    <ColumnDefinition Width="340*"/>
+                    <ColumnDefinition Width="106*"/>
                     <ColumnDefinition Width="31*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -156,14 +159,14 @@
 
                 </StackPanel>
 
-                <ListView Grid.Row="1" Name="listHSUT"
+                <ListView Grid.Row="1" Name="listCTPC"
                               ItemsSource="{Binding ListChiTietPhieuChi}" 
                               SelectedItem="{Binding SelectedChiTietPhieuChi, Mode=OneWayToSource}" 
-                              FontSize="14" Grid.ColumnSpan="2">
+                              FontSize="14" Grid.ColumnSpan="3">
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding HienThiCommand}">
+                            <i:InvokeCommandAction Command="{Binding HienThi_CTPCCommand}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -172,22 +175,22 @@
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
                                 <GridViewColumnHeader Tag="MA_UV" 
-                                                      Command="{Binding SortCommand}" 
+                                                      Command="{Binding Sort_CTPCCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                       VerticalAlignment="Center" Content="ID" Width="80">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding NOIDUNG_CTPC}" >
                                 <GridViewColumnHeader Tag="NOIDUNG_CTPC" 
-                                                      Command="{Binding SortCommand}" 
+                                                      Command="{Binding Sort_CTPCCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                       VerticalAlignment="Center" Content="Nội dung" Width="220">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
-                            <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_CTPC}">
+                            <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_CTPC ,StringFormat='0'}">
                                 <GridViewColumnHeader Tag="TRIGIA_CTPC" 
-                                                      Command="{Binding SortCommand}" 
+                                                      Command="{Binding Sort_CTPCCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                       VerticalAlignment="Center" Content="Trị giá" Width="100">
                                 </GridViewColumnHeader>
@@ -199,7 +202,7 @@
         </Grid>
 
         <!-- Lưu và huỷ -->
-        <Grid Grid.Row="2" Margin="20 10" DataContext="{StaticResource ChiPhiVM}">
+        <Grid Grid.Row="2" Margin="20 10" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <!-- Lưu  -->
                 <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
