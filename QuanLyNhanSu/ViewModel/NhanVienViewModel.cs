@@ -285,7 +285,9 @@ namespace QuanLyNhanSu.ViewModel
 
                     DataProvider.Ins.model.NHANVIEN.Add(NhanVienMoi);
                     DataProvider.Ins.model.SaveChanges();
+                    ListNhanVien.Add(NhanVienMoi);
                     MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
                 else
                 {
@@ -308,8 +310,7 @@ namespace QuanLyNhanSu.ViewModel
 
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                LoadListNhanVien();                
+                }                              
                 p.Close();
             });
 
