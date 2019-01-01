@@ -101,7 +101,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Nhân viên"></TextBlock>
                             <ComboBox ItemsSource="{Binding ListNhanVien}" SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -130,11 +130,11 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Loại nghỉ phép"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListTTKhoanNghiPhep}" SelectedItem="{Binding SelectedTTKhoanNghiPhep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0" DisplayMemberPath="LoaiNghiPhep.TEN_LNP"/>
+                            <ComboBox ItemsSource="{Binding ListKhoanNghiPhep}" SelectedItem="{Binding SelectedKhoanNghiPhep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0" DisplayMemberPath="LOAINGHIPHEP.TEN_LNP"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem>
@@ -149,7 +149,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày bắt đầu"></TextBlock>
                             <DatePicker SelectedDate="{Binding NgayBatDau, UpdateSourceTrigger=PropertyChanged}"
@@ -168,7 +168,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày kết thúc"></TextBlock>
                             <DatePicker SelectedDate="{Binding NgayKetThuc, UpdateSourceTrigger=PropertyChanged}"
@@ -187,7 +187,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Lí do"></TextBlock>
                             <TextBox Text="{Binding LiDo, UpdateSourceTrigger=PropertyChanged}"
@@ -210,23 +210,17 @@
                 </StackPanel>
 
                 <ListView Grid.Row="1" Name="listKhoanNghiPhep"
-                              ItemsSource="{Binding ListTTKhoanNghiPhep}" 
+                              ItemsSource="{Binding ListKhoanNghiPhep}" 
                               FontSize="14">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding LoaiNghiPhep.TEN_LNP}" >
-                                <GridViewColumnHeader Tag="VITRICONGVIEC_HSUT" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Loại nghỉ phép" Width="250">
+                            <GridViewColumn DisplayMemberBinding="{Binding LOAINGHIPHEP.TEN_LNP}" >
+                                <GridViewColumnHeader VerticalAlignment="Center" Content="Loại nghỉ phép" Width="250">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
-                            <GridViewColumn DisplayMemberBinding="{Binding SoNgayNghi}">
-                                <GridViewColumnHeader Tag="CHUCVU_HSUT" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Số ngày còn lại" Width="150">
+                            <GridViewColumn DisplayMemberBinding="{Binding SONGAYNGHI_KNP}">
+                                <GridViewColumnHeader VerticalAlignment="Center" Content="Số ngày còn lại" Width="150">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                         </GridView>

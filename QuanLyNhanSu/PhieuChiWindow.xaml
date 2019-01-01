@@ -97,7 +97,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Nhân viên"></TextBlock>
                             <ComboBox ItemsSource="{Binding ListNhanVien}" SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -114,7 +114,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Thời gian lập"></TextBlock>
                             <TextBox Text="{Binding ThoiGianLap, UpdateSourceTrigger=PropertyChanged}"
@@ -131,7 +131,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <StackPanel Width="450">
+                        <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
                             <TextBox Text="{Binding TriGia, StringFormat='0', UpdateSourceTrigger=PropertyChanged}"

@@ -25,16 +25,16 @@ namespace QuanLyNhanSu.ViewModel
         private ObservableCollection<NHANVIEN> _ListNhanVien;
         public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep;
-        public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep { get => _ListTTKhoanNghiPhep; set { _ListTTKhoanNghiPhep = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANNGHIPHEP> _ListKhoanNghiPhep;
+        public ObservableCollection<KHOANNGHIPHEP> ListKhoanNghiPhep { get => _ListKhoanNghiPhep; set { _ListKhoanNghiPhep = value; OnPropertyChanged(); } }
         #endregion
 
         #region Thuộc tính binding
         private NHANVIEN _SelectedNhanVien;
         public NHANVIEN SelectedNhanVien { get => _SelectedNhanVien; set { _SelectedNhanVien = value; OnPropertyChanged(); } }
 
-        private ThongTinKhoanNghiPhep _SelectedTTKhoanNghiPhep;
-        public ThongTinKhoanNghiPhep SelectedTTKhoanNghiPhep { get => _SelectedTTKhoanNghiPhep; set { _SelectedTTKhoanNghiPhep = value; OnPropertyChanged(); } }
+        private KHOANNGHIPHEP _SelectedKhoanNghiPhep;
+        public KHOANNGHIPHEP SelectedKhoanNghiPhep { get => _SelectedKhoanNghiPhep; set { _SelectedKhoanNghiPhep = value; OnPropertyChanged(); } }
 
         private NGHIPHEP _SelectedNghiPhep;
         public NGHIPHEP SelectedNghiPhep { get => _SelectedNghiPhep; set { _SelectedNghiPhep = value; OnPropertyChanged(); } }
@@ -83,7 +83,7 @@ namespace QuanLyNhanSu.ViewModel
         #region Thuộc tính khác
         private double _TongNgayNghi;
         public double TongNgayNghi { get => _TongNgayNghi; set { _TongNgayNghi = value; OnPropertyChanged(); } }
-        
+
         private string _SearchNghiPhep;
         public string SearchNghiPhep { get => _SearchNghiPhep; set { _SearchNghiPhep = value; OnPropertyChanged(); } }
 
@@ -127,13 +127,13 @@ namespace QuanLyNhanSu.ViewModel
                 return SelectedNhanVien == null ? false : true;
             }, (p) =>
             {
-                LoadListTTKhoanNghiPhep(SelectedNhanVien.MA_NV);
+                LoadListKhoanNghiPhep(SelectedNhanVien.MA_NV);
             });
             #endregion
 
             #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
-            {                
+            {
                 if (ListNhanVien == null)
                 {
                     MessageBox.Show("Vui lòng thiết lập khoản nghỉ phép cho nhân viên trước khi tạo nghỉ phép mới.", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
@@ -159,7 +159,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 IsEditable = false;
                 IsNVChangeable = false;
-                
+
                 HienThiNghiPhep();
 
                 NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
@@ -192,7 +192,7 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     IsNVChangeable = false;
                 }
-                
+
             });
             #endregion
 
@@ -235,9 +235,9 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Lưu command
-            LuuCommand = new RelayCommand<Window>((p) => 
-            {               
-                if (SelectedNhanVien == null || SelectedTTKhoanNghiPhep == null || NgayBatDau == null || NgayKetThuc==null || LiDo==null)
+            LuuCommand = new RelayCommand<Window>((p) =>
+            {
+                if (SelectedNhanVien == null || SelectedKhoanNghiPhep == null || NgayBatDau == null || NgayKetThuc == null || LiDo == null)
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin nghỉ phép!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
@@ -253,50 +253,58 @@ namespace QuanLyNhanSu.ViewModel
                     return false;
                 }
 
-                TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
-
-                if (TongNgayNghi > SelectedTTKhoanNghiPhep.SoNgayNghi)
-                {
-                    MessageBox.Show("Số ngày nghỉ còn lại của loại nghỉ phép đã chọn không đủ, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return false;
-                }
-
                 return true;
             }, (p) =>
-            {               
+            {
                 if (SelectedNghiPhep == null)
                 {
-                    var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
+                    // Kiểm tra ngày còn lại của khoản nghỉ phép
+                    TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
+
+                    if (TongNgayNghi > SelectedKhoanNghiPhep.SONGAYNGHI_KNP)
+                    {
+                        MessageBox.Show("Số ngày nghỉ còn lại của loại nghỉ phép đã chọn không đủ, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     var nghiPhepMoi = new NGHIPHEP()
                     {
                         MA_NV = SelectedNhanVien.MA_NV,
-                        MA_KNP = tempKNP.MA_KNP,
+                        MA_KNP = SelectedKhoanNghiPhep.MA_KNP,
                         NGAYBATDAU_NP = NgayBatDau,
-                        NGAYKETTHUC_NP=NgayKetThuc,
-                        LIDO_NP=LiDo
+                        NGAYKETTHUC_NP = NgayKetThuc,
+                        LIDO_NP = LiDo
                     };
 
-                    DataProvider.Ins.model.NGHIPHEP.Add(nghiPhepMoi);                    
+                    DataProvider.Ins.model.NGHIPHEP.Add(nghiPhepMoi);
 
-                    var updatedKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == nghiPhepMoi.MA_KNP).SingleOrDefault();
-                    updatedKNP.SONGAYNGHI_KNP -= (int)TongNgayNghi;
+                    SelectedKhoanNghiPhep.SONGAYNGHI_KNP -= (int)TongNgayNghi;
 
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Thêm nghỉ phép thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ListNghiPhep.Add(nghiPhepMoi);
                 }
                 else
                 {
                     var nghiPhepSua = DataProvider.Ins.model.NGHIPHEP.Where(x => x.MA_NP == SelectedNghiPhep.MA_NP).SingleOrDefault();
 
+
                     // Khôi phục lại số ngày nghỉ của khoản nghỉ phép đã lưu
                     var oldKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == nghiPhepSua.MA_KNP).SingleOrDefault();
-                    double oldDays = (nghiPhepSua.NGAYKETTHUC_NP.Value - nghiPhepSua.NGAYBATDAU_NP.Value).TotalDays+1;
+                    double oldDays = (nghiPhepSua.NGAYKETTHUC_NP.Value - nghiPhepSua.NGAYBATDAU_NP.Value).TotalDays + 1;
                     oldKNP.SONGAYNGHI_KNP += (int)oldDays;
 
-                    // Thay đổi thông tin nghỉ phép
-                    var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
+                    // Kiểm tra ngày còn lại của khoản nghỉ phép
+                    TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
 
-                    nghiPhepSua.MA_KNP = tempKNP.MA_KNP;
+                    if (TongNgayNghi > SelectedKhoanNghiPhep.SONGAYNGHI_KNP)
+                    {
+                        MessageBox.Show("Số ngày nghỉ còn lại của loại nghỉ phép đã chọn không đủ, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Cập nhật thông tin mới
+                    nghiPhepSua.MA_KNP = SelectedKhoanNghiPhep.MA_KNP;
                     nghiPhepSua.NGAYBATDAU_NP = NgayBatDau;
                     nghiPhepSua.NGAYKETTHUC_NP = NgayKetThuc;
                     nghiPhepSua.LIDO_NP = LiDo;
@@ -306,9 +314,7 @@ namespace QuanLyNhanSu.ViewModel
 
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Chỉnh sửa nghỉ phép thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-
-                LoadListNghiPhep();
+                }                
                 p.Close();
             });
             #endregion
@@ -317,7 +323,7 @@ namespace QuanLyNhanSu.ViewModel
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
-                if (SelectedNghiPhep== null)
+                if (SelectedNghiPhep == null)
                 {
                     return false;
                 }
@@ -361,17 +367,9 @@ namespace QuanLyNhanSu.ViewModel
 
         public void HienThiNghiPhep()
         {
-            SelectedNhanVien = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNghiPhep.MA_NV).SingleOrDefault();            
-            LoadListTTKhoanNghiPhep(SelectedNghiPhep.MA_NV);
-            var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == SelectedNghiPhep.MA_KNP).SingleOrDefault();
-            foreach(ThongTinKhoanNghiPhep item in ListTTKhoanNghiPhep)
-            {
-                if (item.LoaiNghiPhep.MA_LNP == tempKNP.MA_LNP)
-                {
-                    SelectedTTKhoanNghiPhep = item;
-                    break;
-                }
-            }
+            SelectedNhanVien = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNghiPhep.MA_NV && x.TRANGTHAI_NV == true).SingleOrDefault();
+            LoadListKhoanNghiPhep(SelectedNghiPhep.MA_NV);
+            SelectedKhoanNghiPhep = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == SelectedNghiPhep.MA_KNP).SingleOrDefault();
             NgayBatDau = SelectedNghiPhep.NGAYBATDAU_NP;
             NgayKetThuc = SelectedNghiPhep.NGAYKETTHUC_NP;
             LiDo = SelectedNghiPhep.LIDO_NP;
@@ -382,26 +380,13 @@ namespace QuanLyNhanSu.ViewModel
             ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
         }
 
-        public void LoadListTTKhoanNghiPhep(int maNV)
+        public void LoadListKhoanNghiPhep(int maNV)
         {
-            ListTTKhoanNghiPhep = new ObservableCollection<ThongTinKhoanNghiPhep>();
-            var listKNP = from nv in DataProvider.Ins.model.NHANVIEN
-                          where nv.MA_NV == maNV
-                          join knp in DataProvider.Ins.model.KHOANNGHIPHEP
-                          on nv.MA_NV equals knp.MA_NV
-                          join lnp in DataProvider.Ins.model.LOAINGHIPHEP
-                          on knp.MA_LNP equals lnp.MA_LNP
-
-                          select new ThongTinKhoanNghiPhep()
-                          {
-                              NhanVien = nv,
-                              LoaiNghiPhep = lnp,
-                              SoNgayNghi = (int)knp.SONGAYNGHI_KNP
-                          };
-
-            foreach (ThongTinKhoanNghiPhep item in listKNP)
+            ListKhoanNghiPhep = new ObservableCollection<KHOANNGHIPHEP>();
+            var listKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == maNV);
+            foreach (KHOANNGHIPHEP item in listKNP)
             {
-                ListTTKhoanNghiPhep.Add(item);
+                ListKhoanNghiPhep.Add(item);
             }
         }
 
@@ -409,7 +394,7 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListNhanVien = new ObservableCollection<NHANVIEN>();
 
-            var listNV = from nv in DataProvider.Ins.model.NHANVIEN
+            var listNV = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
                          where (from knp in DataProvider.Ins.model.KHOANNGHIPHEP
                                 where knp.MA_NV == nv.MA_NV
                                 select knp).FirstOrDefault() != null
@@ -424,12 +409,12 @@ namespace QuanLyNhanSu.ViewModel
         public void ResetControls()
         {
             SelectedNhanVien = null;
-            SelectedTTKhoanNghiPhep = null;
+            SelectedKhoanNghiPhep = null;
             SelectedNghiPhep = null;
             NgayBatDau = null;
             NgayKetThuc = null;
             LiDo = null;
-            ListTTKhoanNghiPhep = null;
+            ListKhoanNghiPhep = null;
         }
     }
 }
