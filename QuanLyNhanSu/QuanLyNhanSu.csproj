@@ -82,14 +82,23 @@
     <Compile Include="HoSoUngTuyen.xaml.cs">
       <DependentUpon>HoSoUngTuyen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KhoanLuongWindow.xaml.cs">
+      <DependentUpon>KhoanLuongWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KhoanNghiPhepWindow.xaml.cs">
       <DependentUpon>KhoanNghiPhepWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoaiLuongWindow.xaml.cs">
+      <DependentUpon>LoaiLuongWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoaiNghiPhepWindow.xaml.cs">
       <DependentUpon>LoaiNghiPhepWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LuongWindow.xaml.cs">
+      <DependentUpon>LuongWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BANGLUONG.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -155,6 +164,7 @@
     <Compile Include="Model\TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ThongTinKhoanLuong.cs" />
     <Compile Include="Model\ThongTinKhoanNghiPhep.cs" />
     <Compile Include="Model\ThongTinPhieuChi.cs" />
     <Compile Include="Model\ThongTinTaikhoan.cs" />
@@ -178,9 +188,12 @@
     </Compile>
     <Compile Include="ViewModel\ChiTietPhieuChiViewModel.cs" />
     <Compile Include="ViewModel\HoSoUngTuyenViewModel.cs" />
+    <Compile Include="ViewModel\KhoanLuongViewModel.cs" />
     <Compile Include="ViewModel\KhoanNghiPhepViewModel.cs" />
+    <Compile Include="ViewModel\LoaiLuongViewModel.cs" />
     <Compile Include="ViewModel\LoaiNghiPhepViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\LuongViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NghiPhepViewModel.cs" />
     <Compile Include="ViewModel\NhanVienViewModel.cs" />
@@ -196,7 +209,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="KhoanLuongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="KhoanNghiPhepWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoaiLuongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LuongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
