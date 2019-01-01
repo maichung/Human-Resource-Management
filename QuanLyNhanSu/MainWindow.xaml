@@ -2199,7 +2199,7 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <Grid Grid.Row="1" DataContext="{StaticResource UngVienVM}">
+                <Grid Grid.Row="1" DataContext="{StaticResource TuyenDungVM}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
