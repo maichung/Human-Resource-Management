@@ -182,13 +182,6 @@
                     </ListView.Style>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
-                                <GridViewColumnHeader Tag="MA_UV" 
-                                                      Command="{Binding Sort_CTPCCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="ID" Width="80">
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding NOIDUNG_CTPC}" >
                                 <GridViewColumnHeader Tag="NOIDUNG_CTPC" 
                                                       Command="{Binding Sort_CTPCCommand}" 

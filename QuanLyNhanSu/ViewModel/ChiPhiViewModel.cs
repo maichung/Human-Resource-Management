@@ -167,15 +167,11 @@ namespace QuanLyNhanSu.ViewModel
                        DataProvider.Ins.model.PHIEUCHI.Add(PhieuChiMoi);
                        DataProvider.Ins.model.SaveChanges();
                        
-                       int Ma_PCMoi=0;
-                       foreach (PHIEUCHI x in DataProvider.Ins.model.PHIEUCHI)
-                       {
-                           if (x.THOIGIANLAP_PC == PhieuChiMoi.THOIGIANLAP_PC)
-                               Ma_PCMoi = x.MA_PC;
-                       }
+            
                        foreach (CHITIETPHIEUCHI x in ListChiTietPhieuChi)
                        {
-                               x.MA_PC = Ma_PCMoi;
+                           
+                               x.MA_PC = PhieuChiMoi.MA_PC;
                            DataProvider.Ins.model.CHITIETPHIEUCHI.Add(x);
                        }
                        DataProvider.Ins.model.SaveChanges();
@@ -303,7 +299,7 @@ namespace QuanLyNhanSu.ViewModel
                         DataProvider.Ins.model.CHITIETPHIEUCHI.Remove(SelectedChiTietPhieuChi);
 
                         //Xóa trên hiển thị
-                        ListChiTietPhieuChi.Remove(SelectedChiTietPhieuChi);
+                        ListChiTietPhieuChi.Remove(SelectedChiTietPhieuChi);                      
                     }
                     else
                     {
@@ -402,11 +398,13 @@ namespace QuanLyNhanSu.ViewModel
                         //Cật nhật hiển thị
                         SelectedChiTietPhieuChi.NOIDUNG_CTPC = NoiDung_CTPC;
                         SelectedChiTietPhieuChi.TRIGIA_CTPC = TriGia_CTPC;
-
-                        //Cập nhật model
-                        var ChiTietPhieuChiSua = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).SingleOrDefault();
-                        ChiTietPhieuChiSua.NOIDUNG_CTPC = NoiDung_CTPC;
-                        ChiTietPhieuChiSua.TRIGIA_CTPC = TriGia_CTPC;
+                        if (SelectedPhieuChi != null)
+                        {
+                            //Cập nhật model
+                            var ChiTietPhieuChiSua = DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_CTPC == SelectedChiTietPhieuChi.MA_CTPC).SingleOrDefault();
+                            ChiTietPhieuChiSua.NOIDUNG_CTPC = NoiDung_CTPC;
+                            ChiTietPhieuChiSua.TRIGIA_CTPC = TriGia_CTPC;
+                        }
 
                         MessageBox.Show("Sửa chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         TinhTongTriGiaChiTietPhieuChi();

@@ -403,7 +403,7 @@
                         <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="0">
-                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Setter Property="Visibility" Value="Visible"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -2077,7 +2077,7 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <Grid Grid.Row="1" DataContext="{StaticResource UngVienVM}">
+                <Grid Grid.Row="1" DataContext="{StaticResource TuyenDungVM}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -2184,7 +2184,7 @@
             <Grid Name="gridChiPhi">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="7">
                                 <Setter Property="Visibility" Value="Visible"></Setter>

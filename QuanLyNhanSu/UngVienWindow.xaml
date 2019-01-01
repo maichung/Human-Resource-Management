@@ -25,18 +25,18 @@
             </Grid.Background>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 0">
                 <!-- Tạo hồ sơ ứng tuyển -->
-                <Button DataContext="{StaticResource HoSoUngTuyenVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
+                <Button DataContext="{StaticResource TuyenDungVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Tạo hồ sơ ứng tuyển mới">
                     <Image Stretch="None" Source="Resources\Icons\btnThemHSUT.png"></Image>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding TaoHSUTCommand}">
+                            <i:InvokeCommandAction Command="{Binding TaoMoi_HSUTCommand}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
                 <!-- Sửa thông tin -->
-                <Button DataContext="{StaticResource UngVienVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                <Button DataContext="{StaticResource TuyenDungVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
                     <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
 
                     <i:Interaction.Triggers>
@@ -47,11 +47,11 @@
                     </i:Interaction.Triggers>
                 </Button>
                 <!-- Xóa thông tin -->
-                <Button DataContext="{StaticResource UngVienVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                <Button DataContext="{StaticResource TuyenDungVM}" BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
                     <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding XoaUngVienCommand}"
+                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
                                                        CommandParameter="{Binding ElementName=ungVienWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
@@ -70,7 +70,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Thông tin cá nhân-->
-            <Grid Grid.Column="0" DataContext="{StaticResource UngVienVM}">
+            <Grid Grid.Column="0" DataContext="{StaticResource TuyenDungVM}">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="5*"></RowDefinition>
@@ -207,7 +207,7 @@
             </Grid>
 
             <!--- Hồ sơ ứng tuyển-->
-            <Grid Grid.Column="1" DataContext="{StaticResource HoSoUngTuyenVM}" Name="gridHoSoUngTuyen" >
+            <Grid Grid.Column="1" DataContext="{StaticResource TuyenDungVM}" Name="gridHoSoUngTuyen" >
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="5*"></RowDefinition>
@@ -219,39 +219,40 @@
                 </StackPanel>
 
                 <ListView Grid.Row="1" Name="listHSUT"
-                              ItemsSource="{Binding ListHSUT}" 
-                              SelectedItem="{Binding SelectedHSUT, Mode=OneWayToSource}" 
+                              ItemsSource="{Binding ListHoSoUngTuyen}" 
+                              SelectedItem="{Binding SelectedHoSoUngTuyen, Mode=OneWayToSource}" 
                               FontSize="14">
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding HienThiCommand}">
+                            <i:InvokeCommandAction Command="{Binding HienThi_HSUTCommand}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
-                                <GridViewColumnHeader Tag="MA_UV" 
-                                                      Command="{Binding SortCommand}" 
-                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="ID" Width="80">
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
+
                             <GridViewColumn DisplayMemberBinding="{Binding VITRICONGVIEC_HSUT}" >
                                 <GridViewColumnHeader Tag="VITRICONGVIEC_HSUT" 
-                                                      Command="{Binding SortCommand}" 
+                                                      Command="{Binding Sort_HSUTCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Vị trí công việc" Width="220">
+                                                      VerticalAlignment="Center" Content="Vị trí công việc" Width="200">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
-                            <GridViewColumn DisplayMemberBinding="{Binding CHUCVU_HSUT}">
-                                <GridViewColumnHeader Tag="CHUCVU_HSUT" 
-                                                      Command="{Binding SortCommand}" 
+                            <GridViewColumn DisplayMemberBinding="{Binding NGAYNOP_HSUT,StringFormat= dd/MM/yyyy}">
+                                <GridViewColumnHeader Tag="NGayNOP_HSUT" 
+                                                      Command="{Binding Sort_HSUTCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Chức vụ" Width="100">
+                                                      VerticalAlignment="Center" Content="Ngày nộp" Width="120">
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding TRANGTHAI_HSUT}">
+                                <GridViewColumnHeader Tag="TRANGTHAI_HSUT" 
+                                                      Command="{Binding Sort_HSUTCommand}" 
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                      VerticalAlignment="Center" Content="Trạng thấi" Width="100">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                         </GridView>
@@ -261,7 +262,7 @@
         </Grid>
 
         <!-- Lưu và huỷ -->
-        <Grid Grid.Row="2" Margin="20 10" DataContext="{StaticResource UngVienVM}">
+        <Grid Grid.Row="2" Margin="20 10" DataContext="{StaticResource TuyenDungVM}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <!-- Lưu  -->
                 <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">

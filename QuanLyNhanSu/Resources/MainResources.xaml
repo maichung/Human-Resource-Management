@@ -4,16 +4,16 @@
                     xmlns:viewmodel="clr-namespace:QuanLyNhanSu.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:NhanVienViewModel x:Key="NhanVienVM"></viewmodel:NhanVienViewModel>
-    <viewmodel:UngVienViewModel x:Key="UngVienVM"></viewmodel:UngVienViewModel>
     <viewmodel:PhongBanViewModel x:Key="PhongBanVM"></viewmodel:PhongBanViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:TaiKhoanViewModel x:Key="TaiKhoanVM"></viewmodel:TaiKhoanViewModel>
-    <viewmodel:HoSoUngTuyenViewModel x:Key="HoSoUngTuyenVM"></viewmodel:HoSoUngTuyenViewModel>
     <viewmodel:NghiPhepViewModel x:Key="NghiPhepVM"></viewmodel:NghiPhepViewModel>
     <viewmodel:KhoanNghiPhepViewModel x:Key="KhoanNghiPhepVM"></viewmodel:KhoanNghiPhepViewModel>
     <viewmodel:LoaiNghiPhepViewModel x:Key="LoaiNghiPhepVM"></viewmodel:LoaiNghiPhepViewModel>
+    <viewmodel:TuyenDungViewModel x:Key="TuyenDungVM"></viewmodel:TuyenDungViewModel>
     <viewmodel:ChiPhiViewModel x:Key="ChiPhiVM"></viewmodel:ChiPhiViewModel>
     <viewmodel:LuongViewModel x:Key="LuongVM"></viewmodel:LuongViewModel>
     <viewmodel:LoaiLuongViewModel x:Key="LoaiLuongVM"></viewmodel:LoaiLuongViewModel>
     <viewmodel:KhoanLuongViewModel x:Key="KhoanLuongVM"></viewmodel:KhoanLuongViewModel>
+
 </ResourceDictionary>
