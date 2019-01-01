@@ -132,7 +132,7 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa tài khoản", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa hồ sơ ứng tuyển ", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
@@ -184,7 +184,8 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (string.IsNullOrEmpty(ViTriCongViec)
                 || SelectedTrangThai == null
-                || NgayNop == null)
+                || NgayNop == null
+                || CV==null)
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin hồ sơ ứng tuyển!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;

@@ -299,6 +299,7 @@ namespace QuanLyNhanSu.ViewModel
                 HoSoUngTuyen hoSoUngTuyen = new HoSoUngTuyen();     
                  var hoSoUngTuyenVM = hoSoUngTuyen.DataContext as HoSoUngTuyenViewModel;
                  hoSoUngTuyenVM.SelectedUngVien = SelectedUngVien;
+
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  hoSoUngTuyenVM.ReloadListHSUT();
                  hoSoUngTuyen.Close();
