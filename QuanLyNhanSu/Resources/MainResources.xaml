@@ -13,7 +13,6 @@
     <viewmodel:KhoanNghiPhepViewModel x:Key="KhoanNghiPhepVM"></viewmodel:KhoanNghiPhepViewModel>
     <viewmodel:LoaiNghiPhepViewModel x:Key="LoaiNghiPhepVM"></viewmodel:LoaiNghiPhepViewModel>
     <viewmodel:ChiPhiViewModel x:Key="ChiPhiVM"></viewmodel:ChiPhiViewModel>
-    <viewmodel:ChiTietPhieuChiViewModel x:Key="ChiTietPhieuChiVM"></viewmodel:ChiTietPhieuChiViewModel>
     <viewmodel:LuongViewModel x:Key="LuongVM"></viewmodel:LuongViewModel>
     <viewmodel:LoaiLuongViewModel x:Key="LoaiLuongVM"></viewmodel:LoaiLuongViewModel>
     <viewmodel:KhoanLuongViewModel x:Key="KhoanLuongVM"></viewmodel:KhoanLuongViewModel>

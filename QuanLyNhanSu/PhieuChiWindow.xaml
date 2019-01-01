@@ -170,7 +170,16 @@
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-
+                    <ListView.Style>
+                        <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
@@ -196,7 +205,7 @@
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                         </GridView>
-                    </ListView.View>
+                    </ListView.View>                    
                 </ListView>
             </Grid>
         </Grid>

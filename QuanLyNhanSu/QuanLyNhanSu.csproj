@@ -186,7 +186,6 @@
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\ChiTietPhieuChiViewModel.cs" />
     <Compile Include="ViewModel\HoSoUngTuyenViewModel.cs" />
     <Compile Include="ViewModel\KhoanLuongViewModel.cs" />
     <Compile Include="ViewModel\KhoanNghiPhepViewModel.cs" />
