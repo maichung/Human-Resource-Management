@@ -453,8 +453,8 @@
 
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding MA_LSNV}">
-                                    <GridViewColumnHeader Tag="MA_LSNV" 
+                                <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                    <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortLichSuNVCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Mã LSNV" Width="150">

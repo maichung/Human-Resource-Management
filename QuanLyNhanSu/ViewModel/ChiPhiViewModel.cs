@@ -82,6 +82,8 @@ namespace QuanLyNhanSu.ViewModel
                  return true;
              }, (p) =>
              {
+                 UnchangedAllActions();
+
                  IsEditable = true;
                  ResetControls();
                  SelectedPhieuChi = null;
@@ -264,6 +266,8 @@ namespace QuanLyNhanSu.ViewModel
                   return SelectedPhieuChi == null ? false : true;
               }, (p) =>
              {
+                 UnchangedAllActions();
+
                  IsEditable = false;
                  SelectedNhanVien = SelectedPhieuChi.NHANVIEN;
                  TriGia = (long)SelectedPhieuChi.TRIGIA_PC;
@@ -419,7 +423,7 @@ namespace QuanLyNhanSu.ViewModel
             Sort_CTPCCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListChiTietPhieuChi);
-                if (sort)
+                if (sort_CTPC)
                 {
                     view.SortDescriptions.Clear();
                     view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
@@ -429,7 +433,7 @@ namespace QuanLyNhanSu.ViewModel
                     view.SortDescriptions.Clear();
                     view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
                 }
-                sort = !sort;
+                sort_CTPC = !sort_CTPC;
             });
 
             //Hủy command
@@ -564,7 +568,9 @@ namespace QuanLyNhanSu.ViewModel
 
             }
             else
+            {
                 ListChiTietPhieuChi = new ObservableCollection<CHITIETPHIEUCHI>(DataProvider.Ins.model.CHITIETPHIEUCHI.Where(x => x.MA_PC == SelectedPhieuChi.MA_PC));
+            }
         }
 
         public void ResetControls_CTPC()
@@ -575,13 +581,32 @@ namespace QuanLyNhanSu.ViewModel
 
         private void UnchangedAllActions()
         {
+            /*
             foreach (CHITIETPHIEUCHI x in DataProvider.Ins.model.CHITIETPHIEUCHI)
             {              
                 if (DataProvider.Ins.model.Entry(x).State != System.Data.Entity.EntityState.Unchanged)
                         DataProvider.Ins.model.Entry(x).Reload();
+            }*/
+            var changedEntries = DataProvider.Ins.model.ChangeTracker.Entries()
+              .Where(x => x.State != System.Data.Entity.EntityState.Unchanged).ToList();
+
+            foreach (var entry in changedEntries)
+            {
+                switch (entry.State)
+                {
+                    case System.Data.Entity.EntityState.Modified:
+                        entry.CurrentValues.SetValues(entry.OriginalValues);
+                        entry.State = System.Data.Entity.EntityState.Unchanged;
+                        break;
+                    case System.Data.Entity.EntityState.Added:
+                        entry.State = System.Data.Entity.EntityState.Detached;
+                        break;
+                    case System.Data.Entity.EntityState.Deleted:
+                        entry.State = System.Data.Entity.EntityState.Unchanged;
+                        break;
+                }
             }
-                   // MessageBox.Show(DataProvider.Ins.model.Entry(x).State.ToString());          
-          // MessageBox.Show( DataProvider.Ins.model.Entry(SelectedChiTietPhieuChi).State.ToString());
+
 
         }
         #endregion

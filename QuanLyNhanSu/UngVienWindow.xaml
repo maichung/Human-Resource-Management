@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin nhân viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin ứng viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
          ResizeMode="CanMinimize"
         Name="ungVienWindow">
@@ -229,7 +229,16 @@
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-
+                    <ListView.Style>
+                        <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
                     <ListView.View>
                         <GridView>
 

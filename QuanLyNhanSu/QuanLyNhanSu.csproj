@@ -76,8 +76,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+
+    <Compile Include="ChamCongWindow.xaml.cs">
+      <DependentUpon>ChamCongWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChiTietChamCongWindow.xaml.cs">
+      <DependentUpon>ChiTietChamCongWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChiTietPhieuChiWindow.xaml.cs">
       <DependentUpon>ChiTietPhieuChiWindow.xaml</DependentUpon>
+
     </Compile>
     <Compile Include="HoSoUngTuyenWindow.xaml.cs">
       <DependentUpon>HoSoUngTuyenWindow.xaml</DependentUpon>
@@ -187,6 +195,7 @@
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\TuyenDungViewModel.cs" />
+    <Compile Include="ViewModel\ChamCongViewModel.cs" />
     <Compile Include="ViewModel\KhoanLuongViewModel.cs" />
     <Compile Include="ViewModel\KhoanNghiPhepViewModel.cs" />
     <Compile Include="ViewModel\LoaiLuongViewModel.cs" />
@@ -199,6 +208,15 @@
     <Compile Include="ViewModel\TaiKhoanViewModel.cs" />
     <Compile Include="ViewModel\ChiPhiViewModel.cs" />
     <Compile Include="ViewModel\PhongBanViewModel.cs" />
+
+    <Page Include="ChamCongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChiTietChamCongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChiTietPhieuChiWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

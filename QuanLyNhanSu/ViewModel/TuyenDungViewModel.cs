@@ -95,6 +95,7 @@ namespace QuanLyNhanSu.ViewModel
                  return true;
              }, (p) =>
              {
+                 UnchangedAllActions();
                  IsEditable = true;
                  ResetControls();
                  SelectedUngVien = null;          
@@ -284,6 +285,7 @@ namespace QuanLyNhanSu.ViewModel
                   return SelectedUngVien == null ? false : true;
               }, (p) =>
              {
+                 UnchangedAllActions();
                  IsEditable = false;
                  HoTen = SelectedUngVien.HOTEN_UV;
                  SelectedGioiTinh = SelectedUngVien.GIOITINH_UV == true ? "Nữ" : "Nam";
@@ -338,6 +340,11 @@ namespace QuanLyNhanSu.ViewModel
             //Tạo mới hồ sơ ứng tuyển command
             TaoMoi_HSUTCommand = new RelayCommand<Object>((p) =>
             {
+                if (IsEditable==false)
+                {
+                    MessageBox.Show("Vui lòng bấm chỉnh sửa trước khi thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Question);
+                    return false;
+                }
                 return true;
             }, (p) =>
             {
@@ -445,7 +452,7 @@ namespace QuanLyNhanSu.ViewModel
             Sort_HSUTCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListHoSoUngTuyen);
-                if (sort)
+                if (sort_HSUT)
                 {
                     view.SortDescriptions.Clear();
                     view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
@@ -455,7 +462,7 @@ namespace QuanLyNhanSu.ViewModel
                     view.SortDescriptions.Clear();
                     view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
                 }
-                sort = !sort;
+                sort_HSUT = !sort_HSUT;
             });
 
             //Hủy hồ sơ ứng tuyểncommand
@@ -700,11 +707,27 @@ namespace QuanLyNhanSu.ViewModel
 
         private void UnchangedAllActions()
         {
-            foreach (HOSOUNGTUYEN x in DataProvider.Ins.model.HOSOUNGTUYEN)
-            {              
-                if (DataProvider.Ins.model.Entry(x).State != System.Data.Entity.EntityState.Unchanged)
-                        DataProvider.Ins.model.Entry(x).Reload();
-            }           
+           // if (ListHoSoUngTuyen == null) return;
+            var changedEntries = DataProvider.Ins.model.ChangeTracker.Entries()
+                .Where(x => x.State != System.Data.Entity.EntityState.Unchanged).ToList();
+
+            foreach (var entry in changedEntries)
+            {
+                switch (entry.State)
+                {
+                    case System.Data.Entity.EntityState.Modified:
+                        entry.CurrentValues.SetValues(entry.OriginalValues);
+                        entry.State = System.Data.Entity.EntityState.Unchanged;
+                        break;
+                    case System.Data.Entity.EntityState.Added:
+                        entry.State = System.Data.Entity.EntityState.Detached;
+                        break;
+                    case System.Data.Entity.EntityState.Deleted:
+                        entry.State = System.Data.Entity.EntityState.Unchanged;
+                        break;
+                }
+            }
+                   
         }
         #endregion
     }
