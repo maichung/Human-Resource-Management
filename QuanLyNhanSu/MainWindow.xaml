@@ -1633,7 +1633,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
-                                 Text="{Binding SearchPhongBan, UpdateSourceTrigger=PropertyChanged}">
+                                 Text="{Binding SearchNhanVien, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="TextChanged">
                                     <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
@@ -1698,6 +1698,13 @@
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Chức vụ" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding PHONGBAN.TEN_PB}">
+                                        <GridViewColumnHeader Tag="PHONGBAN.TEN_PB" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Phòng ban" Width="200">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
                                 </GridView>

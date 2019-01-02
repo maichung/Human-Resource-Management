@@ -16,335 +16,526 @@ namespace QuanLyNhanSu.ViewModel
 {
     public class ChamCongViewModel : BaseViewModel
     {
-        //#region DataContext
-        //private ObservableCollection<CHAMCONGNGAY> _ListChamCong;
-        //public ObservableCollection<CHAMCONGNGAY> ListChamCong { get => _ListChamCong; set { _ListChamCong = value; OnPropertyChanged(); } }
-        //#endregion
+        #region DataContext
+        private ObservableCollection<NHANVIEN> _ListNhanVien;
+        public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
+        private ObservableCollection<ThongTinChamCong> _ListTTChamCong_ALLNV;
+        public ObservableCollection<ThongTinChamCong> ListTTChamCong_ALLNV { get => _ListTTChamCong_ALLNV; set { _ListTTChamCong_ALLNV = value; OnPropertyChanged(); } }
+        private ObservableCollection<CHAMCONGNGAY> _ListChamCong_1NV;
+        public ObservableCollection<CHAMCONGNGAY> ListChamCong_1NV { get => _ListChamCong_1NV; set { _ListChamCong_1NV = value; OnPropertyChanged(); } }
+        private ObservableCollection<ThongTinChamCong> _ListTTChamCong_1NV;
+        public ObservableCollection<ThongTinChamCong> ListTTChamCong_1NV { get => _ListTTChamCong_1NV; set { _ListTTChamCong_1NV = value; OnPropertyChanged(); } }
+        #endregion
 
-        //#region Combobox item source
-        //private ObservableCollection<NHANVIEN> _ListNhanVien;
-        //public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
-        //#endregion
+        #region Cbx source
+        private ObservableCollection<int> _ListNam;
+        public ObservableCollection<int> ListNam { get => _ListNam; set { _ListNam = value; OnPropertyChanged(); } }
+        private int _SelectedNam;
+        public int SelectedNam { get => _SelectedNam; set { _SelectedNam = value; OnPropertyChanged(); } }
+        private ObservableCollection<int> _ListThang;
+        public ObservableCollection<int> ListThang { get => _ListThang; set { _ListThang = value; OnPropertyChanged(); } }
+        private int _SelectedThang;
+        public int SelectedThang { get => _SelectedThang; set { _SelectedThang = value; OnPropertyChanged(); } }
+        #endregion
 
-        //#region Thuộc tính binding
-        //private NHANVIEN _SelectedNhanVien;
-        //public NHANVIEN SelectedNhanVien { get => _SelectedNhanVien; set { _SelectedNhanVien = value; OnPropertyChanged(); } }
+        #region Thuộc tính binding
+        private bool _IsEditable;
+        public bool IsEditable { get => _IsEditable; set { _IsEditable = value; OnPropertyChanged(); } }
+        private DateTime? _NgayChamCong;
+        public DateTime? NgayChamCong { get => _NgayChamCong; set { _NgayChamCong = value; OnPropertyChanged(); } }
+        private NHANVIEN _SelectedNhanVien;
+        public NHANVIEN SelectedNhanVien { get => _SelectedNhanVien; set { _SelectedNhanVien = value; OnPropertyChanged(); } }
+        private ImageSource _AvatarSource;
+        public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
+        #endregion
 
-        
-        //#endregion
+        #region Binding Command
+        public ICommand TaoMoiCommand { get; set; }
+        public ICommand HienThiCommand { get; set; }
+        public ICommand HuyCommand { get; set; }
+        public ICommand SuaCommand { get; set; }
+        public ICommand SortCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand LuuCommand { get; set; }
+        public ICommand ChangeCmbCommand { get; set; }
+        #endregion
 
-        //#region Binding Command
-        //public ICommand TaoMoiCommand { get; set; }
-        //public ICommand HienThiCommand { get; set; }
-        //public ICommand HuyCommand { get; set; }
-        //public ICommand SuaCommand { get; set; }
-        //public ICommand SortCommand { get; set; }
-        //public ICommand SearchCommand { get; set; }
-        //public ICommand LuuCommand { get; set; }
-        //public ICommand XoaCommand { get; set; }
-        //#endregion
-
-        //#region Thuộc tính khác
-        //private string _SearchChamCong;
-        //public string SearchChamCong { get => _SearchChamCong; set { _SearchChamCong = value; OnPropertyChanged(); } }
-
-        //public bool sort;
-        //#endregion
+        #region Thuộc tính khác
+        private string _SearchNhanVien;
+        public string SearchNhanVien { get => _SearchNhanVien; set { _SearchNhanVien = value; OnPropertyChanged(); } }
+        public bool sort;
+        private ObservableCollection<ThongTinChamCong> tempListTTChamCong_1NV;
+        #endregion
 
         public ChamCongViewModel()
         {
-        //    LoadListNghiPhep();
-        //    LoadListNhanVien();
+            if (DataProvider.Ins.model.LOAICHAMCONG.Count() == 0)
+            {
+                CreateLoaiChamCong();
+            }                
+            LoadListNhanVien();
+            NgayChamCong = DateTime.Now;
+            int[] DSNam = new int[] { 2019, 2020, 2021, 2022, 2023 };
+            ListNam = new ObservableCollection<int>(DSNam);
+            int[] DSThang = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+            ListThang = new ObservableCollection<int>(DSThang);
 
-        //    #region Xử lý ẩn hiện tab
-        //    TabNgayNghiPhepCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        ChucNangNP = (int)ChucNangNghiPhep.NgayNghiPhep;
-        //    });
+            #region Huỷ command
+            ChangeCmbCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                LoadListTTChamCong_1NV();
+            });
+            #endregion
 
-        //    TabKhoanNghiPhepCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        ChucNangNP = (int)ChucNangNghiPhep.KhoanNghiPhep;
-        //    });
+            #region Tạo mới command
+            TaoMoiCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ListTTChamCong_1NV = null;
+                SelectedNhanVien = null;
+                IsEditable = true;
+                LoadListTTChamCong_ALLNV();
 
-        //    TabLoaiNghiPhepCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        ChucNangNP = (int)ChucNangNghiPhep.LoaiNghiPhep;
-        //    });
-        //    #endregion
+                ChamCongWindow chamcongWindow = new ChamCongWindow();
+                chamcongWindow.ShowDialog();
+            });
+            #endregion
 
-        //    #region Hiển thị khoản nghỉ phép command
-        //    HienThiKhoanNghiPhepCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        return SelectedNhanVien == null ? false : true;
-        //    }, (p) =>
-        //    {
-        //        LoadListTTKhoanNghiPhep(SelectedNhanVien.MA_NV);
-        //    });
-        //    #endregion
+            #region Hiển thị command
+            HienThiCommand = new RelayCommand<Object>((p) =>
+            {
+                return SelectedNhanVien == null ? false : true;
+            }, (p) =>
+            {
+                ListTTChamCong_ALLNV = null;
+                IsEditable = false;
+                AvatarSource = NhanVienViewModel.GetImage(SelectedNhanVien.AVATAR_NV);                
+                SelectedNam = DateTime.Now.Year;
+                SelectedThang = DateTime.Now.Month;
+                LoadListTTChamCong_1NV();                
 
-        //    #region Tạo mới command
-        //    TaoMoiCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        if (ListNhanVien == null)
-        //        {
-        //            MessageBox.Show("Vui lòng thiết lập khoản nghỉ phép cho nhân viên trước khi tạo nghỉ phép mới.", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-        //            return false;
-        //        }
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        IsEditable = true;
-        //        IsNVChangeable = true;
-        //        ResetControls();
+                ChiTietChamCongWindow ctccWindow = new ChiTietChamCongWindow();
+                ctccWindow.ShowDialog();
+            });
+            #endregion
 
-        //        NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
-        //        nghiphepWindow.ShowDialog();
-        //    });
-        //    #endregion
+            #region Huỷ command
+            HuyCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    IsEditable = false;
+                    p.Close();
+                }
+            });
+            #endregion
 
-        //    #region Hiển thị command
-        //    HienThiCommand = new RelayCommand<Object>((p) =>
-        //    {
-        //        return SelectedNghiPhep == null ? false : true;
-        //    }, (p) =>
-        //    {
-        //        IsEditable = false;
-        //        IsNVChangeable = false;
+            #region Sửa command
+            SuaCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                IsEditable = true;
+            });
+            #endregion
 
-        //        HienThiNghiPhep();
+            #region Sort command
+            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListNhanVien);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+            #endregion
 
-        //        NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
-        //        nghiphepWindow.ShowDialog();
-        //    });
-        //    #endregion
+            #region Search Command
+            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(SearchNhanVien))
+                {
+                    CollectionViewSource.GetDefaultView(ListNhanVien).Filter = (all) => { return true; };
+                }
+                else
+                {
+                    CollectionViewSource.GetDefaultView(ListNhanVien).Filter = (searchNhanVien) =>
+                    {
+                        return (searchNhanVien as NHANVIEN).HOTEN_NV.ToString().IndexOf(SearchNhanVien, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                               (searchNhanVien as NHANVIEN).CHUCVU_NV.ToString().IndexOf(SearchNhanVien, StringComparison.OrdinalIgnoreCase) >= 0;
+                    };
+                }
+            });
+            #endregion
 
-        //    #region Huỷ command
-        //    HuyCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-        //    {
-        //        MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-        //        if (result == MessageBoxResult.OK)
-        //        {
-        //            IsEditable = false;
-        //            IsNVChangeable = false;
-        //            p.Close();
-        //        }
-        //    });
-        //    #endregion
+            #region Lưu command
+            LuuCommand = new RelayCommand<Window>((p) =>
+            {
+                if (IsEditable == false)
+                {
+                    MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
 
-        //    #region Sửa command
-        //    SuaCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-        //    {
-        //        IsEditable = true;
-        //        if (SelectedNghiPhep == null)
-        //        {
-        //            IsNVChangeable = true;
-        //        }
-        //        else
-        //        {
-        //            IsNVChangeable = false;
-        //        }
+                if(ListTTChamCong_ALLNV != null)
+                {
+                    foreach (ThongTinChamCong item in ListTTChamCong_ALLNV)
+                    {
+                        if (item.TangCa == true)
+                        {
+                            if (item.GioBatDau == null || item.GioKetThuc == null)
+                            {
+                                MessageBox.Show("Vui lòng chọn giờ bắt đầu và giờ kết thúc cho những nhân viên tăng ca!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return false;
+                            }
+                            if (item.GioBatDau > item.GioKetThuc)
+                            {
+                                MessageBox.Show("Giờ kết thúc phải sau giờ bắt đầu, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return false;
+                            }
+                        }
+                    }
+                }
 
-        //    });
-        //    #endregion
+                if (ListTTChamCong_1NV != null && SelectedNhanVien != null)
+                {
+                    foreach (ThongTinChamCong item in ListTTChamCong_1NV)
+                    {
+                        if (item.TangCa == true)
+                        {
+                            if (item.GioBatDau == null || item.GioKetThuc == null)
+                            {
+                                MessageBox.Show("Vui lòng chọn giờ bắt đầu và giờ kết thúc cho những nhân viên tăng ca!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return false;
+                            }
+                            if (item.GioBatDau.Value.TimeOfDay > item.GioKetThuc.Value.TimeOfDay)
+                            {
+                                MessageBox.Show("Giờ kết thúc phải sau giờ bắt đầu, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return false;
+                            }
+                        }
+                    }
+                }
 
-        //    #region Sort command
-        //    SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
-        //    {
-        //        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListNghiPhep);
-        //        if (sort)
-        //        {
-        //            view.SortDescriptions.Clear();
-        //            view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
-        //        }
-        //        else
-        //        {
-        //            view.SortDescriptions.Clear();
-        //            view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
-        //        }
-        //        sort = !sort;
-        //    });
-        //    #endregion
+                return true;
+            }, (p) =>
+            {
+                if (SelectedNhanVien == null)
+                {
+                    foreach(ThongTinChamCong item in ListTTChamCong_ALLNV)
+                    {
+                        if(item.HanhChinh == true)
+                        {
+                            var chamCongNgayMoi = new CHAMCONGNGAY()
+                            {
+                                MA_NV = item.NhanVien.MA_NV,
+                                MA_LCC = 1,
+                                THOIGIANBATDAU_CCN = new DateTime(NgayChamCong.Value.Year, NgayChamCong.Value.Month, NgayChamCong.Value.Day, 8, 0, 0),
+                                THOIGIANKETTHUC_CCN = new DateTime(NgayChamCong.Value.Year, NgayChamCong.Value.Month, NgayChamCong.Value.Day, 17, 0, 0),
+                            };
+                            DataProvider.Ins.model.CHAMCONGNGAY.Add(chamCongNgayMoi);
+                            DataProvider.Ins.model.SaveChanges();
+                        }
+                        if (item.TangCa == true)
+                        {
+                            var chamCongNgayMoi = new CHAMCONGNGAY()
+                            {
+                                MA_NV = item.NhanVien.MA_NV,
+                                MA_LCC = 2,
+                                THOIGIANBATDAU_CCN = new DateTime(NgayChamCong.Value.Year, NgayChamCong.Value.Month, NgayChamCong.Value.Day, item.GioBatDau.Value.Hour, item.GioBatDau.Value.Minute, item.GioBatDau.Value.Second),
+                                THOIGIANKETTHUC_CCN = new DateTime(NgayChamCong.Value.Year, NgayChamCong.Value.Month, NgayChamCong.Value.Day, item.GioKetThuc.Value.Hour, item.GioKetThuc.Value.Minute, item.GioKetThuc.Value.Second),
+                            };
+                            DataProvider.Ins.model.CHAMCONGNGAY.Add(chamCongNgayMoi);
+                            DataProvider.Ins.model.SaveChanges();
+                        }
+                    }
 
-        //    #region Search Command
-        //    SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-        //    {
-        //        if (string.IsNullOrEmpty(SearchNghiPhep))
-        //        {
-        //            CollectionViewSource.GetDefaultView(ListNghiPhep).Filter = (all) => { return true; };
-        //        }
-        //        else
-        //        {
-        //            CollectionViewSource.GetDefaultView(ListNghiPhep).Filter = (searchNghiPhep) =>
-        //            {
-        //                return (searchNghiPhep as NGHIPHEP).MA_NV.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
-        //                       (searchNghiPhep as NGHIPHEP).NGAYBATDAU_NP.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
-        //                       (searchNghiPhep as NGHIPHEP).NGAYKETTHUC_NP.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
-        //            };
-        //        }
+                    LoadListNhanVien();
+                    MessageBox.Show("Chấm công ngày thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //Duyệt danh sách tìm ra object nào trong danh sách có sự thay đổi
+                    foreach(ThongTinChamCong item in ListTTChamCong_1NV)
+                    {
+                        foreach (ThongTinChamCong temp in tempListTTChamCong_1NV)
+                        {
+                            if(item.NgayChamCong.Value == temp.NgayChamCong.Value)
+                            {
+                                //TH1: thay đổi chấm công hành chính
+                                if (item.HanhChinh != temp.HanhChinh)
+                                {
+                                    var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && 
+                                                                                             x.MA_LCC == 1 && 
+                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
+                                    //Xóa
+                                    if(item.HanhChinh == false)
+                                    {
+                                        using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                                        {
+                                            try
+                                            {
+                                                DataProvider.Ins.model.CHAMCONGNGAY.Remove(ccn);
+                                                DataProvider.Ins.model.SaveChanges();
+                                                transactions.Commit();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                transactions.Rollback();
+                                            }
+                                        }                                        
+                                    }
+                                    //Thêm mới
+                                    else
+                                    {
+                                        var chamCongNgayMoi = new CHAMCONGNGAY()
+                                        {
+                                            MA_NV = SelectedNhanVien.MA_NV,
+                                            MA_LCC = 1,
+                                            THOIGIANBATDAU_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, 8, 0, 0),
+                                            THOIGIANKETTHUC_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, 17, 0, 0),
+                                        };
+                                        DataProvider.Ins.model.CHAMCONGNGAY.Add(chamCongNgayMoi);
+                                        DataProvider.Ins.model.SaveChanges();
+                                    }
+                                    
+                                }
+                                //TH2: thay đổi chấm công tăng ca
+                                if (item.TangCa != temp.TangCa)
+                                {
+                                    var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
+                                                                                             x.MA_LCC == 2 &&
+                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
+                                    //Xóa
+                                    if (item.TangCa == false)
+                                    {
+                                        using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
+                                        {
+                                            try
+                                            {
+                                                DataProvider.Ins.model.CHAMCONGNGAY.Remove(ccn);
+                                                DataProvider.Ins.model.SaveChanges();
+                                                transactions.Commit();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                transactions.Rollback();
+                                            }
+                                        }
+                                    }
+                                    //Thêm mới
+                                    else
+                                    {
+                                        var chamCongNgayMoi = new CHAMCONGNGAY()
+                                        {
+                                            MA_NV = item.NhanVien.MA_NV,
+                                            MA_LCC = 2,
+                                            THOIGIANBATDAU_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioBatDau.Value.Hour, item.GioBatDau.Value.Minute, item.GioBatDau.Value.Second),
+                                            THOIGIANKETTHUC_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioKetThuc.Value.Hour, item.GioKetThuc.Value.Minute, item.GioKetThuc.Value.Second),
+                                        };
+                                        DataProvider.Ins.model.CHAMCONGNGAY.Add(chamCongNgayMoi);
+                                        DataProvider.Ins.model.SaveChanges();
+                                    }
+                                }
+                                //Sửa
+                                else
+                                {
+                                    if(item.GioBatDau != temp.GioBatDau)
+                                    {
+                                        var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
+                                                                                             x.MA_LCC == 2 &&
+                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
+                                        ccn.THOIGIANBATDAU_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioBatDau.Value.Hour, item.GioBatDau.Value.Minute, item.GioBatDau.Value.Second);
+                                        DataProvider.Ins.model.SaveChanges();
+                                    }
+                                    if (item.GioKetThuc != temp.GioKetThuc)
+                                    {
+                                        var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
+                                                                                             x.MA_LCC == 2 &&
+                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
+                                        ccn.THOIGIANKETTHUC_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioKetThuc.Value.Hour, item.GioKetThuc.Value.Minute, item.GioKetThuc.Value.Second);
+                                        DataProvider.Ins.model.SaveChanges();
+                                    }
+                                }
+                                break;
+                            }
+                            
+                        }
+                    }
 
-        //    });
-        //    #endregion
+                    MessageBox.Show("Chỉnh sửa chấm công thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
 
-        //    #region Lưu command
-        //    LuuCommand = new RelayCommand<Window>((p) =>
-        //    {
-        //        if (SelectedNhanVien == null || SelectedTTKhoanNghiPhep == null || NgayBatDau == null || NgayKetThuc == null || LiDo == null)
-        //        {
-        //            MessageBox.Show("Vui lòng nhập đầy đủ thông tin nghỉ phép!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return false;
-        //        }
-        //        if (IsEditable == false)
-        //        {
-        //            MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return false;
-        //        }
-        //        if (NgayBatDau > NgayKetThuc)
-        //        {
-        //            MessageBox.Show("Ngày kết thúc phải sau ngày bắt đầu, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return false;
-        //        }
-
-        //        TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
-
-        //        if (TongNgayNghi > SelectedTTKhoanNghiPhep.SoNgayNghi)
-        //        {
-        //            MessageBox.Show("Số ngày nghỉ còn lại của loại nghỉ phép đã chọn không đủ, vui lòng chọn lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return false;
-        //        }
-
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        if (SelectedNghiPhep == null)
-        //        {
-        //            var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
-        //            var nghiPhepMoi = new NGHIPHEP()
-        //            {
-        //                MA_NV = SelectedNhanVien.MA_NV,
-        //                MA_KNP = tempKNP.MA_KNP,
-        //                NGAYBATDAU_NP = NgayBatDau,
-        //                NGAYKETTHUC_NP = NgayKetThuc,
-        //                LIDO_NP = LiDo
-        //            };
-
-        //            DataProvider.Ins.model.NGHIPHEP.Add(nghiPhepMoi);
-
-        //            var updatedKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == nghiPhepMoi.MA_KNP).SingleOrDefault();
-        //            updatedKNP.SONGAYNGHI_KNP -= (int)TongNgayNghi;
-
-        //            DataProvider.Ins.model.SaveChanges();
-        //            MessageBox.Show("Thêm nghỉ phép thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        else
-        //        {
-        //            var nghiPhepSua = DataProvider.Ins.model.NGHIPHEP.Where(x => x.MA_NP == SelectedNghiPhep.MA_NP).SingleOrDefault();
-
-        //            // Khôi phục lại số ngày nghỉ của khoản nghỉ phép đã lưu
-        //            var oldKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == nghiPhepSua.MA_KNP).SingleOrDefault();
-        //            double oldDays = (nghiPhepSua.NGAYKETTHUC_NP.Value - nghiPhepSua.NGAYBATDAU_NP.Value).TotalDays + 1;
-        //            oldKNP.SONGAYNGHI_KNP += (int)oldDays;
-
-        //            // Thay đổi thông tin nghỉ phép
-        //            var tempKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedNhanVien.MA_NV && x.MA_LNP == SelectedTTKhoanNghiPhep.LoaiNghiPhep.MA_LNP).SingleOrDefault();
-
-        //            nghiPhepSua.MA_KNP = tempKNP.MA_KNP;
-        //            nghiPhepSua.NGAYBATDAU_NP = NgayBatDau;
-        //            nghiPhepSua.NGAYKETTHUC_NP = NgayKetThuc;
-        //            nghiPhepSua.LIDO_NP = LiDo;
-
-        //            var updatedKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == nghiPhepSua.MA_KNP).SingleOrDefault();
-        //            updatedKNP.SONGAYNGHI_KNP -= (int)TongNgayNghi;
-
-        //            DataProvider.Ins.model.SaveChanges();
-        //            MessageBox.Show("Chỉnh sửa nghỉ phép thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-
-        //        LoadListNghiPhep();
-        //        p.Close();
-        //    });
-        //    #endregion
-
-        //    #region Xoá command
-        //    XoaCommand = new RelayCommand<Window>((p) =>
-        //    {
-
-        //        if (SelectedNghiPhep == null)
-        //        {
-        //            return false;
-        //        }
-        //        return true;
-        //    }, (p) =>
-        //    {
-        //        MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        //        if (result == MessageBoxResult.Yes)
-        //        {
-        //            using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
-        //            {
-        //                try
-        //                {
-        //                    var np = DataProvider.Ins.model.NGHIPHEP.Where(x => x.MA_NP == SelectedNghiPhep.MA_NP).FirstOrDefault();
-        //                    DataProvider.Ins.model.NGHIPHEP.Remove(np);
-
-        //                    // Khôi phục lại số ngày nghỉ của khoản nghỉ phép đã lưu                         
-        //                    var oldKNP = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_KNP == np.MA_KNP).SingleOrDefault();
-        //                    double oldDays = (np.NGAYKETTHUC_NP.Value - np.NGAYBATDAU_NP.Value).TotalDays + 1;
-        //                    oldKNP.SONGAYNGHI_KNP += (int)oldDays;
-
-        //                    DataProvider.Ins.model.SaveChanges();
-        //                    transactions.Commit();
-        //                    MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-        //                    ResetControls();
-        //                    p.Close();
-
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //                    transactions.Rollback();
-        //                }
-        //                LoadListNghiPhep();
-
-        //            }
-        //        }
-        //    });
-        //    #endregion
+                p.Close();
+            });
+            #endregion
         }
-             
-        //public void LoadListNhanVien()
-        //{
-        //    ListNhanVien = new ObservableCollection<NHANVIEN>();
 
-        //    var listNV = from nv in DataProvider.Ins.model.NHANVIEN
-        //                 where (from knp in DataProvider.Ins.model.KHOANNGHIPHEP
-        //                        where knp.MA_NV == nv.MA_NV
-        //                        select knp).FirstOrDefault() != null
-        //                 select nv;
+        public void LoadListNhanVien()
+        {
+            ListNhanVien = new ObservableCollection<NHANVIEN>();
 
-        //    foreach (NHANVIEN item in listNV)
-        //    {
-        //        ListNhanVien.Add(item);
-        //    }
-        //}
+            var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
+                         where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
+                                where ccn.MA_NV == nv.MA_NV
+                                select ccn).FirstOrDefault() != null
+                         select nv;
 
-        //public void ResetControls()
-        //{
-        //    SelectedNhanVien = null;
-        //    SelectedTTKhoanNghiPhep = null;
-        //    SelectedNghiPhep = null;
-        //    NgayBatDau = null;
-        //    NgayKetThuc = null;
-        //    LiDo = null;
-        //    ListTTKhoanNghiPhep = null;
-        //}
+            foreach (NHANVIEN item in listNhanVien)
+            {
+                ListNhanVien.Add(item);
+            }
+        }
+
+        public void CreateLoaiChamCong()
+        {
+            DataProvider.Ins.model.LOAICHAMCONG.Add(new LOAICHAMCONG() { TEN_LCC = "Hành chính" });
+            DataProvider.Ins.model.LOAICHAMCONG.Add(new LOAICHAMCONG() { TEN_LCC = "Tăng ca" });
+            DataProvider.Ins.model.SaveChanges();
+        }
+
+        public void LoadListTTChamCong_ALLNV()
+        {
+            ListTTChamCong_ALLNV = new ObservableCollection<ThongTinChamCong>();
+
+            var listTTChamCong_ALLNV = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
+                               select new ThongTinChamCong()
+                               {
+                                   NhanVien = nv,
+                                   HanhChinh = false,
+                                   TangCa = false
+                               };
+
+            foreach (ThongTinChamCong item in listTTChamCong_ALLNV)
+            {
+                ListTTChamCong_ALLNV.Add(item);
+            }
+        }
+
+        public void LoadListTTChamCong_1NV()
+        {
+            ListChamCong_1NV = new ObservableCollection<CHAMCONGNGAY>();
+            ListTTChamCong_1NV = new ObservableCollection<ThongTinChamCong>();
+            tempListTTChamCong_1NV = new ObservableCollection<ThongTinChamCong>();
+
+            var listChamCong_1NV = from ccn in DataProvider.Ins.model.CHAMCONGNGAY
+                                   where ccn.MA_NV == SelectedNhanVien.MA_NV &&
+                                         ccn.THOIGIANBATDAU_CCN.Value.Year == SelectedNam &&
+                                         ccn.THOIGIANBATDAU_CCN.Value.Month == SelectedThang
+                                   select ccn;
+
+            foreach (CHAMCONGNGAY item in listChamCong_1NV)
+            {
+                ListChamCong_1NV.Add(item);
+            }
+
+            //Kiểm tra xem danh sách chấm công đã được thêm thông tin chấm công ngày mà nhân viên có cả 2 loại
+            bool isAdd;
+            for (var i = 0; i < ListChamCong_1NV.Count(); i++)
+            {
+                isAdd = false;
+                for (var j = ListChamCong_1NV.Count() - 1; j > i; j--)
+                {
+                    if (ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value.Date == ListChamCong_1NV[j].THOIGIANBATDAU_CCN.Value.Date)
+                    {
+                        if(ListChamCong_1NV[i].MA_LCC == 2)
+                        {
+                            ListTTChamCong_1NV.Add(new ThongTinChamCong
+                            {
+                                NhanVien = SelectedNhanVien,
+                                HanhChinh = true,
+                                TangCa = true,
+                                GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
+                                GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                                NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                            });
+                            tempListTTChamCong_1NV.Add(new ThongTinChamCong
+                            {
+                                NhanVien = SelectedNhanVien,
+                                HanhChinh = true,
+                                TangCa = true,
+                                GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
+                                GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                                NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                            });
+                        }
+                        else if (ListChamCong_1NV[j].MA_LCC == 2)
+                        {
+                            ListTTChamCong_1NV.Add(new ThongTinChamCong
+                            {
+                                NhanVien = SelectedNhanVien,
+                                HanhChinh = true,
+                                TangCa = true,
+                                GioBatDau = ListChamCong_1NV[j].THOIGIANBATDAU_CCN.Value,
+                                GioKetThuc = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value,
+                                NgayChamCong = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value
+                            });
+                            tempListTTChamCong_1NV.Add(new ThongTinChamCong
+                            {
+                                NhanVien = SelectedNhanVien,
+                                HanhChinh = true,
+                                TangCa = true,
+                                GioBatDau = ListChamCong_1NV[j].THOIGIANBATDAU_CCN.Value,
+                                GioKetThuc = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value,
+                                NgayChamCong = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value
+                            });
+                        }
+                        isAdd = true;
+                        ListChamCong_1NV.Remove(ListChamCong_1NV[j]);
+                        break;
+                    }
+                }
+                //Khi danh sách thông tin chấm công không rơi vào trường hợp nhân viên trong ngày đó có cả 2 loại chấm công
+                if(isAdd == false)
+                {
+                    if (ListChamCong_1NV[i].MA_LCC == 1)
+                    {
+                        ListTTChamCong_1NV.Add(new ThongTinChamCong
+                        {
+                            NhanVien = SelectedNhanVien,
+                            HanhChinh = true,
+                            TangCa = false,
+                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                        });
+                        tempListTTChamCong_1NV.Add(new ThongTinChamCong
+                        {
+                            NhanVien = SelectedNhanVien,
+                            HanhChinh = true,
+                            TangCa = false,
+                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                        });
+                    }
+                    else if (ListChamCong_1NV[i].MA_LCC == 2)
+                    {
+                        ListTTChamCong_1NV.Add(new ThongTinChamCong
+                        {
+                            NhanVien = SelectedNhanVien,
+                            HanhChinh = false,
+                            TangCa = true,
+                            GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
+                            GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                        });
+                        tempListTTChamCong_1NV.Add(new ThongTinChamCong
+                        {
+                            NhanVien = SelectedNhanVien,
+                            HanhChinh = false,
+                            TangCa = true,
+                            GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
+                            GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
+                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                        });
+                    }
+                }                
+            }
+        }
     }
 }
