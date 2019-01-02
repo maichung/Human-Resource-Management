@@ -9,7 +9,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Thông tin chi tiết chấm công" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
-         ResizeMode="CanMinimize"
+        ResizeMode="CanMinimize"
+        DataContext="{StaticResource ChamCongVM}"
         Name="chamCongWindow">
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
@@ -29,7 +30,20 @@
                         <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
                     </Ellipse.Fill>
                 </Ellipse>
-                <TextBlock Text="Họ tên nhân viên" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
+                <TextBlock Text="{Binding SelectedNhanVien.HOTEN_NV}" FontFamily="Segoe UI Semibold" FontSize="22" ></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                    <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SuaCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
 
@@ -45,50 +59,76 @@
                 <StackPanel Width="125" Margin="0 0 25 0">
                     <TextBlock Foreground="#6F7A80" 
                                        Text="Chọn năm"></TextBlock>
-                    <ComboBox ItemsSource="{Binding ListGioiTinh}" SelectedItem="{Binding SelectedGioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0"/>
+                    <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                 </StackPanel>
                 <StackPanel Width="125" Margin="0 0 25 0">
                     <TextBlock Foreground="#6F7A80" 
                                        Text="Chọn tháng"></TextBlock>
-                    <ComboBox ItemsSource="{Binding ListGioiTinh}" SelectedItem="{Binding SelectedGioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0"/>
+                    <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                 </StackPanel>
             </StackPanel>            
 
             <!-- Danh sách chấm công -->
-            <Grid Grid.Row="1" Margin="0 20 0 0">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
-                        <TextBlock VerticalAlignment="Center" Margin="0,0,150,0" FontSize="16">Ngày</TextBlock>
-                        <CheckBox FontSize="16">Đi làm</CheckBox>
-                        <GridSplitter Margin="20 0" VerticalAlignment="Stretch" IsEnabled="False" Width="1" Background="#9b9b9b"></GridSplitter>
-                        <CheckBox Margin="0,0,20,0" FontSize="16">Tăng ca</CheckBox>
-                        <materialDesign:TimePicker materialDesign:HintAssist.Hint="Bắt đầu" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
-                        <materialDesign:TimePicker materialDesign:HintAssist.Hint="Kết thúc" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
-                        <TextBlock VerticalAlignment="Center" Margin="0,0,150,0" FontSize="16">Ngày</TextBlock>
-                        <CheckBox FontSize="16">Đi làm</CheckBox>
-                        <GridSplitter Margin="20 0" VerticalAlignment="Stretch" IsEnabled="False" Width="1" Background="#9b9b9b"></GridSplitter>
-                        <CheckBox Margin="0,0,20,0" FontSize="16">Tăng ca</CheckBox>
-                        <materialDesign:TimePicker materialDesign:HintAssist.Hint="Bắt đầu" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
-                        <materialDesign:TimePicker materialDesign:HintAssist.Hint="Kết thúc" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
-                    </StackPanel>
+            <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
+                <ItemsControl ItemsSource="{Binding ListTTChamCong_1NV, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.Resources>
+                        <Style TargetType="ItemsControl">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Resources>
 
-                </StackPanel>
-            </Grid>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Name="panelChiTietChamCong"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
+                                <TextBlock Text= "{Binding NgayChamCong, StringFormat='dd/MM/yyyy'}" VerticalAlignment="Center" Margin="0,0,150,0" FontSize="16"></TextBlock>
+                                <CheckBox IsChecked="{Binding HanhChinh, UpdateSourceTrigger=PropertyChanged}" FontSize="16">Hành chính</CheckBox>
+                                <GridSplitter Margin="20 0" VerticalAlignment="Stretch" IsEnabled="False" Width="1" Background="#9b9b9b"></GridSplitter>
+                                <CheckBox IsChecked="{Binding TangCa, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,0" FontSize="16">Tăng ca</CheckBox>
+                                <materialDesign:TimePicker SelectedTime="{Binding GioBatDau, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Bắt đầu" Is24Hours="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
+                                <materialDesign:TimePicker SelectedTime="{Binding GioKetThuc, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Kết thúc" Is24Hours="True" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="16"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
 
         <!-- Lưu và huỷ -->
-        <Grid Grid.Row="2" Margin="20 10" DataContext="{StaticResource UngVienVM}">
+        <Grid Grid.Row="2" Margin="20 10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <!-- Lưu  -->
                 <Button Height="40" Width="100" Content="Lưu"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="16" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=ungVienWindow}">
+                                                   CommandParameter="{Binding ElementName=chamCongWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -99,7 +139,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=ungVienWindow}">
+                                                   CommandParameter="{Binding ElementName=chamCongWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

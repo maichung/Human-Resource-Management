@@ -91,7 +91,15 @@ namespace QuanLyNhanSu.ViewModel
             });
 
             // Lưu command
-            LuuCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            LuuCommand = new RelayCommand<Window>((p) => {
+                if (SelectedCmbNV == null)
+                {
+                    MessageBox.Show("Vui lòng chọn nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                return true;
+            }, (p) =>
             {
                 if (SelectedTTKhoanNghiPhep == null)
                 {

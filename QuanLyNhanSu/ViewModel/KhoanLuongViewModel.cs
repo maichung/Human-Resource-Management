@@ -22,6 +22,8 @@ namespace QuanLyNhanSu.ViewModel
         public ObservableCollection<ThongTinKhoanLuong> ListTTKhoanLuong_KLWD { get => _ListTTKhoanLuong_KLWD; set { _ListTTKhoanLuong_KLWD = value; OnPropertyChanged(); } }
         private ObservableCollection<ThongTinKhoanLuong> _ListTTKhoanLuong_CapNhat;
         public ObservableCollection<ThongTinKhoanLuong> ListTTKhoanLuong_CapNhat { get => _ListTTKhoanLuong_CapNhat; set { _ListTTKhoanLuong_CapNhat = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANLUONG> _ListKhoanLuong;
+        public ObservableCollection<KHOANLUONG> ListKhoanLuong { get => _ListKhoanLuong; set { _ListKhoanLuong = value; OnPropertyChanged(); } }
         #endregion
 
         #region Combobox item source
@@ -91,7 +93,15 @@ namespace QuanLyNhanSu.ViewModel
             });
 
             // Lưu command
-            LuuCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            LuuCommand = new RelayCommand<Window>((p) => {
+                if (SelectedCmbNV == null)
+                {
+                    MessageBox.Show("Vui lòng chọn nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                return true;
+            }, (p) =>
             {
                 if (SelectedTTKhoanLuong == null)
                 {
@@ -269,7 +279,7 @@ namespace QuanLyNhanSu.ViewModel
                     ListTTKhoanLuong_KLWD.Add(item);
                 }
 
-                //Xử lý việc có thêm loại nghỉ phép cho nhân viên khi nhân viên đã được tạo khoản nghỉ phép
+                //Xử lý việc có thêm loại lương cho nhân viên khi nhân viên đã được tạo khoản nghỉ phép
                 var listLoaiLuong = from ll in DataProvider.Ins.model.LOAILUONG
                                        where (from llNV in listLoaiLuongNV
                                               where ll.MA_LL == llNV.LoaiLuong.MA_LL
