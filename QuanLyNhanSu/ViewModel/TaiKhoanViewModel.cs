@@ -337,6 +337,7 @@ namespace QuanLyNhanSu.ViewModel
                         };
             foreach (ThongTinTaikhoan item in query)
             {
+                if (item.NhanVien.TRANGTHAI_NV==true)
                 ListTaiKhoan.Add(item);
             }
 

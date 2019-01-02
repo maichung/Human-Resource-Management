@@ -17,9 +17,9 @@ namespace QuanLyNhanSu
     /// <summary>
     /// Interaction logic for HoSoUngTuyen.xaml
     /// </summary>
-    public partial class HoSoUngTuyen : Window
+    public partial class HoSoUngTuyenWindow : Window
     {
-        public HoSoUngTuyen()
+        public HoSoUngTuyenWindow()
         {
             InitializeComponent();
         }

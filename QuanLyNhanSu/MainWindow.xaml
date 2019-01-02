@@ -1326,15 +1326,15 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding MA_NP}" >
-                                            <GridViewColumnHeader Tag="MA_NP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding MA_NV}" >
+                                            <GridViewColumnHeader Tag="MA_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="ID" Width="100">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding MA_NV}">
-                                            <GridViewColumnHeader Tag="MA_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Nhân viên" Width="250">
@@ -2206,7 +2206,7 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <Grid Grid.Row="1" DataContext="{StaticResource UngVienVM}">
+                <Grid Grid.Row="1" DataContext="{StaticResource TuyenDungVM}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
