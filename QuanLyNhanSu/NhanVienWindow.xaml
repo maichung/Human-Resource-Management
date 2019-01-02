@@ -453,21 +453,21 @@
 
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                <GridViewColumn DisplayMemberBinding="{Binding MA_LSNV}">
                                     <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortLichSuNVCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Mã LSNV" Width="150">
+                                                              VerticalAlignment="Center" Content="ID" Width="100">
                                     </GridViewColumnHeader>
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding MOTA_LSNV}">
                                     <GridViewColumnHeader Tag="MOTA_LSNV" 
                                                               Command="{Binding SortLichSuNVCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Mô tả lịch sử" Width="300">
+                                                              VerticalAlignment="Center" Content="Chi tiết thay đổi" Width="500">
                                     </GridViewColumnHeader>
                                 </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding THOIGIAN_LSNV}">
+                                <GridViewColumn DisplayMemberBinding="{Binding THOIGIAN_LSNV, StringFormat='dd/MM/yyyy HH:mm'}">
                                     <GridViewColumnHeader Tag="THOIGIAN_LSNV" 
                                                               Command="{Binding SortLichSuNVCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 

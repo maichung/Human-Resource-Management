@@ -9,7 +9,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="YOLOHR" Height="750" Width="1300" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="14"
-        DataContext="{StaticResource MainVM}">
+        DataContext="{StaticResource MainVM}"
+        Name="mainWindow">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"></ColumnDefinition>
@@ -34,7 +35,15 @@
                     <TextBlock Text="{Binding NhanVien.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
                     <Button Content="Đăng xuất" HorizontalAlignment="Left" 
-                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0"></Button>
+                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding DangXuatCommand}"
+                                                       CommandParameter="{Binding ElementName=mainWindow}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
                 </StackPanel>
                 <GridSplitter Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" IsEnabled="False" Background="#FFD6D6D6"></GridSplitter>
             </Grid>
@@ -426,7 +435,7 @@
                 <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}">
                     <WrapPanel Orientation="Horizontal">
                         <!-- Thẻ nghỉ phép -->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -528,7 +537,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ nhên viên mới -->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -585,7 +594,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ sinh nhật trong tháng -->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -642,7 +651,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ tuyển dụng mới-->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -708,7 +717,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ ngày lễ tiếp theo -->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -803,7 +812,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ thông báo -->
-                        <materialDesign:Card Width="300" Height="250" Margin="5,0,20,25">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -831,12 +840,12 @@
                                     </ListView.ItemsPanel>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">                                                
+                                            <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Center" FontSize="14"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
-                                </ListView>                            
+                                </ListView>
                             </Grid>
                         </materialDesign:Card>
                     </WrapPanel>
@@ -1690,14 +1699,14 @@
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Chức vụ" Width="200">
                                         </GridViewColumnHeader>
-                                    </GridViewColumn>                                    
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </Grid>
             </Grid>
-            
+
             <!-- Lương -->
             <Grid Name="gridLuong">
                 <Grid.Style>
@@ -1721,7 +1730,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <TextBlock Text="LƯƠNG" FontFamily="Segoe UI Semibold" FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    <TextBlock Text="Lương" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                 </Grid>
 
                 <!-- Nội dung trang -->
@@ -2294,10 +2303,6 @@
                             </ListView.View>
                         </ListView>
                     </Grid>
-
-
-
-
                 </Grid>
             </Grid>
 
@@ -2324,7 +2329,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <TextBlock Text="CHI PHÍ" FontFamily="Segoe UI Semibold" FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    <TextBlock Text="Chi phí" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                 </Grid>
 
                 <!-- Nội dung trang -->
@@ -2540,7 +2545,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                            </StackPanel>                            
+                            </StackPanel>
                         </StackPanel>
                         <GridSplitter Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" IsEnabled="False" Background="#FFD6D6D6"></GridSplitter>
                     </Grid>

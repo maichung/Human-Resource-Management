@@ -68,6 +68,10 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand BtnBaoCaoCommand { get; set; }
         public ICommand BtnCaiDatCommand { get; set; }
 
+        #region Đăng xuất
+        public ICommand DangXuatCommand { get; set; }
+        #endregion
+
         public MainViewModel()
         {
            
@@ -162,6 +166,18 @@ namespace QuanLyNhanSu.ViewModel
             LoadListAVTNhanVienMoi();
             LoadListNhanVienSinhNhatThang();
             LoadSoLuong();
+
+            DangXuatCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn đăng xuất khỏi hệ thống không?", "Đăng xuất", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    p.Hide();
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.ShowDialog();
+                    p.Close();
+                }
+            });
         }
 
         public void LoadListAvatarNghiPhep1Ngay()

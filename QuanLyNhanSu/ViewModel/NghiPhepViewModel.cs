@@ -72,6 +72,7 @@ namespace QuanLyNhanSu.ViewModel
         {
             NgayNghiPhep, KhoanNghiPhep, LoaiNghiPhep
         };
+
         private int _ChucNangNP;
         public int ChucNangNP { get => _ChucNangNP; set { _ChucNangNP = value; OnPropertyChanged(); } }
 
@@ -92,8 +93,10 @@ namespace QuanLyNhanSu.ViewModel
 
         public NghiPhepViewModel()
         {
+            #region Khởi tạo
             LoadListNghiPhep();
             LoadListNhanVien();
+            #endregion
 
             #region Xử lý ẩn hiện tab
             TabNgayNghiPhepCommand = new RelayCommand<Object>((p) =>
@@ -182,17 +185,17 @@ namespace QuanLyNhanSu.ViewModel
 
             #region Sửa command
             SuaCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                IsEditable = true;
+            {                
                 if (SelectedNghiPhep == null)
                 {
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn ngày nghỉ phép trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     IsNVChangeable = true;
                 }
                 else
                 {
                     IsNVChangeable = false;
                 }
-
+                IsEditable = true;
             });
             #endregion
 
@@ -295,6 +298,8 @@ namespace QuanLyNhanSu.ViewModel
                     oldKNP.SONGAYNGHI_KNP += (int)oldDays;
 
                     // Kiểm tra ngày còn lại của khoản nghỉ phép
+                    DateTime a = new DateTime(2018, 12, 10);
+                    DateTime b = DateTime.Now;
                     TongNgayNghi = (NgayKetThuc.Value - NgayBatDau.Value).TotalDays + 1;
 
                     if (TongNgayNghi > SelectedKhoanNghiPhep.SONGAYNGHI_KNP)
@@ -322,15 +327,15 @@ namespace QuanLyNhanSu.ViewModel
             #region Xoá command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
-
                 if (SelectedNghiPhep == null)
                 {
+                    MessageBox.Show("Vui lòng chọn ngày nghỉ phép trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá ngày nghỉ phép này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
@@ -347,7 +352,7 @@ namespace QuanLyNhanSu.ViewModel
 
                             DataProvider.Ins.model.SaveChanges();
                             transactions.Commit();
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                             ResetControls();
                             p.Close();
 
@@ -365,6 +370,7 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void HienThiNghiPhep()
         {
             SelectedNhanVien = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNghiPhep.MA_NV && x.TRANGTHAI_NV == true).SingleOrDefault();
@@ -416,5 +422,6 @@ namespace QuanLyNhanSu.ViewModel
             LiDo = null;
             ListKhoanNghiPhep = null;
         }
+        #endregion
     }
 }
