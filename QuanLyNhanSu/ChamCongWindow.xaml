@@ -38,7 +38,15 @@
                 <TextBlock Foreground="#6F7A80" 
                                        Text="Chọn ngày chấm công"></TextBlock>
                 <DatePicker SelectedDate="{Binding NgayChamCong, UpdateSourceTrigger=PropertyChanged}"
-                                        FontSize="16" Margin="0,5,0,0"/>
+                            FontSize="16" Margin="0,5,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding DoiNgayChamCongCommand}"
+                                                   CommandParameter="{Binding ElementName=chamCongWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
             </StackPanel>
 
 
@@ -47,10 +55,10 @@
                 <ItemsControl ItemsSource="{Binding ListTTChamCong_ALLNV, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.Resources>
                         <Style TargetType="ItemsControl">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Setter Property="IsEnabled" Value="True"></Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="false">
+                                    <Setter Property="IsEnabled" Value="False"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

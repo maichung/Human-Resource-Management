@@ -14,5 +14,17 @@ namespace QuanLyNhanSu.Model
         public DateTime? GioBatDau { get; set; }
         public DateTime? GioKetThuc { get; set; }
         public DateTime? NgayChamCong { get; set; }
+
+        public ThongTinChamCong() { }
+
+        public ThongTinChamCong(ThongTinChamCong a)
+        {
+            NhanVien = a.NhanVien;
+            HanhChinh = a.HanhChinh;
+            TangCa = a.TangCa;
+            GioBatDau = a.GioBatDau;
+            GioKetThuc = a.GioKetThuc;
+            NgayChamCong = a.NgayChamCong;
+        }
     }
 }
