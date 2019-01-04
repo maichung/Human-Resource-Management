@@ -119,13 +119,13 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedUngVien == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn ứng viên trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa ứng viên và các hồ sơ ứng tuyển của ứng viên?", "Xóa phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá ứng viên này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
@@ -141,13 +141,12 @@ namespace QuanLyNhanSu.ViewModel
                                 DataProvider.Ins.model.UNGVIEN.Remove(uv);
                                 DataProvider.Ins.model.SaveChanges();
                                 transactions.Commit();
-                                MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 LoadListUngVien();
                                 p.Close();
                             }
                             catch (Exception e)
                             {
-                                MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBox.Show("Đã xảy ra lỗi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                                 transactions.Rollback();
                             }
                         }
@@ -269,7 +268,7 @@ namespace QuanLyNhanSu.ViewModel
                   return true;
               }, (p) =>
              {
-                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                  if (result == MessageBoxResult.OK)
                  {
                      IsEditable = false;
@@ -280,8 +279,13 @@ namespace QuanLyNhanSu.ViewModel
 
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
-              {
-                  return true;
+            {
+                if (SelectedUngVien == null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn ứng viên trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                return true;
               }, (p) =>
              {
                  IsEditable = true;
@@ -317,13 +321,13 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedHoSoUngTuyen == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn hồ sơ ứng tuyển trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa hồ sơ ứng tuyển", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá hồ sơ ứng tuyển này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (SelectedUngVien != null)
@@ -350,7 +354,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (IsEditable==false)
                 {
-                    MessageBox.Show("Vui lòng bấm chỉnh sửa trước khi thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Question);
+                    MessageBox.Show("Vui lòng bấm chỉnh sửa trước khi thêm mới hồ sơ ứng tuyển.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -403,7 +407,7 @@ namespace QuanLyNhanSu.ViewModel
                            //Thêm hồ sơ ứng tuyển hiển thị
                            ListHoSoUngTuyen.Add(HSUTMoi);
 
-                           MessageBox.Show("Thêm hồ sơ ứng tuyển mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                           MessageBox.Show("Thêm hồ sơ ứng tuyển thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                        }
 
@@ -425,7 +429,7 @@ namespace QuanLyNhanSu.ViewModel
                            DataProvider.Ins.model.HOSOUNGTUYEN.Add(HSUTMoi);
 
 
-                           MessageBox.Show("Thêm hồ sơ ứng tuyển mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                           MessageBox.Show("Thêm hồ sơ ứng tuyển thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                        }
                        p.Close();
@@ -449,7 +453,7 @@ namespace QuanLyNhanSu.ViewModel
                            HSUTSua.NGAYNOP_HSUT = NgayNop;
                            HSUTSua.CV_HSUT = CV_HoSoUngTuyen;
                        }
-                       MessageBox.Show("Sửa chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                       MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                        p.Close();
                    }
                }
@@ -479,7 +483,7 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Mọi chỉnh sửa sẽ không được lưu\nXác nhận hủy??", "Xác nhận hủy", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     p.Close();                   
@@ -492,7 +496,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedHoSoUngTuyen == null)
                 {
-                    MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn hồ sơ ứng tuyển trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -559,7 +563,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (CV_HoSoUngTuyen==null)
                 {
-                    MessageBox.Show("Chưa chọn file pdf.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Vui lòng chọn file CV cho hồ sơ ứng tuyển!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;

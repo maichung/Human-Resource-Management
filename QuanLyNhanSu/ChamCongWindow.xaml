@@ -73,8 +73,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
-                                <TextBlock Text="{Binding NhanVien.MA_NV}" VerticalAlignment="Center" Margin="0,0,20,0" FontSize="16"></TextBlock>
-                                <TextBlock Text="{Binding NhanVien.HOTEN_NV}" VerticalAlignment="Center" Margin="0,0,150,0" FontSize="16"></TextBlock>
+                                <TextBlock Text="{Binding NhanVien.MA_NV}" Width="100" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                <TextBlock Text="{Binding NhanVien.HOTEN_NV}" Width="300" VerticalAlignment="Center" FontSize="16"></TextBlock>
                                 <CheckBox IsChecked="{Binding HanhChinh, UpdateSourceTrigger=PropertyChanged}" FontSize="16">Hành chính</CheckBox>
                                 <GridSplitter Margin="20 0" VerticalAlignment="Stretch" IsEnabled="False" Width="1" Background="#9b9b9b"></GridSplitter>
                                 <CheckBox IsChecked="{Binding TangCa, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,0" FontSize="16">Tăng ca</CheckBox>
