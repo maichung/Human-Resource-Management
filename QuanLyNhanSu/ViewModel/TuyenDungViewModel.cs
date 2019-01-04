@@ -78,6 +78,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand XoaCommand { get; set; }
+        public ICommand ClosedCommand { get; set; }
         #endregion
 
         public TuyenDungViewModel()
@@ -95,7 +96,6 @@ namespace QuanLyNhanSu.ViewModel
                  return true;
              }, (p) =>
              {
-                 UnchangedAllActions();
                  IsEditable = true;
                  ResetControls();
                  SelectedUngVien = null;          
@@ -103,6 +103,15 @@ namespace QuanLyNhanSu.ViewModel
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  ungVienWindow.ShowDialog();
              });
+
+            //Dong Window command
+            ClosedCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                UnchangedAllActions();
+            });
 
 
             // Xóa ứng viên
@@ -285,7 +294,6 @@ namespace QuanLyNhanSu.ViewModel
                   return SelectedUngVien == null ? false : true;
               }, (p) =>
              {
-                 UnchangedAllActions();
                  IsEditable = false;
                  HoTen = SelectedUngVien.HOTEN_UV;
                  SelectedGioiTinh = SelectedUngVien.GIOITINH_UV == true ? "Nữ" : "Nam";
@@ -351,7 +359,7 @@ namespace QuanLyNhanSu.ViewModel
                 ResetControls_HSUT();
                 IsEditable_HSUT = true;
                 SelectedHoSoUngTuyen = null;
-                
+                SelectedTrangThai = "Chưa xử lý";
 
                 HoSoUngTuyenWindow hoSoUngTuyen = new HoSoUngTuyenWindow();
                 hoSoUngTuyen.ShowDialog();
@@ -502,7 +510,6 @@ namespace QuanLyNhanSu.ViewModel
             }, (p) =>
             {
 
-                IsEditable = false;
                 ViTriCongViec = SelectedHoSoUngTuyen.VITRICONGVIEC_HSUT;
                 SelectedTrangThai = SelectedHoSoUngTuyen.TRANGTHAI_HSUT;
                 NgayNop = SelectedHoSoUngTuyen.NGAYNOP_HSUT;
@@ -550,6 +557,11 @@ namespace QuanLyNhanSu.ViewModel
             // Xem file command
             XemFile_HSUTCommand = new RelayCommand<Object>((p) =>
             {
+                if (CV_HoSoUngTuyen==null)
+                {
+                    MessageBox.Show("Chưa chọn file pdf.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
                 return true;
             }, (p) =>
             {

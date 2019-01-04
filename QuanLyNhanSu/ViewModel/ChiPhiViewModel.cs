@@ -68,6 +68,8 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand XoaCommand { get; set; }
+
+        public ICommand ClosedCommand { get; set; }
         #endregion
 
         public ChiPhiViewModel()
@@ -76,13 +78,23 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVien();
             IsEditable = false;
 
+            //Dong Window command
+            ClosedCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                UnchangedAllActions();
+            });
+
+
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
                  return true;
              }, (p) =>
              {
-                 UnchangedAllActions();
+                
 
                  IsEditable = true;
                  ResetControls();
@@ -266,7 +278,7 @@ namespace QuanLyNhanSu.ViewModel
                   return SelectedPhieuChi == null ? false : true;
               }, (p) =>
              {
-                 UnchangedAllActions();
+                 
 
                  IsEditable = false;
                  SelectedNhanVien = SelectedPhieuChi.NHANVIEN;

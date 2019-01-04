@@ -10,7 +10,14 @@
         Title="Thông tin ứng viên" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
          ResizeMode="CanMinimize"
+         DataContext="{StaticResource TuyenDungVM}"
         Name="ungVienWindow">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"></RowDefinition>
@@ -82,19 +89,19 @@
                 </StackPanel>
 
                 <ListView Grid.Row="1">
+                    <ListView.Style>
+                        <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
                     <!-- Họ tên-->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
-
+                      
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Họ tên"></TextBlock>
@@ -104,16 +111,7 @@
                     </ListViewItem>
                     <!-- Ngày sinh-->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                        
 
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
@@ -124,16 +122,7 @@
                     </ListViewItem>
                     <!-- Giới tính-->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                        
 
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
@@ -144,16 +133,7 @@
                     </ListViewItem>
                     <!-- Địa chỉ-->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                        
 
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
@@ -164,16 +144,7 @@
                     </ListViewItem>
                     <!-- Email -->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                       
 
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
@@ -184,16 +155,7 @@
                     </ListViewItem>
                     <!-- Số điện thoại-->
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
+                        
 
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
