@@ -17,16 +17,23 @@ namespace QuanLyNhanSu.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        #region Thuộc tính quyền tài khoản
+        public enum QuyenTaiKhoan
+        {
+            TruongBoPhan_HCNS, NhanVien_HCNS, TruongBoPhanKhac, QuanTriHeThong
+        };
+        private int _QuyenTK;
+        public int QuyenTK { get => _QuyenTK; set { _QuyenTK = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Thuộc tính ẩn hiện grid
         public enum ChucNangNhanSu
         {
             TrangChu, NhanVien, PhongBan, NghiPhep, ChamCong, Luong, TuyenDung, ChiPhi, BaoCao, CaiDat
         };
         private int _ChucNangNS;
         public int ChucNangNS { get => _ChucNangNS; set { _ChucNangNS = value; OnPropertyChanged(); } }
-
-        private NHANVIEN _NhanVien;
-        public NHANVIEN NhanVien { get => _NhanVien; set { _NhanVien = value; OnPropertyChanged(); } }
-
+        #endregion
 
         #region Items Source
         private ObservableCollection<ImageSource> _ListAVTNhanVienNP1;
@@ -41,7 +48,11 @@ namespace QuanLyNhanSu.ViewModel
         public Dictionary<ImageSource, string> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
         #endregion
 
+        static public TAIKHOAN TaiKhoan { get; set; }
+
         #region Thuộc tính binding
+        private TAIKHOAN _TaiKhoanHienThi;
+        public TAIKHOAN TaiKhoanHienThi { get => _TaiKhoanHienThi; set { _TaiKhoanHienThi = value; OnPropertyChanged(); } }
         private int _SoLuongNghiPhep;
         public int SoLuongNghiPhep { get => _SoLuongNghiPhep; set { _SoLuongNghiPhep = value; OnPropertyChanged(); } }
         private int _SoLuongNhanVienMoi;
@@ -56,7 +67,11 @@ namespace QuanLyNhanSu.ViewModel
         public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
         #endregion
 
+        #region Command cài đặt quyền
+        public ICommand SetupQuyenCommand { get; set; }
+        #endregion
 
+        #region Command ẩn hiện grid
         public ICommand BtnTrangChuCommand { get; set; }
         public ICommand BtnNhanVienCommand { get; set; }
         public ICommand BtnPhongBanCommand { get; set; }
@@ -67,6 +82,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand BtnChiPhiCommand { get; set; }
         public ICommand BtnBaoCaoCommand { get; set; }
         public ICommand BtnCaiDatCommand { get; set; }
+        #endregion
 
         #region Đăng xuất
         public ICommand DangXuatCommand { get; set; }
@@ -74,7 +90,14 @@ namespace QuanLyNhanSu.ViewModel
 
         public MainViewModel()
         {
-           
+            SetupQuyenCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                SetupQuyenTaiKhoan();
+            });
+            
             #region Xử lý ẩn hiện Grid
             BtnTrangChuCommand = new RelayCommand<Object>((p) =>
             {
@@ -86,8 +109,13 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnNhanVienCommand = new RelayCommand<Grid>((p) =>
             {
-                //if (p == null || p.DataContext == null)
-                //    return false;
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                    
+
                 return true;
             }, (p) =>
             {
@@ -96,6 +124,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnPhongBanCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -104,6 +138,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnNghiPhepCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -112,6 +152,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnChamCongCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -120,6 +166,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnLuongCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK != (int)QuyenTaiKhoan.TruongBoPhan_HCNS)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -128,6 +180,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnTuyenDungCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -136,6 +194,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnChiPhiCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -144,6 +208,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnBaoCaoCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.QuanTriHeThong)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -152,6 +222,12 @@ namespace QuanLyNhanSu.ViewModel
 
             BtnCaiDatCommand = new RelayCommand<Grid>((p) =>
             {
+                if (QuyenTK == (int)QuyenTaiKhoan.TruongBoPhanKhac || QuyenTK == (int)QuyenTaiKhoan.NhanVien_HCNS)
+                {
+                    MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
@@ -169,7 +245,7 @@ namespace QuanLyNhanSu.ViewModel
 
             DangXuatCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn đăng xuất khỏi hệ thống không?", "Đăng xuất", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn đăng xuất khỏi hệ thống không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     p.Hide();
@@ -178,6 +254,26 @@ namespace QuanLyNhanSu.ViewModel
                     p.Close();
                 }
             });
+        }
+
+        public void SetupQuyenTaiKhoan()
+        {
+            if(TaiKhoan.QUYEN_TK == "Trưởng bộ phận Hành chính-Nhân sự")
+            {
+                QuyenTK = (int)QuyenTaiKhoan.TruongBoPhan_HCNS;
+            }
+            else if (TaiKhoan.QUYEN_TK == "Nhân viên hành chính nhân sự")
+            {
+                QuyenTK = (int)QuyenTaiKhoan.NhanVien_HCNS;
+            }
+            else if (TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                QuyenTK = (int)QuyenTaiKhoan.TruongBoPhanKhac;
+            }
+            else if (TaiKhoan.QUYEN_TK == "Quản trị hệ thống")
+            {
+                QuyenTK = (int)QuyenTaiKhoan.QuanTriHeThong;
+            }
         }
 
         public void LoadListAvatarNghiPhep1Ngay()

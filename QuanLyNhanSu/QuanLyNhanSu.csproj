@@ -171,8 +171,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ThongTinChamCong.cs" />
-    <Compile Include="Model\ThongTinKhoanLuong.cs" />
-    <Compile Include="Model\ThongTinKhoanNghiPhep.cs" />
     <Compile Include="Model\ThongTinTaikhoan.cs" />
     <Compile Include="Model\UNGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>

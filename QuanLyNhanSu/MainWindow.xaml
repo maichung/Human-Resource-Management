@@ -11,6 +11,12 @@
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="14"
         DataContext="{StaticResource MainVM}"
         Name="mainWindow">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding SetupQuyenCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"></ColumnDefinition>
@@ -32,7 +38,9 @@
                             <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <TextBlock Text="{Binding NhanVien.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
+                    <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
+                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.CHUCVU_NV}" HorizontalAlignment="Left" FontSize="12" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
                     <Button Content="Đăng xuất" HorizontalAlignment="Left" 
                                Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0">
@@ -802,7 +810,7 @@
                                     <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
+                                                <i:InvokeCommandAction Command="{Binding BtnCaiDatCommand}">
                                                 </i:InvokeCommandAction>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
@@ -1419,8 +1427,8 @@
 
                             <!-- Nội dung -->
                             <ListView Grid.Row="1" Name="listKhoanNghiPhep" DataContext="{StaticResource KhoanNghiPhepVM}"
-                                  ItemsSource="{Binding ListTTKhoanNghiPhep_MainWD}" 
-                                  SelectedItem="{Binding SelectedTTKhoanNghiPhep, Mode=OneWayToSource}">
+                                  ItemsSource="{Binding ListKhoanNghiPhep_MainWD}" 
+                                  SelectedItem="{Binding SelectedKhoanNghiPhep, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding HienThiCommand}">
@@ -1430,22 +1438,22 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}">
-                                            <GridViewColumnHeader Tag="NhanVien.HOTEN_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Họ tên nhân viên" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding LoaiNghiPhep.TEN_LNP}">
-                                            <GridViewColumnHeader Tag="LoaiNghiPhep.TEN_LNP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding LOAINGHIPHEP.TEN_LNP}">
+                                            <GridViewColumnHeader Tag="LOAINGHIPHEP.TEN_LNP" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Loại nghỉ phép" Width="300">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding SoNgayNghi}">
-                                            <GridViewColumnHeader Tag="SoNgayNghi" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding SONGAYNGHI_KNP}">
+                                            <GridViewColumnHeader Tag="SONGAYNGHI_KNP" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Số ngày nghỉ" Width="300">
@@ -2023,8 +2031,8 @@
 
                             <!-- Nội dung -->
                             <ListView Grid.Row="1" DataContext="{StaticResource KhoanLuongVM}"
-                                  ItemsSource="{Binding ListTTKhoanLuong_MainWD}" 
-                                  SelectedItem="{Binding SelectedTTKhoanLuong, Mode=OneWayToSource}">
+                                  ItemsSource="{Binding ListKhoanLuong_MainWD}" 
+                                  SelectedItem="{Binding SelectedKhoanLuong, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding HienThiCommand}">
@@ -2034,22 +2042,22 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}">
-                                            <GridViewColumnHeader Tag="NhanVien.HOTEN_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Họ tên nhân viên" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding LoaiLuong.TEN_LL}">
-                                            <GridViewColumnHeader Tag="LoaiLuong.TEN_LL" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding LOAILUONG.TEN_LL}">
+                                            <GridViewColumnHeader Tag="LOAILUONG.TEN_LL" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Loại lương" Width="300">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding SoTien, StringFormat='N0'}">
-                                            <GridViewColumnHeader Tag="SoTien" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding SOTIEN_KL, StringFormat='N0'}">
+                                            <GridViewColumnHeader Tag="SOTIEN_KL" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Số tiền" Width="300">

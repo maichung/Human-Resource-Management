@@ -20,7 +20,6 @@ namespace QuanLyNhanSu.ViewModel
 
         #region  Thuộc tính khác
         public bool ktDangNhap { get; set; }
-        public NHANVIEN NVDangNhap { get; set; }
 
         public ICommand DangNhapCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
@@ -43,14 +42,11 @@ namespace QuanLyNhanSu.ViewModel
         void DangNhap(Window p)
         {
             string matKhauMaHoa = MD5Hash(Base64Encode(MatKhau));
-            var taiKhoan = DataProvider.Ins.model.TAIKHOAN.Where(x => x.TENDANGNHAP_TK == TenDangNhap && x.MATKHAU_TK == matKhauMaHoa);
+            var taiKhoan = DataProvider.Ins.model.TAIKHOAN.Where(x => x.TENDANGNHAP_TK == TenDangNhap && x.MATKHAU_TK == matKhauMaHoa).SingleOrDefault();
             
-            if (taiKhoan.Count() > 0)
-            {
-              
+            if (taiKhoan != null)
+            {              
                 ktDangNhap = true;
-                int maNV = taiKhoan.SingleOrDefault().MA_NV;
-                NVDangNhap = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == maNV).SingleOrDefault();
             }
             else
             {
@@ -61,13 +57,14 @@ namespace QuanLyNhanSu.ViewModel
             if (ktDangNhap)
             {
                 p.Hide();
+                MainViewModel.TaiKhoan = taiKhoan;
                 MainWindow mainWindow = new MainWindow();
                 if (mainWindow.DataContext == null)
                     return;
                 var mainVM = mainWindow.DataContext as MainViewModel;
                 mainVM.ChucNangNS = (int)MainViewModel.ChucNangNhanSu.TrangChu;
-                mainVM.AvatarSource = NhanVienViewModel.GetImage(NVDangNhap.AVATAR_NV);
-                mainVM.NhanVien = NVDangNhap;
+                mainVM.AvatarSource = NhanVienViewModel.GetImage(taiKhoan.NHANVIEN.AVATAR_NV);
+                mainVM.TaiKhoanHienThi = taiKhoan;
                 mainWindow.ShowDialog();
                 p.Close();
             }
