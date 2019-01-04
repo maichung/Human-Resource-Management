@@ -58,13 +58,14 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand LuuCommand { get; set; }
         public ICommand ChangeCmbCommand { get; set; }
+        public ICommand DoiNgayChamCongCommand { get; set; }        
         #endregion
 
         #region Thuộc tính khác
         private string _SearchNhanVien;
         public string SearchNhanVien { get => _SearchNhanVien; set { _SearchNhanVien = value; OnPropertyChanged(); } }
         public bool sort;
-        private ObservableCollection<ThongTinChamCong> tempListTTChamCong_1NV;
+        private ObservableCollection<ThongTinChamCong> backupListTTChamCong_1NV;
         #endregion
 
         public ChamCongViewModel()
@@ -80,10 +81,24 @@ namespace QuanLyNhanSu.ViewModel
             int[] DSThang = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
             ListThang = new ObservableCollection<int>(DSThang);
 
-            #region Huỷ command
+            #region ChangeCmb command
             ChangeCmbCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 LoadListTTChamCong_1NV();
+            });
+            #endregion
+
+            #region Đổi ngày chấm công command
+            DoiNgayChamCongCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if(NgayChamCong.Value < DateTime.Now.Date)
+                {
+                    IsEditable = false;
+                }
+                else
+                {
+                    IsEditable = true;
+                }
             });
             #endregion
 
@@ -114,7 +129,7 @@ namespace QuanLyNhanSu.ViewModel
                 AvatarSource = NhanVienViewModel.GetImage(SelectedNhanVien.AVATAR_NV);                
                 SelectedNam = DateTime.Now.Year;
                 SelectedThang = DateTime.Now.Month;
-                LoadListTTChamCong_1NV();                
+                LoadListTTChamCong_1NV();
 
                 ChiTietChamCongWindow ctccWindow = new ChiTietChamCongWindow();
                 ctccWindow.ShowDialog();
@@ -266,7 +281,7 @@ namespace QuanLyNhanSu.ViewModel
                     //Duyệt danh sách tìm ra object nào trong danh sách có sự thay đổi
                     foreach(ThongTinChamCong item in ListTTChamCong_1NV)
                     {
-                        foreach (ThongTinChamCong temp in tempListTTChamCong_1NV)
+                        foreach (ThongTinChamCong temp in backupListTTChamCong_1NV)
                         {
                             if(item.NgayChamCong.Value == temp.NgayChamCong.Value)
                             {
@@ -313,7 +328,7 @@ namespace QuanLyNhanSu.ViewModel
                                 {
                                     var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
                                                                                              x.MA_LCC == 2 &&
-                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
+                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.GioKetThuc.Value).SingleOrDefault();
                                     //Xóa
                                     if (item.TangCa == false)
                                     {
@@ -348,22 +363,25 @@ namespace QuanLyNhanSu.ViewModel
                                 //Sửa
                                 else
                                 {
-                                    if(item.GioBatDau != temp.GioBatDau)
+                                    if(item.TangCa == true)
                                     {
-                                        var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
-                                                                                             x.MA_LCC == 2 &&
-                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
-                                        ccn.THOIGIANBATDAU_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioBatDau.Value.Hour, item.GioBatDau.Value.Minute, item.GioBatDau.Value.Second);
-                                        DataProvider.Ins.model.SaveChanges();
-                                    }
-                                    if (item.GioKetThuc != temp.GioKetThuc)
-                                    {
-                                        var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
-                                                                                             x.MA_LCC == 2 &&
-                                                                                             x.THOIGIANKETTHUC_CCN.Value == item.NgayChamCong.Value).SingleOrDefault();
-                                        ccn.THOIGIANKETTHUC_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioKetThuc.Value.Hour, item.GioKetThuc.Value.Minute, item.GioKetThuc.Value.Second);
-                                        DataProvider.Ins.model.SaveChanges();
-                                    }
+                                        if (item.GioBatDau != temp.GioBatDau)
+                                        {
+                                            var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
+                                                                                                 x.MA_LCC == 2 &&
+                                                                                                 x.THOIGIANKETTHUC_CCN.Value == item.GioKetThuc.Value).SingleOrDefault();
+                                            ccn.THOIGIANBATDAU_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioBatDau.Value.Hour, item.GioBatDau.Value.Minute, item.GioBatDau.Value.Second);
+                                            DataProvider.Ins.model.SaveChanges();
+                                        }
+                                        if (item.GioKetThuc != temp.GioKetThuc)
+                                        {
+                                            var ccn = DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_NV == SelectedNhanVien.MA_NV &&
+                                                                                                 x.MA_LCC == 2 &&
+                                                                                                 x.THOIGIANKETTHUC_CCN.Value == item.GioKetThuc.Value).SingleOrDefault();
+                                            ccn.THOIGIANKETTHUC_CCN = new DateTime(item.NgayChamCong.Value.Year, item.NgayChamCong.Value.Month, item.NgayChamCong.Value.Day, item.GioKetThuc.Value.Hour, item.GioKetThuc.Value.Minute, item.GioKetThuc.Value.Second);
+                                            DataProvider.Ins.model.SaveChanges();
+                                        }
+                                    }                                    
                                 }
                                 break;
                             }
@@ -384,10 +402,22 @@ namespace QuanLyNhanSu.ViewModel
             ListNhanVien = new ObservableCollection<NHANVIEN>();
 
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
-                         where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
-                                where ccn.MA_NV == nv.MA_NV
-                                select ccn).FirstOrDefault() != null
-                         select nv;
+                             where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
+                                    where ccn.MA_NV == nv.MA_NV
+                                    select ccn).FirstOrDefault() != null
+                             select nv;
+
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                foreach (NHANVIEN item in listNhanVien)
+                {
+                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
+                    {
+                        ListNhanVien.Add(item);
+                    }
+                }
+                return;
+            }
 
             foreach (NHANVIEN item in listNhanVien)
             {
@@ -414,6 +444,18 @@ namespace QuanLyNhanSu.ViewModel
                                    TangCa = false
                                };
 
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                foreach (ThongTinChamCong item in listTTChamCong_ALLNV)
+                {
+                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.NhanVien.MA_PB)
+                    {
+                        ListTTChamCong_ALLNV.Add(item);
+                    }
+                }
+                return;
+            }
+
             foreach (ThongTinChamCong item in listTTChamCong_ALLNV)
             {
                 ListTTChamCong_ALLNV.Add(item);
@@ -424,13 +466,30 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListChamCong_1NV = new ObservableCollection<CHAMCONGNGAY>();
             ListTTChamCong_1NV = new ObservableCollection<ThongTinChamCong>();
-            tempListTTChamCong_1NV = new ObservableCollection<ThongTinChamCong>();
+            backupListTTChamCong_1NV = new ObservableCollection<ThongTinChamCong>();
 
             var listChamCong_1NV = from ccn in DataProvider.Ins.model.CHAMCONGNGAY
                                    where ccn.MA_NV == SelectedNhanVien.MA_NV &&
                                          ccn.THOIGIANBATDAU_CCN.Value.Year == SelectedNam &&
                                          ccn.THOIGIANBATDAU_CCN.Value.Month == SelectedThang
                                    select ccn;
+            //Tạo ngày đầu tiên trong tháng để khi lấy ngày cuối của tháng ta chỉ cần cộng 1 tháng và trừ 1 ngày
+            DateTime firstDayOfMonth = new DateTime(SelectedNam, SelectedThang, 1);
+            if (listChamCong_1NV.Count() < 1)
+            {                
+                //Duyệt từng ngày trong tháng
+                for (var i = 1; i <= firstDayOfMonth.AddMonths(1).AddDays(-1).Day; i++)
+                {
+                    ListTTChamCong_1NV.Add(new ThongTinChamCong()
+                    {
+                        NhanVien = SelectedNhanVien,
+                        HanhChinh = false,
+                        TangCa = false,
+                        NgayChamCong = new DateTime(SelectedNam, SelectedThang, i)
+                    });
+                }
+                return;
+            }
 
             foreach (CHAMCONGNGAY item in listChamCong_1NV)
             {
@@ -439,6 +498,7 @@ namespace QuanLyNhanSu.ViewModel
 
             //Kiểm tra xem danh sách chấm công đã được thêm thông tin chấm công ngày mà nhân viên có cả 2 loại
             bool isAdd;
+            //Lấy ra danh sách chấm công của nhân viên trong tháng/năm được chọn (chỉ có chấm công)
             for (var i = 0; i < ListChamCong_1NV.Count(); i++)
             {
                 isAdd = false;
@@ -455,16 +515,7 @@ namespace QuanLyNhanSu.ViewModel
                                 TangCa = true,
                                 GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
                                 GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
-                                NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
-                            });
-                            tempListTTChamCong_1NV.Add(new ThongTinChamCong
-                            {
-                                NhanVien = SelectedNhanVien,
-                                HanhChinh = true,
-                                TangCa = true,
-                                GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
-                                GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
-                                NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                                NgayChamCong = new DateTime(SelectedNam, SelectedThang, ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value.Day, 17, 0, 0)
                             });
                         }
                         else if (ListChamCong_1NV[j].MA_LCC == 2)
@@ -476,16 +527,7 @@ namespace QuanLyNhanSu.ViewModel
                                 TangCa = true,
                                 GioBatDau = ListChamCong_1NV[j].THOIGIANBATDAU_CCN.Value,
                                 GioKetThuc = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value,
-                                NgayChamCong = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value
-                            });
-                            tempListTTChamCong_1NV.Add(new ThongTinChamCong
-                            {
-                                NhanVien = SelectedNhanVien,
-                                HanhChinh = true,
-                                TangCa = true,
-                                GioBatDau = ListChamCong_1NV[j].THOIGIANBATDAU_CCN.Value,
-                                GioKetThuc = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value,
-                                NgayChamCong = ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value
+                                NgayChamCong = new DateTime(SelectedNam, SelectedThang, ListChamCong_1NV[j].THOIGIANKETTHUC_CCN.Value.Day, 17, 0, 0)
                             });
                         }
                         isAdd = true;
@@ -505,13 +547,6 @@ namespace QuanLyNhanSu.ViewModel
                             TangCa = false,
                             NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
                         });
-                        tempListTTChamCong_1NV.Add(new ThongTinChamCong
-                        {
-                            NhanVien = SelectedNhanVien,
-                            HanhChinh = true,
-                            TangCa = false,
-                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
-                        });
                     }
                     else if (ListChamCong_1NV[i].MA_LCC == 2)
                     {
@@ -524,17 +559,47 @@ namespace QuanLyNhanSu.ViewModel
                             GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
                             NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
                         });
-                        tempListTTChamCong_1NV.Add(new ThongTinChamCong
+                    }
+                }                
+            }
+
+            //Kiểm tra xem ngày đó nhân viên đã được chấm công hay chưa
+            bool isChamCong;
+            //Lấy ra danh sách chấm công của nhân viên trong tháng/năm được chọn (tất cả ngày có chấm công hoặc không)
+            if (ListTTChamCong_1NV.Count() <= 15)
+            {
+                for (var i = 1; i <= DateTime.DaysInMonth(SelectedNam, SelectedThang); i++)
+                {
+                    isChamCong = false;
+                    foreach (ThongTinChamCong item in ListTTChamCong_1NV)
+                    {
+                        if (item.NgayChamCong.Value.Day == i)
+                        {
+                            isChamCong = true;
+                            break;
+                        }
+                            
+                    }
+
+                    if(isChamCong == false)
+                    {
+                        ListTTChamCong_1NV.Add(new ThongTinChamCong()
                         {
                             NhanVien = SelectedNhanVien,
                             HanhChinh = false,
-                            TangCa = true,
-                            GioBatDau = ListChamCong_1NV[i].THOIGIANBATDAU_CCN.Value,
-                            GioKetThuc = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value,
-                            NgayChamCong = ListChamCong_1NV[i].THOIGIANKETTHUC_CCN.Value
+                            TangCa = false,
+                            NgayChamCong = new DateTime(SelectedNam, SelectedThang, i)
                         });
                     }
-                }                
+                }
+            }
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTTChamCong_1NV);
+            view.SortDescriptions.Clear();
+            view.SortDescriptions.Add(new SortDescription("NgayChamCong", ListSortDirection.Ascending));
+            foreach(ThongTinChamCong item in ListTTChamCong_1NV)
+            {
+                backupListTTChamCong_1NV.Add(new ThongTinChamCong(item));
             }
         }
     }

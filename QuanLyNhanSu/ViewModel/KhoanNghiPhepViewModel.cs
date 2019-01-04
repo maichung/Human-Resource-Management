@@ -16,12 +16,12 @@ namespace QuanLyNhanSu.ViewModel
     class KhoanNghiPhepViewModel : BaseViewModel
     {
         #region List item source
-        private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_MainWD;
-        public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_MainWD { get => _ListTTKhoanNghiPhep_MainWD; set { _ListTTKhoanNghiPhep_MainWD = value; OnPropertyChanged(); } }
-        private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_KNPWD;
-        public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_KNPWD { get => _ListTTKhoanNghiPhep_KNPWD; set { _ListTTKhoanNghiPhep_KNPWD = value; OnPropertyChanged(); } }
-        private ObservableCollection<ThongTinKhoanNghiPhep> _ListTTKhoanNghiPhep_CapNhat;
-        public ObservableCollection<ThongTinKhoanNghiPhep> ListTTKhoanNghiPhep_CapNhat { get => _ListTTKhoanNghiPhep_CapNhat; set { _ListTTKhoanNghiPhep_CapNhat = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANNGHIPHEP> _ListKhoanNghiPhep_MainWD;
+        public ObservableCollection<KHOANNGHIPHEP> ListKhoanNghiPhep_MainWD { get => _ListKhoanNghiPhep_MainWD; set { _ListKhoanNghiPhep_MainWD = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANNGHIPHEP> _ListKhoanNghiPhep_KNPWD;
+        public ObservableCollection<KHOANNGHIPHEP> ListKhoanNghiPhep_KNPWD { get => _ListKhoanNghiPhep_KNPWD; set { _ListKhoanNghiPhep_KNPWD = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANNGHIPHEP> _ListKhoanNghiPhep_CapNhat;
+        public ObservableCollection<KHOANNGHIPHEP> ListKhoanNghiPhep_CapNhat { get => _ListKhoanNghiPhep_CapNhat; set { _ListKhoanNghiPhep_CapNhat = value; OnPropertyChanged(); } }
         #endregion
 
         #region Combobox item source
@@ -34,8 +34,8 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Thuộc tính binding
-        private ThongTinKhoanNghiPhep _SelectedTTKhoanNghiPhep;
-        public ThongTinKhoanNghiPhep SelectedTTKhoanNghiPhep { get => _SelectedTTKhoanNghiPhep; set { _SelectedTTKhoanNghiPhep = value; OnPropertyChanged(); } }
+        private KHOANNGHIPHEP _SelectedKhoanNghiPhep;
+        public KHOANNGHIPHEP SelectedKhoanNghiPhep { get => _SelectedKhoanNghiPhep; set { _SelectedKhoanNghiPhep = value; OnPropertyChanged(); } }
         private bool _IsEditable;
         public bool IsEditable { get => _IsEditable; set { _IsEditable = value; OnPropertyChanged(); } }
         private bool _IsSelectNV;
@@ -43,8 +43,8 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Thuộc tính khác
-        private string _SearchTTKhoanNghiPhep;
-        public string SearchTTKhoanNghiPhep { get => _SearchTTKhoanNghiPhep; set { _SearchTTKhoanNghiPhep = value; OnPropertyChanged(); } }
+        private string _SearchKhoanNghiPhep;
+        public string SearchKhoanNghiPhep { get => _SearchKhoanNghiPhep; set { _SearchKhoanNghiPhep = value; OnPropertyChanged(); } }
         public bool sort;
         #endregion
 
@@ -61,36 +61,38 @@ namespace QuanLyNhanSu.ViewModel
         public KhoanNghiPhepViewModel()
         {
             //Màn hình chính tab Khoản nghỉ phép
-            LoadTTKhoanNghiPhep_MainWD();            
+            LoadListKhoanNghiPhep_MainWD();
 
-            //Tạo mới command
+            #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 IsEditable = true;
                 IsSelectNV = true;
-                SelectedTTKhoanNghiPhep = null;
-                LoadTTKhoanNghiPhep_KNPWD();
+                SelectedKhoanNghiPhep = null;
+                LoadListKhoanNghiPhep_KNPWD();
                 LoadListNhanVien();
 
                 KhoanNghiPhepWindow khoanNghiPhepWindow = new KhoanNghiPhepWindow();
                 khoanNghiPhepWindow.ShowDialog();
             });
+            #endregion
 
-            //Hiển thị Command
-            HienThiCommand = new RelayCommand<Object>((p) => { return SelectedTTKhoanNghiPhep == null ? false : true; }, (p) =>
+            #region Hiển thị Command
+            HienThiCommand = new RelayCommand<Object>((p) => { return SelectedKhoanNghiPhep == null ? false : true; }, (p) =>
             {
-                LoadTTKhoanNghiPhep_KNPWD();
+                LoadListKhoanNghiPhep_KNPWD();
                 LoadListNhanVien();
                 IsEditable = false;
                 IsSelectNV = false;
-                SelectedCmbNV = SelectedTTKhoanNghiPhep.NhanVien;
+                SelectedCmbNV = SelectedKhoanNghiPhep.NHANVIEN;
                 
 
                 KhoanNghiPhepWindow khoanNghiPhepWindow = new KhoanNghiPhepWindow();
                 khoanNghiPhepWindow.ShowDialog();
             });
+            #endregion
 
-            // Lưu command
+            #region Lưu command
             LuuCommand = new RelayCommand<Window>((p) => {
                 if (SelectedCmbNV == null)
                 {
@@ -101,15 +103,15 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                if (SelectedTTKhoanNghiPhep == null)
+                if (SelectedKhoanNghiPhep == null)
                 {
-                    foreach (ThongTinKhoanNghiPhep item in ListTTKhoanNghiPhep_KNPWD)
+                    foreach (KHOANNGHIPHEP item in ListKhoanNghiPhep_KNPWD)
                     {
                         var KhoanNghiPhepMoi = new KHOANNGHIPHEP()
                         {
                             MA_NV = SelectedCmbNV.MA_NV,
-                            MA_LNP = item.LoaiNghiPhep.MA_LNP,
-                            SONGAYNGHI_KNP = item.SoNgayNghi
+                            MA_LNP = item.MA_LNP,
+                            SONGAYNGHI_KNP = item.SONGAYNGHI_KNP
                         };
 
                         DataProvider.Ins.model.KHOANNGHIPHEP.Add(KhoanNghiPhepMoi);
@@ -120,29 +122,29 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else
                 {
-                    var listKhoanNghiPhepSua = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedTTKhoanNghiPhep.NhanVien.MA_NV);
-                    foreach (KHOANNGHIPHEP knp in listKhoanNghiPhepSua)
+                    var listKhoanNghiPhepSua = DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.MA_NV == SelectedKhoanNghiPhep.MA_NV);
+                    foreach (KHOANNGHIPHEP knpCu in listKhoanNghiPhepSua)
                     {
-                        foreach (ThongTinKhoanNghiPhep ttknp in ListTTKhoanNghiPhep_KNPWD)
+                        foreach (KHOANNGHIPHEP knpMoi in ListKhoanNghiPhep_KNPWD)
                         {
-                            if (knp.MA_LNP == ttknp.LoaiNghiPhep.MA_LNP)
+                            if (knpCu.MA_LNP == knpMoi.MA_LNP)
                             {
-                                knp.SONGAYNGHI_KNP = ttknp.SoNgayNghi;
+                                knpCu.SONGAYNGHI_KNP = knpMoi.SONGAYNGHI_KNP;
                                 break;
                             }
                         }
                     }
                     DataProvider.Ins.model.SaveChanges();
 
-                    if (ListTTKhoanNghiPhep_CapNhat != null)
+                    if (ListKhoanNghiPhep_CapNhat != null)
                     {
-                        foreach (ThongTinKhoanNghiPhep item in ListTTKhoanNghiPhep_CapNhat)
+                        foreach (KHOANNGHIPHEP item in ListKhoanNghiPhep_CapNhat)
                         {
                             var KhoanNghiPhepMoi = new KHOANNGHIPHEP()
                             {
-                                MA_NV = SelectedTTKhoanNghiPhep.NhanVien.MA_NV,
-                                MA_LNP = item.LoaiNghiPhep.MA_LNP,
-                                SONGAYNGHI_KNP = item.SoNgayNghi
+                                MA_NV = SelectedKhoanNghiPhep.MA_NV,
+                                MA_LNP = item.MA_LNP,
+                                SONGAYNGHI_KNP = item.SONGAYNGHI_KNP
                             };
 
                             DataProvider.Ins.model.KHOANNGHIPHEP.Add(KhoanNghiPhepMoi);
@@ -152,11 +154,13 @@ namespace QuanLyNhanSu.ViewModel
 
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                LoadTTKhoanNghiPhep_MainWD();
+
+                LoadListKhoanNghiPhep_MainWD();
                 p.Close();
             });
+            #endregion
 
-            //Hủy command
+            #region Hủy command
             HuyCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
@@ -167,36 +171,46 @@ namespace QuanLyNhanSu.ViewModel
                     p.Close();
                 }
             });
+            #endregion
 
-            //Sửa Command
-            SuaCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            #region Sửa Command
+            SuaCommand = new RelayCommand<Object>((p) => {
+                if(SelectedKhoanNghiPhep == null)
+                {
+                    MessageBox.Show("Đang tạo mới không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                return true;
+            }, (p) =>
             {
                 IsEditable = true;
                 IsSelectNV = false;
             });
+            #endregion
 
-            //Search command
+            #region Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
-                if (string.IsNullOrEmpty(SearchTTKhoanNghiPhep))
+                if (string.IsNullOrEmpty(SearchKhoanNghiPhep))
                 {
-                    CollectionViewSource.GetDefaultView(ListTTKhoanNghiPhep_MainWD).Filter = (all) => { return true; };
+                    CollectionViewSource.GetDefaultView(ListKhoanNghiPhep_MainWD).Filter = (all) => { return true; };
                 }
                 else
                 {
-                    CollectionViewSource.GetDefaultView(ListTTKhoanNghiPhep_MainWD).Filter = (searchTTKhoanNghiPhep) =>
+                    CollectionViewSource.GetDefaultView(ListKhoanNghiPhep_MainWD).Filter = (searchKhoanNghiPhep) =>
                     {
-                        return (searchTTKhoanNghiPhep as ThongTinKhoanNghiPhep).NhanVien.HOTEN_NV.IndexOf(SearchTTKhoanNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                               (searchTTKhoanNghiPhep as ThongTinKhoanNghiPhep).LoaiNghiPhep.TEN_LNP.IndexOf(SearchTTKhoanNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
+                        return (searchKhoanNghiPhep as KHOANNGHIPHEP).NHANVIEN.HOTEN_NV.IndexOf(SearchKhoanNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                               (searchKhoanNghiPhep as KHOANNGHIPHEP).LOAINGHIPHEP.TEN_LNP.IndexOf(SearchKhoanNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
                 }
 
             });
+            #endregion
 
-            //Sort command
+            #region Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTTKhoanNghiPhep_MainWD);
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanNghiPhep_MainWD);
                 if (sort)
                 {
                     view.SortDescriptions.Clear();
@@ -209,13 +223,12 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
         }
 
         void LoadListNhanVien()
         {
-            ListNhanVien = null;           
-
-            if(SelectedTTKhoanNghiPhep == null)
+            if(SelectedKhoanNghiPhep == null)
             {
                 ListNhanVien = new ObservableCollection<NHANVIEN>();
                 var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
@@ -225,6 +238,18 @@ namespace QuanLyNhanSu.ViewModel
                                          .FirstOrDefault() == null
                                    select nv;
 
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+                {
+                    foreach (NHANVIEN item in listNhanVien)
+                    {
+                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
+                        {
+                            ListNhanVien.Add(item);
+                        }
+                    }
+                    return;
+                }
+
                 foreach (NHANVIEN item in listNhanVien)
                 {
                     ListNhanVien.Add(item);
@@ -232,98 +257,98 @@ namespace QuanLyNhanSu.ViewModel
             }
             else
             {
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+                {
+                    ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+                    return;
+                }
+
                 ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
             }
-
-
         }
 
-        public void LoadTTKhoanNghiPhep_KNPWD()
+        public void LoadListKhoanNghiPhep_KNPWD()
         {
-            ListTTKhoanNghiPhep_KNPWD = null;
-            ListTTKhoanNghiPhep_CapNhat = null;
-            ListTTKhoanNghiPhep_KNPWD = new ObservableCollection<ThongTinKhoanNghiPhep>();
-            if(SelectedTTKhoanNghiPhep == null)
+            ListKhoanNghiPhep_CapNhat = null;
+            ListKhoanNghiPhep_KNPWD = new ObservableCollection<KHOANNGHIPHEP>();
+            if(SelectedKhoanNghiPhep == null)
             {
                 var listLoaiNghiPhep = from lnp in DataProvider.Ins.model.LOAINGHIPHEP
-                                       select new ThongTinKhoanNghiPhep()
-                                       {
-                                           NhanVien = null,
-                                           LoaiNghiPhep = lnp,
-                                           SoNgayNghi = 0
-                                       };
-                foreach (ThongTinKhoanNghiPhep item in listLoaiNghiPhep)
+                                       select lnp;
+
+                foreach (LOAINGHIPHEP item in listLoaiNghiPhep)
                 {
-                    ListTTKhoanNghiPhep_KNPWD.Add(item);
+                    ListKhoanNghiPhep_KNPWD.Add(new KHOANNGHIPHEP()
+                    {
+                        LOAINGHIPHEP = item,
+                        MA_LNP = item.MA_LNP,
+                        SONGAYNGHI_KNP = 0
+                    });
                 }
             }
             else
             {
                 var listLoaiNghiPhepNV = from knp in DataProvider.Ins.model.KHOANNGHIPHEP
-                                       join nv in DataProvider.Ins.model.NHANVIEN
-                                       on knp.MA_NV equals nv.MA_NV
-                                       join lnp in DataProvider.Ins.model.LOAINGHIPHEP
-                                       on knp.MA_LNP equals lnp.MA_LNP
-                                       where nv.MA_NV == SelectedTTKhoanNghiPhep.NhanVien.MA_NV
-                                       select new ThongTinKhoanNghiPhep()
-                                       {
-                                           NhanVien = nv,
-                                           LoaiNghiPhep = lnp,
-                                           SoNgayNghi = (int)knp.SONGAYNGHI_KNP
-                                       };
+                                         where knp.MA_NV == SelectedKhoanNghiPhep.MA_NV
+                                         select knp;
 
-                foreach (ThongTinKhoanNghiPhep item in listLoaiNghiPhepNV)
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
                 {
-                    ListTTKhoanNghiPhep_KNPWD.Add(item);
+                    foreach (KHOANNGHIPHEP item in listLoaiNghiPhepNV)
+                    {
+                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.NHANVIEN.MA_PB)
+                        {
+                            ListKhoanNghiPhep_KNPWD.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (KHOANNGHIPHEP item in listLoaiNghiPhepNV)
+                    {
+                        ListKhoanNghiPhep_KNPWD.Add(item);
+                    }
                 }
 
                 //Xử lý việc có thêm loại nghỉ phép cho nhân viên khi nhân viên đã được tạo khoản nghỉ phép
                 var listLoaiNghiPhep = from lnp in DataProvider.Ins.model.LOAINGHIPHEP
                                        where (from lnpNV in listLoaiNghiPhepNV
-                                              where lnp.MA_LNP == lnpNV.LoaiNghiPhep.MA_LNP
+                                              where lnp.MA_LNP == lnpNV.MA_LNP
                                               select lnp).FirstOrDefault() == null
-                                       select new ThongTinKhoanNghiPhep()
-                                       {
-                                           NhanVien = null,
-                                           LoaiNghiPhep = lnp,
-                                           SoNgayNghi = 0
-                                       };
+                                       select lnp;
 
                 if (listLoaiNghiPhep.Count() > 0)
                 {
-                    ListTTKhoanNghiPhep_CapNhat = new ObservableCollection<ThongTinKhoanNghiPhep>();
-                    foreach (ThongTinKhoanNghiPhep item in listLoaiNghiPhep)
+                    ListKhoanNghiPhep_CapNhat = new ObservableCollection<KHOANNGHIPHEP>();
+                    foreach (LOAINGHIPHEP item in listLoaiNghiPhep)
                     {
-                        ListTTKhoanNghiPhep_KNPWD.Add(item);
-                        ListTTKhoanNghiPhep_CapNhat.Add(item);
+                        KHOANNGHIPHEP knp = new KHOANNGHIPHEP()
+                        {
+                            MA_LNP = item.MA_LNP,
+                            SONGAYNGHI_KNP = 0
+                        };
+                        ListKhoanNghiPhep_KNPWD.Add(knp);
+                        ListKhoanNghiPhep_CapNhat.Add(knp);
                     }
                 }
             }
             
         }
 
-        public void LoadTTKhoanNghiPhep_MainWD()
+        public void LoadListKhoanNghiPhep_MainWD()
         {
-            ListTTKhoanNghiPhep_MainWD = new ObservableCollection<ThongTinKhoanNghiPhep>();
-            var listKhoanNghiPhep = from knp in DataProvider.Ins.model.KHOANNGHIPHEP
-                                    join nv in DataProvider.Ins.model.NHANVIEN
-                                    on knp.MA_NV equals nv.MA_NV
-                                    join lnp in DataProvider.Ins.model.LOAINGHIPHEP
-                                    on knp.MA_LNP equals lnp.MA_LNP
-                                    select new ThongTinKhoanNghiPhep()
-                                    {
-                                        NhanVien = nv,
-                                        LoaiNghiPhep = lnp,
-                                        SoNgayNghi = (int)knp.SONGAYNGHI_KNP
-                                    };
-            foreach (ThongTinKhoanNghiPhep item in listKhoanNghiPhep)
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
             {
-                ListTTKhoanNghiPhep_MainWD.Add(item);
+                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+            }
+            else
+            {
+                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP);
             }
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTTKhoanNghiPhep_MainWD);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanNghiPhep_MainWD);
             view.GroupDescriptions.Clear();
-            view.GroupDescriptions.Add(new PropertyGroupDescription("NhanVien.HOTEN_NV"));
+            view.GroupDescriptions.Add(new PropertyGroupDescription("NHANVIEN.HOTEN_NV"));
         }
     }
 }

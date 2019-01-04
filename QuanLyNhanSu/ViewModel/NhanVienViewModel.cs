@@ -226,8 +226,7 @@ namespace QuanLyNhanSu.ViewModel
             #region Khởi tạo
             LoadListNhanVien();
             string[] DSGioiTinh = new string[] { "Nam", "Nữ" };
-            ListGioiTinh = new ObservableCollection<string>(DSGioiTinh);
-            ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
+            ListGioiTinh = new ObservableCollection<string>(DSGioiTinh);            
             #endregion
 
             #region Xử lý ẩn hiện tab
@@ -263,6 +262,7 @@ namespace QuanLyNhanSu.ViewModel
                   IsEditable = true;
                   ResetControls();
                   LoadListLichSuNhanVien();
+                  LoadListPhongBan();
 
                   NhanVienWindow nhanVienWindow = new NhanVienWindow();
                   nhanVienWindow.ShowDialog();
@@ -276,6 +276,7 @@ namespace QuanLyNhanSu.ViewModel
             }, (p) =>
             {
                 LoadListLichSuNhanVien();
+                LoadListPhongBan();
                 IsEditable = false;
 
                 HoTen = SelectedNhanVien.HOTEN_NV;
@@ -478,7 +479,6 @@ namespace QuanLyNhanSu.ViewModel
                 if (result == MessageBoxResult.Yes)
                 {
                     var NhanVienSua = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_NV == SelectedNhanVien.MA_NV).SingleOrDefault();
-
                     NhanVienSua.TRANGTHAI_NV = false;
 
                     DataProvider.Ins.model.SaveChanges();
@@ -526,7 +526,8 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     CollectionViewSource.GetDefaultView(ListLichSuNhanVien).Filter = (searchLichSuNV) =>
                     {
-                        return (searchLichSuNV as LICHSUNHANVIEN).MOTA_LSNV.IndexOf(SearchLichSuNV, StringComparison.OrdinalIgnoreCase) >= 0;
+                        return (searchLichSuNV as LICHSUNHANVIEN).MOTA_LSNV.IndexOf(SearchLichSuNV, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        (searchLichSuNV as LICHSUNHANVIEN).THOIGIAN_LSNV.ToString().IndexOf(SearchLichSuNV, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
                 }
             });
@@ -537,6 +538,11 @@ namespace QuanLyNhanSu.ViewModel
         public void LoadListNhanVien()
         {
             ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
+        }
+
+        public void LoadListPhongBan()
+        {
+            ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
         }
 
         public void LoadListLichSuNhanVien()

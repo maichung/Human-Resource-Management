@@ -228,7 +228,7 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     CollectionViewSource.GetDefaultView(ListNghiPhep).Filter = (searchNghiPhep) =>
                     {
-                        return (searchNghiPhep as NGHIPHEP).MA_NV.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        return (searchNghiPhep as NGHIPHEP).NHANVIEN.HOTEN_NV.IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
                                (searchNghiPhep as NGHIPHEP).NGAYBATDAU_NP.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0 ||
                                (searchNghiPhep as NGHIPHEP).NGAYKETTHUC_NP.ToString().IndexOf(SearchNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
@@ -355,7 +355,6 @@ namespace QuanLyNhanSu.ViewModel
 
                             ResetControls();
                             p.Close();
-
                         }
                         catch (Exception e)
                         {
@@ -363,7 +362,6 @@ namespace QuanLyNhanSu.ViewModel
                             transactions.Rollback();
                         }
                         LoadListNghiPhep();
-
                     }
                 }
             });

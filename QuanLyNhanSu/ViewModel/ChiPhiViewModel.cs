@@ -68,6 +68,8 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand XoaCommand { get; set; }
+
+        public ICommand ClosedCommand { get; set; }
         #endregion
 
         public ChiPhiViewModel()
@@ -76,13 +78,23 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVien();
             IsEditable = false;
 
+            //Dong Window command
+            ClosedCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                UnchangedAllActions();
+            });
+
+
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
                  return true;
              }, (p) =>
              {
-                 UnchangedAllActions();
+                
 
                  IsEditable = true;
                  ResetControls();
@@ -99,14 +111,14 @@ namespace QuanLyNhanSu.ViewModel
 
                 if (SelectedPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn phiếu chi trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-            MessageBoxResult result = MessageBox.Show("Xác nhận xóa phiếu chi?", "Xóa phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá phiếu chi này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
             {
                 using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
                 {
@@ -121,13 +133,13 @@ namespace QuanLyNhanSu.ViewModel
                             DataProvider.Ins.model.PHIEUCHI.Remove(pc);
                             DataProvider.Ins.model.SaveChanges();
                             transactions.Commit();
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                         
                             LoadListPhieuChi();
                             p.Close();
                         }
                         catch (Exception e)
                         {
-                            MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("Đã xảy ra lỗi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                             transactions.Rollback();
                         }
                     }
@@ -144,7 +156,7 @@ namespace QuanLyNhanSu.ViewModel
               {
                   if (SelectedNhanVien == null)
                   {
-                      MessageBox.Show("Chưa chọn nhân viên cho phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      MessageBox.Show("Vui lòng chọn nhân viên cho phiếu chi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
                   if (IsEditable == false)
@@ -177,8 +189,8 @@ namespace QuanLyNhanSu.ViewModel
                            DataProvider.Ins.model.CHITIETPHIEUCHI.Add(x);
                        }
                        DataProvider.Ins.model.SaveChanges();
-                       MessageBox.Show("Thêm phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                      
+                       MessageBox.Show("Thêm phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                    }
 
                     //Chỉnh sửa phiếu chi đã có
@@ -189,7 +201,7 @@ namespace QuanLyNhanSu.ViewModel
                        PhieuChiSua.TRIGIA_PC = (decimal?)TriGia;
                        DataProvider.Ins.model.SaveChanges();
                        MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                      
+
                    }
                    LoadListPhieuChi();
                    p.Close();
@@ -236,7 +248,7 @@ namespace QuanLyNhanSu.ViewModel
                   return true;
               }, (p) =>
              {
-                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                  if (result == MessageBoxResult.OK)
                  {
                      IsEditable = false;
@@ -250,7 +262,7 @@ namespace QuanLyNhanSu.ViewModel
               {
                   if (SelectedPhieuChi == null)
                   {
-                      MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      MessageBoxResult result = MessageBox.Show("Vui lòng chọn phiếu chi trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
                   return true;
@@ -266,7 +278,7 @@ namespace QuanLyNhanSu.ViewModel
                   return SelectedPhieuChi == null ? false : true;
               }, (p) =>
              {
-                 UnchangedAllActions();
+                 
 
                  IsEditable = false;
                  SelectedNhanVien = SelectedPhieuChi.NHANVIEN;
@@ -287,14 +299,14 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedChiTietPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn chi tiết phiếu chi trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
 
-            MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa chi tiết phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá chi tiết phiếu chi này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (SelectedPhieuChi != null)
@@ -321,7 +333,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (IsEditable==false)
                 {
-                    MessageBox.Show("Bấm chỉnh sửa trước khi thêm chi tiết phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng bấm nút Chỉnh sửa trước khi thêm mới chi tiết phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
                 return true;
@@ -369,7 +381,7 @@ namespace QuanLyNhanSu.ViewModel
                             //Thêm chi tiết phiếu chi hiển thị
                             ListChiTietPhieuChi.Add(chiTietPhieuChiMoi);
 
-                            MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Thêm chi tiết phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information); ;
                         
                         }
 
@@ -389,8 +401,8 @@ namespace QuanLyNhanSu.ViewModel
                             DataProvider.Ins.model.CHITIETPHIEUCHI.Add(chiTietPhieuChiMoi);
 
 
-                            MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                           
+                            MessageBox.Show("Thêm chi tiết phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         }
                         TinhTongTriGiaChiTietPhieuChi();
                         p.Close();
@@ -410,7 +422,7 @@ namespace QuanLyNhanSu.ViewModel
                             ChiTietPhieuChiSua.TRIGIA_CTPC = TriGia_CTPC;
                         }
 
-                        MessageBox.Show("Sửa chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         TinhTongTriGiaChiTietPhieuChi();
                         p.Close();
                     }
@@ -442,7 +454,7 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Mọi chỉnh sửa sẽ không được lưu\nXác nhận hủy??", "Xác nhận hủy", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     p.Close();                   
@@ -455,7 +467,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedChiTietPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn chi tiết phiếu chi trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;

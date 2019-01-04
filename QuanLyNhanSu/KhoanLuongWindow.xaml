@@ -63,7 +63,7 @@
             </ComboBox>
 
             <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding ListTTKhoanLuong_KLWD, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl ItemsSource="{Binding ListKhoanLuong_KLWD, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.Resources>
                         <Style TargetType="ItemsControl">
                             <Setter Property="IsEnabled" Value="False"></Setter>
@@ -85,8 +85,8 @@
                         <DataTemplate>
                             <StackPanel Width="600">
                                 <TextBlock Foreground="#6F7A80" 
-                                    Text="{Binding LoaiLuong.TEN_LL}"></TextBlock>
-                                <TextBox Text="{Binding SoTien, StringFormat='N0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding LOAILUONG.TEN_LL}"></TextBlock>
+                                <TextBox Text="{Binding SOTIEN_KL, StringFormat='N0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     FontSize="16" Margin="0,5,0,0"/>
                             </StackPanel>
                         </DataTemplate>
