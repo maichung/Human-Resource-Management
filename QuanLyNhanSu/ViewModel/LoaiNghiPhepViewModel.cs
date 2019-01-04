@@ -56,14 +56,15 @@ namespace QuanLyNhanSu.ViewModel
 
         public LoaiNghiPhepViewModel()
         {
+            #region Khởi tạo
             LoadListLoaiNghiPhep();
-
             string[] CoLuongArray = new string[] { "Có", "Không" };
             ListCoLuong = new ObservableCollection<string>(CoLuongArray);
 
             IsEditable = false;
+            #endregion
 
-            // Tạo mới command
+            #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -75,8 +76,89 @@ namespace QuanLyNhanSu.ViewModel
                 LoaiNghiPhepWindow loaiNghiPhepWindow = new LoaiNghiPhepWindow();
                 loaiNghiPhepWindow.ShowDialog();
             });
+            #endregion
 
-            // Lưu command
+            #region Hiển thị command
+            HienThiCommand = new RelayCommand<Object>((p) =>
+            {
+                return SelectedLoaiNghiPhep == null ? false : true;
+            }, (p) =>
+            {
+                IsEditable = false;
+
+                TenLoaiNghiPhep = SelectedLoaiNghiPhep.TEN_LNP;
+                SelectedCoLuong = SelectedLoaiNghiPhep.COLUONG_LNP == true ? "Có" : "Không";
+
+                LoaiNghiPhepWindow loaiNghiPhepWindow = new LoaiNghiPhepWindow();
+                loaiNghiPhepWindow.ShowDialog();
+            });
+            #endregion
+
+            #region Sửa command
+            SuaCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (SelectedLoaiNghiPhep == null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn loại nghỉ phép trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                IsEditable = true;
+            });
+            #endregion
+
+            #region Huỷ command
+            HuyCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    IsEditable = false;
+                    p.Close();
+                }
+            });
+            #endregion
+
+            #region Sort command
+            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListLoaiNghiPhep);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+            #endregion
+
+            #region Search command
+            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(SearchLoaiNghiPhep))
+                {
+                    CollectionViewSource.GetDefaultView(ListLoaiNghiPhep).Filter = (all) => { return true; };
+                }
+                else
+                {
+                    CollectionViewSource.GetDefaultView(ListLoaiNghiPhep).Filter = (searchLoaiNghiPhep) =>
+                    {
+                        return (searchLoaiNghiPhep as LOAINGHIPHEP).TEN_LNP.IndexOf(SearchLoaiNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
+                    };
+                }
+            });
+            #endregion
+
+            #region Lưu command
             LuuCommand = new RelayCommand<Window>((p) =>
             {
                 if (string.IsNullOrEmpty(TenLoaiNghiPhep) || SelectedCoLuong == null)
@@ -116,31 +198,18 @@ namespace QuanLyNhanSu.ViewModel
                 LoadListLoaiNghiPhep();
                 p.Close();
             });
+            #endregion
 
-            // Huỷ command
-            HuyCommand = new RelayCommand<Window>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-                if (result == MessageBoxResult.OK)
-                {
-                    IsEditable = false;
-                    p.Close();
-                }
-
-            });
-
-            // Xóa command
+            #region Xóa command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
                 if (SelectedLoaiNghiPhep == null)
                 {
+                    MessageBox.Show("Vui lòng chọn phòng ban trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa loại nghỉ phép", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá loại nghỉ phép này không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     return true;
@@ -170,62 +239,7 @@ namespace QuanLyNhanSu.ViewModel
                     LoadListLoaiNghiPhep();
                 }
             });
-
-            // Sửa command
-            SuaCommand = new RelayCommand<Object>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                IsEditable = true;
-            });
-
-            // Hiển thị command
-            HienThiCommand = new RelayCommand<Object>((p) =>
-            {
-                return SelectedLoaiNghiPhep == null ? false : true;
-            }, (p) =>
-            {
-                IsEditable = false;
-
-                TenLoaiNghiPhep = SelectedLoaiNghiPhep.TEN_LNP;
-                SelectedCoLuong = SelectedLoaiNghiPhep.COLUONG_LNP == true ? "Có" : "Không";
-
-                LoaiNghiPhepWindow loaiNghiPhepWindow = new LoaiNghiPhepWindow();
-                loaiNghiPhepWindow.ShowDialog();
-            });
-
-            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
-            {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListLoaiNghiPhep);
-                if (sort)
-                {
-                    view.SortDescriptions.Clear();
-                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
-                }
-                else
-                {
-                    view.SortDescriptions.Clear();
-                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
-                }
-                sort = !sort;
-            });
-
-            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                if (string.IsNullOrEmpty(SearchLoaiNghiPhep))
-                {
-                    CollectionViewSource.GetDefaultView(ListLoaiNghiPhep).Filter = (all) => { return true; };
-                }
-                else
-                {
-                    CollectionViewSource.GetDefaultView(ListLoaiNghiPhep).Filter = (searchLoaiNghiPhep) =>
-                    {
-                        return (searchLoaiNghiPhep as LOAINGHIPHEP).TEN_LNP.IndexOf(SearchLoaiNghiPhep, StringComparison.OrdinalIgnoreCase) >= 0;
-                    };
-                }
-
-            });
+            #endregion
         }
 
         public void LoadListLoaiNghiPhep()

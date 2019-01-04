@@ -23,37 +23,51 @@ namespace QuanLyNhanSu.ViewModel
         };
         private int _ChucNangNS;
         public int ChucNangNS { get => _ChucNangNS; set { _ChucNangNS = value; OnPropertyChanged(); } }
+        private bool _HienNgayLe;
+        public bool HienNgayLe { get => _HienNgayLe; set { _HienNgayLe = value; OnPropertyChanged(); } }
 
         private NHANVIEN _NhanVien;
         public NHANVIEN NhanVien { get => _NhanVien; set { _NhanVien = value; OnPropertyChanged(); } }
 
 
         #region Items Source
-        private ObservableCollection<ImageSource> _ListAVTNhanVienNP1;
-        public ObservableCollection<ImageSource> ListAVTNhanVienNP1 { get => _ListAVTNhanVienNP1; set { _ListAVTNhanVienNP1 = value; OnPropertyChanged(); } }
-        private ObservableCollection<ImageSource> _ListAVTNhanVienNP7;
-        public ObservableCollection<ImageSource> ListAVTNhanVienNP7 { get => _ListAVTNhanVienNP7; set { _ListAVTNhanVienNP7 = value; OnPropertyChanged(); } }
+        private ObservableCollection<ThongTinNhanVien> _ListNhanVienNP1;
+        public ObservableCollection<ThongTinNhanVien> ListNhanVienNP1 { get => _ListNhanVienNP1; set { _ListNhanVienNP1 = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<ImageSource> _ListAVTNhanVienMoi;
-        public ObservableCollection<ImageSource> ListAVTNhanVienMoi { get => _ListAVTNhanVienMoi; set { _ListAVTNhanVienMoi = value; OnPropertyChanged(); } }
+        private ObservableCollection<ThongTinNhanVien> _ListNhanVienNP7;
+        public ObservableCollection<ThongTinNhanVien> ListNhanVienNP7 { get => _ListNhanVienNP7; set { _ListNhanVienNP7 = value; OnPropertyChanged(); } }
 
-        private Dictionary<ImageSource, string> _ListNhanVienSinhNhatThang;
-        public Dictionary<ImageSource, string> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
+        private ObservableCollection<ThongTinNhanVien> _ListNhanVienMoi;
+        public ObservableCollection<ThongTinNhanVien> ListNhanVienMoi { get => _ListNhanVienMoi; set { _ListNhanVienMoi = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<ThongTinNhanVien> _ListNhanVienSinhNhatThang;
+        public ObservableCollection<ThongTinNhanVien> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
+        
         #endregion
 
         #region Thuộc tính binding
         private int _SoLuongNghiPhep;
         public int SoLuongNghiPhep { get => _SoLuongNghiPhep; set { _SoLuongNghiPhep = value; OnPropertyChanged(); } }
+
         private int _SoLuongNhanVienMoi;
         public int SoLuongNhanVienMoi { get => _SoLuongNhanVienMoi; set { _SoLuongNhanVienMoi = value; OnPropertyChanged(); } }
+
         private int _SoLuongSinhNhatThang;
         public int SoLuongSinhNhatThang { get => _SoLuongSinhNhatThang; set { _SoLuongSinhNhatThang = value; OnPropertyChanged(); } }
+
         private int _SoLuongTuyenDungTuan;
         public int SoLuongTuyenDungTuan { get => _SoLuongTuyenDungTuan; set { _SoLuongTuyenDungTuan = value; OnPropertyChanged(); } }
+
         private int _SoLuongTuyenDungThang;
         public int SoLuongTuyenDungThang { get => _SoLuongTuyenDungThang; set { _SoLuongTuyenDungThang = value; OnPropertyChanged(); } }
+
+        private ThongTinNgayNghiLe _NgayNghiKeTiep1;
+        public ThongTinNgayNghiLe NgayNghiKeTiep1 { get => _NgayNghiKeTiep1; set { _NgayNghiKeTiep1 = value; OnPropertyChanged(); } }
+        private ThongTinNgayNghiLe _NgayNghiKeTiep2;
+        public ThongTinNgayNghiLe NgayNghiKeTiep2 { get => _NgayNghiKeTiep2; set { _NgayNghiKeTiep2 = value; OnPropertyChanged(); } }
         private ImageSource _AvatarSource;
         public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
+
         #endregion
 
 
@@ -159,14 +173,16 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
-
-            // Nghỉ phép
-            LoadListAvatarNghiPhep1Ngay();
-            LoadListAvatarNghiPhep7Ngay();
-            LoadListAVTNhanVienMoi();
+            #region Load thẻ
+            LoadListNghiPhep1Ngay();
+            LoadListNghiPhep7Ngay();
+            LoadListNhanVienMoi();
             LoadListNhanVienSinhNhatThang();
-            LoadSoLuong();
+            LoadSoLuongTuyenDung();
+            LoadNgayLeKeTiep();
+            #endregion
 
+            #region Đăng xuất command
             DangXuatCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn đăng xuất khỏi hệ thống không?", "Đăng xuất", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -178,60 +194,74 @@ namespace QuanLyNhanSu.ViewModel
                     p.Close();
                 }
             });
+            #endregion
         }
 
-        public void LoadListAvatarNghiPhep1Ngay()
+        #region Các hàm hỗ trợ
+        public void LoadListNghiPhep1Ngay()
         {
-            ListAVTNhanVienNP1 = new ObservableCollection<ImageSource>();
             DateTime today = DateTime.Today;
 
-            var listAvatar = from nv in DataProvider.Ins.model.NHANVIEN
+            ListNhanVienNP1 = new ObservableCollection<ThongTinNhanVien>();
+            var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
                              join np in DataProvider.Ins.model.NGHIPHEP
                              on nv.MA_NV equals np.MA_NV
                              where (DbFunctions.DiffDays(np.NGAYBATDAU_NP, DateTime.Now) == 0)
-                             select nv.AVATAR_NV;
-            foreach (string s in listAvatar)
+                             select nv;
+            foreach (NHANVIEN nv in listNhanVien)
             {
-                BitmapImage bitmapImage = NhanVienViewModel.GetImage(s);
-                ListAVTNhanVienNP1.Add(bitmapImage);
+                ListNhanVienNP1.Add(new ThongTinNhanVien
+                {
+                    NhanVien = nv,
+                    NgaySinh = (nv.NGAYSINH_NV ?? DateTime.Now).ToString("dd/MM/yyyy"),
+                    Avatar = NhanVienViewModel.GetImage(nv.AVATAR_NV)
+                });
             }
         }
 
-        public void LoadListAvatarNghiPhep7Ngay()
+        public void LoadListNghiPhep7Ngay()
         {
-            ListAVTNhanVienNP7 = new ObservableCollection<ImageSource>();
-
-            var listAvatar = from nv in DataProvider.Ins.model.NHANVIEN
+            ListNhanVienNP7 = new ObservableCollection<ThongTinNhanVien>();
+            var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
                              join np in DataProvider.Ins.model.NGHIPHEP
                              on nv.MA_NV equals np.MA_NV
-                             where (DbFunctions.DiffDays(np.NGAYBATDAU_NP, DateTime.Now) <= 7)
-                             select nv.AVATAR_NV;
-            foreach (string s in listAvatar)
+                             where ((DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) <= 7) && (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) >= 0))
+                             select nv;
+            foreach (NHANVIEN nv in listNhanVien)
             {
-                BitmapImage bitmapImage = NhanVienViewModel.GetImage(s);
-                ListAVTNhanVienNP7.Add(bitmapImage);
+                ListNhanVienNP7.Add(new ThongTinNhanVien
+                {
+                    NhanVien = nv,
+                    NgaySinh = (nv.NGAYSINH_NV ?? DateTime.Now).ToString("dd/MM/yyyy"),
+                    Avatar = NhanVienViewModel.GetImage(nv.AVATAR_NV)
+                });
             }
-            SoLuongNghiPhep = ListAVTNhanVienNP7.Count();
+
+            SoLuongNghiPhep = ListNhanVienNP7.Count();
         }
 
-        public void LoadListAVTNhanVienMoi()
+        public void LoadListNhanVienMoi()
         {
-            ListAVTNhanVienMoi = new ObservableCollection<ImageSource>();
-
-            var listAvatar = from nv in DataProvider.Ins.model.NHANVIEN
+            ListNhanVienMoi = new ObservableCollection<ThongTinNhanVien>();
+            var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
                              where (DbFunctions.DiffDays(nv.NGAYVAOLAM_NV, DateTime.Now) <= 30)
-                             select nv.AVATAR_NV;
-            foreach (string s in listAvatar)
+                             select nv;
+            foreach (NHANVIEN nv in listNhanVien)
             {
-                BitmapImage bitmapImage = NhanVienViewModel.GetImage(s);
-                ListAVTNhanVienMoi.Add(bitmapImage);
+                ListNhanVienMoi.Add(new ThongTinNhanVien
+                {
+                    NhanVien = nv,
+                    NgaySinh = (nv.NGAYSINH_NV ?? DateTime.Now).ToString("dd/MM/yyyy"),
+                    Avatar = NhanVienViewModel.GetImage(nv.AVATAR_NV)
+                });
             }
-            SoLuongNhanVienMoi = ListAVTNhanVienMoi.Count();
+
+            SoLuongNhanVienMoi = ListNhanVienMoi.Count();
         }
 
         public void LoadListNhanVienSinhNhatThang()
         {
-            ListNhanVienSinhNhatThang = new Dictionary<ImageSource, string>();
+            ListNhanVienSinhNhatThang = new ObservableCollection<ThongTinNhanVien>();
 
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
                                where (DbFunctions.DiffMonths(nv.NGAYSINH_NV, DateTime.Now) == 0)
@@ -239,14 +269,17 @@ namespace QuanLyNhanSu.ViewModel
 
             foreach (NHANVIEN nv in listNhanVien)
             {
-                string s = (nv.NGAYSINH_NV ?? DateTime.Now).ToString("dd/MM/yyyy");
-                ImageSource img = NhanVienViewModel.GetImage(nv.AVATAR_NV);
-                ListNhanVienSinhNhatThang.Add(img, s);
+                ListNhanVienSinhNhatThang.Add(new ThongTinNhanVien
+                {
+                    NhanVien = nv,
+                    NgaySinh = (nv.NGAYSINH_NV ?? DateTime.Now).ToString("dd/MM/yyyy"),
+                    Avatar = NhanVienViewModel.GetImage(nv.AVATAR_NV)
+                });
             }
             SoLuongSinhNhatThang = ListNhanVienSinhNhatThang.Count();
         }
 
-        public void LoadSoLuong()
+        public void LoadSoLuongTuyenDung()
         {
             SoLuongTuyenDungTuan = (from td in DataProvider.Ins.model.HOSOUNGTUYEN
                                     where (DbFunctions.DiffDays(DateTime.Now, td.NGAYNOP_HSUT) <= 7)
@@ -255,5 +288,72 @@ namespace QuanLyNhanSu.ViewModel
                                     where ((td.NGAYNOP_HSUT ?? DateTime.Now).Month == DateTime.Now.Month)
                                     select td.MA_UV).Count();
         }
+
+        public void LoadNgayLeKeTiep()
+        {
+            var listNgayNghiLe = from nnl in DataProvider.Ins.model.NGAYNGHILE
+                                 where (nnl.NGAY_NNL > DateTime.Now)
+                                 select nnl;
+            List<NGAYNGHILE> sortedListNgayNghiLe = listNgayNghiLe.OrderBy(nnl => nnl.NGAY_NNL).ToList();
+
+            if (sortedListNgayNghiLe.Count >= 1)
+            {
+                NgayNghiKeTiep1 = new ThongTinNgayNghiLe
+                {
+                    Ten = sortedListNgayNghiLe[0].TEN_NNL,
+                    Ngay = (sortedListNgayNghiLe[0].NGAY_NNL ?? DateTime.Now).Day,
+                    Thang = MonthNumberToString((sortedListNgayNghiLe[0].NGAY_NNL ?? DateTime.Now).Month)
+                };
+            }
+
+            if (sortedListNgayNghiLe.Count >= 2)
+            {
+                NgayNghiKeTiep2 = new ThongTinNgayNghiLe
+                {
+                    Ten = sortedListNgayNghiLe[1].TEN_NNL,
+                    Ngay = (sortedListNgayNghiLe[1].NGAY_NNL ?? DateTime.Now).Day,
+                    Thang = MonthNumberToString((sortedListNgayNghiLe[0].NGAY_NNL ?? DateTime.Now).Month)
+                };
+            }
+
+            if (sortedListNgayNghiLe.Count == 0)
+                HienNgayLe = false;
+            else
+                HienNgayLe = true;
+        }
+
+        public string MonthNumberToString(int m)
+        {
+            switch (m)
+            {
+                case 1:
+                    return "JAN";
+                case 2:
+                    return "FEB";
+                case 3:
+                    return "MAR";
+                case 4:
+                    return "APR";
+                case 5:
+                    return "MAY";
+                case 6:
+                    return "JUN";
+                case 7:
+                    return "JUL";
+                case 8:
+                    return "AUG";
+                case 9:
+                    return "SEP";
+                case 10:
+                    return "OCT";
+                case 11:
+                    return "NOV";
+                case 12:
+                    return "DEC";
+                default:
+                    return String.Empty;
+            }
+        }
+        #endregion
     }
 }
