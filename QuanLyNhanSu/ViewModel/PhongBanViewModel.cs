@@ -62,11 +62,13 @@ namespace QuanLyNhanSu.ViewModel
 
         public PhongBanViewModel()
         {
+            #region Khởi tạo
             LoadListPhongBan();
 
             IsEditable = false;
+            #endregion
 
-            // Tạo mới command
+            #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -78,8 +80,96 @@ namespace QuanLyNhanSu.ViewModel
                 PhongBanWindow phongBanWindow = new PhongBanWindow();
                 phongBanWindow.ShowDialog();
             });
+            #endregion
 
-            // Lưu command
+            #region Hiển thị command
+            HienThiCommand = new RelayCommand<Object>((p) =>
+            {
+                return SelectedPhongBan == null ? false : true;
+            }, (p) =>
+            {
+                ListNhanVienPhongBan = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_PB == SelectedPhongBan.MA_PB));
+
+                IsEditable = false;
+
+                TenPhongBan = SelectedPhongBan.TEN_PB;
+                SelectedTruongPhong = DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_NV == SelectedPhongBan.MATRUONGPHONG_PB).SingleOrDefault();
+                NgayThanhLap = SelectedPhongBan.NGAYTHANHLAP_PB;
+                DiaChi = SelectedPhongBan.DIACHI_PB;
+
+                PhongBanWindow phongBanWindow = new PhongBanWindow();
+                phongBanWindow.ShowDialog();
+            });
+            #endregion
+
+            #region Sửa command
+            SuaCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (SelectedPhongBan == null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn phòng ban trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                IsEditable = true;
+            });
+            #endregion
+
+            #region Huỷ command
+            HuyCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    IsEditable = false;
+                    p.Close();
+                }
+
+            });
+            #endregion
+
+            #region Sort command
+            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListPhongBan);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+            #endregion
+
+            #region Search command
+            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(SearchPhongBan))
+                {
+                    CollectionViewSource.GetDefaultView(ListPhongBan).Filter = (all) => { return true; };
+                }
+                else
+                {
+                    CollectionViewSource.GetDefaultView(ListPhongBan).Filter = (searchPhongBan) =>
+                    {
+                        return (searchPhongBan as PHONGBAN).TEN_PB.IndexOf(SearchPhongBan, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                               (searchPhongBan as PHONGBAN).DIACHI_PB.IndexOf(SearchPhongBan, StringComparison.OrdinalIgnoreCase) >= 0;
+                    };
+                }
+
+            });
+            #endregion
+
+            #region Lưu command
             LuuCommand = new RelayCommand<Window>((p) =>
             {
                 if (string.IsNullOrEmpty(TenPhongBan) || string.IsNullOrEmpty(DiaChi) || NgayThanhLap == null)
@@ -114,7 +204,10 @@ namespace QuanLyNhanSu.ViewModel
                     var PhongBanSua = DataProvider.Ins.model.PHONGBAN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).SingleOrDefault();
                     PhongBanSua.TEN_PB = TenPhongBan;
                     PhongBanSua.MA_PB = SelectedPhongBan.MA_PB;
-                    PhongBanSua.MATRUONGPHONG_PB = SelectedTruongPhong.MA_NV;
+
+                    if (SelectedPhongBan.MATRUONGPHONG_PB != null)
+                        PhongBanSua.MATRUONGPHONG_PB = SelectedTruongPhong.MA_NV;
+
                     PhongBanSua.NGAYTHANHLAP_PB = NgayThanhLap;
                     PhongBanSua.DIACHI_PB = DiaChi;
 
@@ -124,31 +217,18 @@ namespace QuanLyNhanSu.ViewModel
                 LoadListPhongBan();
                 p.Close();
             });
+            #endregion
 
-            // Huỷ command
-            HuyCommand = new RelayCommand<Window>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-                if (result == MessageBoxResult.OK)
-                {
-                    IsEditable = false;
-                    p.Close();
-                }
-
-            });
-
-            // Xóa command
+            #region Xóa command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
                 if (SelectedPhongBan == null)
                 {
+                    MessageBox.Show("Vui lòng chọn phòng ban trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa phòng ban", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá phòng ban này không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     return true;
@@ -178,68 +258,10 @@ namespace QuanLyNhanSu.ViewModel
                     LoadListPhongBan();
                 }
             });
-
-            // Sửa command
-            SuaCommand = new RelayCommand<Object>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                IsEditable = true;
-            });
-
-            // Hiển thị command
-            HienThiCommand = new RelayCommand<Object>((p) =>
-            {
-                return SelectedPhongBan == null ? false : true;
-            }, (p) =>
-            {
-                ListNhanVienPhongBan = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_PB == SelectedPhongBan.MA_PB));
-
-                IsEditable = false;
-
-                TenPhongBan = SelectedPhongBan.TEN_PB;
-                SelectedTruongPhong = DataProvider.Ins.model.NHANVIEN.Where(nv => nv.MA_NV == SelectedPhongBan.MATRUONGPHONG_PB).SingleOrDefault();
-                NgayThanhLap = SelectedPhongBan.NGAYTHANHLAP_PB;
-                DiaChi = SelectedPhongBan.DIACHI_PB;
-
-                PhongBanWindow phongBanWindow = new PhongBanWindow();
-                phongBanWindow.ShowDialog();
-            });
-
-            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
-            {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListPhongBan);
-                if (sort)
-                {
-                    view.SortDescriptions.Clear();
-                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
-                }
-                else
-                {
-                    view.SortDescriptions.Clear();
-                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
-                }
-                sort = !sort;
-            });
-
-            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                if (string.IsNullOrEmpty(SearchPhongBan))
-                {
-                    CollectionViewSource.GetDefaultView(ListPhongBan).Filter = (all) => { return true; };
-                }
-                else
-                {
-                    CollectionViewSource.GetDefaultView(ListPhongBan).Filter = (searchPhongBan) =>
-                    {
-                        return (searchPhongBan as PHONGBAN).TEN_PB.IndexOf(SearchPhongBan, StringComparison.OrdinalIgnoreCase) >= 0;
-                    };
-                }
-
-            });
+            #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void LoadListPhongBan()
         {
             ListPhongBan = new ObservableCollection<PHONGBAN>(DataProvider.Ins.model.PHONGBAN);
@@ -263,5 +285,6 @@ namespace QuanLyNhanSu.ViewModel
             DiaChi = null;
             ListNhanVienPhongBan = null;
         }
+        #endregion
     }
 }

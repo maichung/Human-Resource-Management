@@ -68,6 +68,8 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand XoaCommand { get; set; }
+
+        public ICommand ClosedCommand { get; set; }
         #endregion
 
         public ChiPhiViewModel()
@@ -76,37 +78,51 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVien();
             IsEditable = false;
 
+            #region Đóng window command
+            //Dong Window command
+            ClosedCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                UnchangedAllActions();
+            });
+            #endregion
+
+            #region Tạo mới command
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
                  return true;
              }, (p) =>
              {
-                 UnchangedAllActions();
+                
 
                  IsEditable = true;
                  ResetControls();
                  SelectedPhieuChi = null;
                  ReloadListChiTietPhieuChi();
+                 LoadListNhanVien();
                  PhieuChiWindow phieuChiWindow = new PhieuChiWindow();
                  phieuChiWindow.ShowDialog();
              });
+            #endregion
 
-
+            #region Xóa command
             // Xóa phiếu chi
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
                 if (SelectedPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn phiếu chi trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-            MessageBoxResult result = MessageBox.Show("Xác nhận xóa phiếu chi?", "Xóa phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá phiếu chi này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
             {
                 using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
                 {
@@ -121,13 +137,13 @@ namespace QuanLyNhanSu.ViewModel
                             DataProvider.Ins.model.PHIEUCHI.Remove(pc);
                             DataProvider.Ins.model.SaveChanges();
                             transactions.Commit();
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                         
                             LoadListPhieuChi();
                             p.Close();
                         }
                         catch (Exception e)
                         {
-                            MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("Đã xảy ra lỗi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                             transactions.Rollback();
                         }
                     }
@@ -138,13 +154,16 @@ namespace QuanLyNhanSu.ViewModel
                 return;
               
             }
-                });     
+                });
+            #endregion
+
+            #region Lưu command
             //Lưu Command
             LuuCommand = new RelayCommand<Window>((p) =>
               {
                   if (SelectedNhanVien == null)
                   {
-                      MessageBox.Show("Chưa chọn nhân viên cho phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      MessageBox.Show("Vui lòng chọn nhân viên cho phiếu chi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
                   if (IsEditable == false)
@@ -177,8 +196,8 @@ namespace QuanLyNhanSu.ViewModel
                            DataProvider.Ins.model.CHITIETPHIEUCHI.Add(x);
                        }
                        DataProvider.Ins.model.SaveChanges();
-                       MessageBox.Show("Thêm phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                      
+                       MessageBox.Show("Thêm phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                    }
 
                     //Chỉnh sửa phiếu chi đã có
@@ -189,13 +208,14 @@ namespace QuanLyNhanSu.ViewModel
                        PhieuChiSua.TRIGIA_PC = (decimal?)TriGia;
                        DataProvider.Ins.model.SaveChanges();
                        MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                      
+
                    }
                    LoadListPhieuChi();
                    p.Close();
                });
+            #endregion
 
-
+            #region Sort command
             //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -212,7 +232,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
@@ -229,14 +251,16 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
+            #region Hủy command
             //Hủy command
             HuyCommand = new RelayCommand<Window>((p) =>
               {
                   return true;
               }, (p) =>
              {
-                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                  if (result == MessageBoxResult.OK)
                  {
                      IsEditable = false;
@@ -244,13 +268,15 @@ namespace QuanLyNhanSu.ViewModel
                      p.Close();
                  }
              });
+            #endregion
 
+            #region Sửa command
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
               {
                   if (SelectedPhieuChi == null)
                   {
-                      MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      MessageBoxResult result = MessageBox.Show("Vui lòng chọn phiếu chi trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
                   return true;
@@ -259,14 +285,16 @@ namespace QuanLyNhanSu.ViewModel
                  IsEditable = true;
              }
             );
+            #endregion
 
+            #region Hiển thị command
             //Hiển thị Command
             HienThiCommand = new RelayCommand<Object>((p) =>
               {
                   return SelectedPhieuChi == null ? false : true;
               }, (p) =>
              {
-                 UnchangedAllActions();
+                 
 
                  IsEditable = false;
                  SelectedNhanVien = SelectedPhieuChi.NHANVIEN;
@@ -274,27 +302,30 @@ namespace QuanLyNhanSu.ViewModel
                  ThoiGianLap = SelectedPhieuChi.THOIGIANLAP_PC.ToString();
                  PhieuChiWindow phieuChiWindow = new PhieuChiWindow();
                  ReloadListChiTietPhieuChi();
+                 LoadListNhanVien();
                  phieuChiWindow.ShowDialog();
              });
+            #endregion
 
 
 
             /* --------------------------------------------------------------------------------------*/
 
 
+            #region Xóa CTPC command
             //Xóa Chi tiết phiếu chi command
             Xoa_CTPCCommand = new RelayCommand<Window>((p) =>
             {
                 if (SelectedChiTietPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn chi tiết phiếu chi trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
 
-            MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa chi tiết phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá chi tiết phiếu chi này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (SelectedPhieuChi != null)
@@ -315,13 +346,15 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else return;
             });
+            #endregion
 
+            #region Tạo mới CTPC command
             //Tạo mới chi tiết phiếu chi command
             TaoMoi_CTPCCommand = new RelayCommand<Object>((p) =>
             {
                 if (IsEditable==false)
                 {
-                    MessageBox.Show("Bấm chỉnh sửa trước khi thêm chi tiết phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng bấm nút Chỉnh sửa trước khi thêm mới chi tiết phiếu chi", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
                 return true;
@@ -333,7 +366,9 @@ namespace QuanLyNhanSu.ViewModel
                 chiTietPhieuChiWindow.ShowDialog();
                
             });
+            #endregion
 
+            #region  Lưu CTPC command            
             //Lưu Chi tiết phiếu chi Command
             Luu_CTPCCommand = new RelayCommand<Window>((p) =>
             {
@@ -369,7 +404,7 @@ namespace QuanLyNhanSu.ViewModel
                             //Thêm chi tiết phiếu chi hiển thị
                             ListChiTietPhieuChi.Add(chiTietPhieuChiMoi);
 
-                            MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Thêm chi tiết phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information); ;
                         
                         }
 
@@ -389,8 +424,8 @@ namespace QuanLyNhanSu.ViewModel
                             DataProvider.Ins.model.CHITIETPHIEUCHI.Add(chiTietPhieuChiMoi);
 
 
-                            MessageBox.Show("Thêm chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                           
+                            MessageBox.Show("Thêm chi tiết phiếu chi thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         }
                         TinhTongTriGiaChiTietPhieuChi();
                         p.Close();
@@ -410,7 +445,7 @@ namespace QuanLyNhanSu.ViewModel
                             ChiTietPhieuChiSua.TRIGIA_CTPC = TriGia_CTPC;
                         }
 
-                        MessageBox.Show("Sửa chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         TinhTongTriGiaChiTietPhieuChi();
                         p.Close();
                     }
@@ -418,7 +453,9 @@ namespace QuanLyNhanSu.ViewModel
               
 
             });
+            #endregion
 
+            #region Sort CTPC command
             //Sort command
             Sort_CTPCCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -435,27 +472,30 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort_CTPC = !sort_CTPC;
             });
+            #endregion
 
-            //Hủy command
+            #region Hủy CTPC command
             Huy_CTPCCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Mọi chỉnh sửa sẽ không được lưu\nXác nhận hủy??", "Xác nhận hủy", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
-                    p.Close();                   
+                    p.Close();
                 }
                 else return;
             });
+            #endregion
 
+            #region Sửa CTPC command
             //Sửa Command
             Sua_CTPCCommand = new RelayCommand<Object>((p) =>
             {
                 if (SelectedChiTietPhieuChi == null)
                 {
-                    MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn chi tiết phiếu chi trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -465,13 +505,16 @@ namespace QuanLyNhanSu.ViewModel
 
             }
             );
+            #endregion
 
+            #region Hiển thị CTPC command
             //Hiển thị Command
             HienThi_CTPCCommand = new RelayCommand<Object>((p) =>
             {
                 return SelectedChiTietPhieuChi == null ? false : true;
             }, (p) =>
             {
+                LoadListNhanVien();
                 NoiDung_CTPC = SelectedChiTietPhieuChi.NOIDUNG_CTPC;
                 TriGia_CTPC = SelectedChiTietPhieuChi.TRIGIA_CTPC;
                 IsEditable_CTPC = false;
@@ -480,6 +523,7 @@ namespace QuanLyNhanSu.ViewModel
                 chiTietPhieuChiWindow.ShowDialog();
 
             });
+            #endregion
 
         }
 
@@ -491,7 +535,7 @@ namespace QuanLyNhanSu.ViewModel
 
         void LoadListNhanVien()
         {
-            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
 
         }
 

@@ -402,10 +402,22 @@ namespace QuanLyNhanSu.ViewModel
             ListNhanVien = new ObservableCollection<NHANVIEN>();
 
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
-                         where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
-                                where ccn.MA_NV == nv.MA_NV
-                                select ccn).FirstOrDefault() != null
-                         select nv;
+                             where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
+                                    where ccn.MA_NV == nv.MA_NV
+                                    select ccn).FirstOrDefault() != null
+                             select nv;
+
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                foreach (NHANVIEN item in listNhanVien)
+                {
+                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
+                    {
+                        ListNhanVien.Add(item);
+                    }
+                }
+                return;
+            }
 
             foreach (NHANVIEN item in listNhanVien)
             {
@@ -431,6 +443,18 @@ namespace QuanLyNhanSu.ViewModel
                                    HanhChinh = false,
                                    TangCa = false
                                };
+
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                foreach (ThongTinChamCong item in listTTChamCong_ALLNV)
+                {
+                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.NhanVien.MA_PB)
+                    {
+                        ListTTChamCong_ALLNV.Add(item);
+                    }
+                }
+                return;
+            }
 
             foreach (ThongTinChamCong item in listTTChamCong_ALLNV)
             {
@@ -544,7 +568,7 @@ namespace QuanLyNhanSu.ViewModel
             //Lấy ra danh sách chấm công của nhân viên trong tháng/năm được chọn (tất cả ngày có chấm công hoặc không)
             if (ListTTChamCong_1NV.Count() <= 15)
             {
-                for (var i = 1; i <= firstDayOfMonth.AddMonths(1).AddDays(-1).Day; i++)
+                for (var i = 1; i <= DateTime.DaysInMonth(SelectedNam, SelectedThang); i++)
                 {
                     isChamCong = false;
                     foreach (ThongTinChamCong item in ListTTChamCong_1NV)

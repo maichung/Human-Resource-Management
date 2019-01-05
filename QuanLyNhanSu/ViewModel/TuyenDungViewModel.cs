@@ -78,6 +78,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand XoaCommand { get; set; }
+        public ICommand ClosedCommand { get; set; }
         #endregion
 
         public TuyenDungViewModel()
@@ -89,13 +90,13 @@ namespace QuanLyNhanSu.ViewModel
             string[] DSTrangThai = new string[] { "Chưa xử lý", "Chấp nhận", "Từ chối" };
             ListTrangThai_HSUT = new ObservableCollection<string>(DSTrangThai);
 
+            #region Tạo mới command
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
                  return true;
              }, (p) =>
              {
-                 UnchangedAllActions();
                  IsEditable = true;
                  ResetControls();
                  SelectedUngVien = null;          
@@ -103,20 +104,32 @@ namespace QuanLyNhanSu.ViewModel
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  ungVienWindow.ShowDialog();
              });
+            #endregion
 
+            #region Đóng window command
+            //Dong Window command
+            ClosedCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                UnchangedAllActions();
+            });
+            #endregion
 
+            #region Xóa command
             // Xóa ứng viên
             XoaCommand = new RelayCommand<Window>((p) =>
             {
                 if (SelectedUngVien == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn ứng viên trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa ứng viên và các hồ sơ ứng tuyển của ứng viên?", "Xóa phiếu chi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá ứng viên này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (var transactions = DataProvider.Ins.model.Database.BeginTransaction())
@@ -132,13 +145,12 @@ namespace QuanLyNhanSu.ViewModel
                                 DataProvider.Ins.model.UNGVIEN.Remove(uv);
                                 DataProvider.Ins.model.SaveChanges();
                                 transactions.Commit();
-                                MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 LoadListUngVien();
                                 p.Close();
                             }
                             catch (Exception e)
                             {
-                                MessageBox.Show("Xóa không thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBox.Show("Đã xảy ra lỗi!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                                 transactions.Rollback();
                             }
                         }
@@ -150,6 +162,9 @@ namespace QuanLyNhanSu.ViewModel
 
                 }
             });
+            #endregion
+
+            #region Lưu command
             //Lưu Command
             LuuCommand = new RelayCommand<Window>((p) =>
               {
@@ -218,8 +233,9 @@ namespace QuanLyNhanSu.ViewModel
                    p.Close();
 
                });
+            #endregion
 
-
+            #region Sort command
             //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -236,7 +252,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
@@ -253,14 +271,16 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
+            #region Hủy command
             //Hủy command
             HuyCommand = new RelayCommand<Window>((p) =>
               {
                   return true;
               }, (p) =>
              {
-                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                  if (result == MessageBoxResult.OK)
                  {
                      IsEditable = false;
@@ -268,24 +288,32 @@ namespace QuanLyNhanSu.ViewModel
                      p.Close();
                  }
              });
+            #endregion
 
+            #region Sửa command
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
-              {
-                  return true;
+            {
+                if (SelectedUngVien == null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn ứng viên trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                return true;
               }, (p) =>
              {
                  IsEditable = true;
              }
             );
+            #endregion
 
+            #region Hiển thị command
             //Hiển thị Command
             HienThiCommand = new RelayCommand<Object>((p) =>
               {
                   return SelectedUngVien == null ? false : true;
               }, (p) =>
              {
-                 UnchangedAllActions();
                  IsEditable = false;
                  HoTen = SelectedUngVien.HOTEN_UV;
                  SelectedGioiTinh = SelectedUngVien.GIOITINH_UV == true ? "Nữ" : "Nam";
@@ -298,24 +326,26 @@ namespace QuanLyNhanSu.ViewModel
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  ungVienWindow.ShowDialog();
              });
+            #endregion
 
 
 
             /* --------------------------------------------------------------------------------------*/
 
 
+            #region Xóa hSUT command
             //Xóa hồ sơ ứng tuyển command
             Xoa_HSUTCommand = new RelayCommand<Window>((p) =>
             {
                 if (SelectedHoSoUngTuyen == null)
                 {
-                    MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Vui lòng chọn hồ sơ ứng tuyển trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa hồ sơ ứng tuyển", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá hồ sơ ứng tuyển này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (SelectedUngVien != null)
@@ -336,13 +366,15 @@ namespace QuanLyNhanSu.ViewModel
                 else return;
 
             });
+            #endregion
 
+            #region Tạo mới HSUT
             //Tạo mới hồ sơ ứng tuyển command
             TaoMoi_HSUTCommand = new RelayCommand<Object>((p) =>
             {
                 if (IsEditable==false)
                 {
-                    MessageBox.Show("Vui lòng bấm chỉnh sửa trước khi thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Question);
+                    MessageBox.Show("Vui lòng bấm chỉnh sửa trước khi thêm mới hồ sơ ứng tuyển.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -351,13 +383,15 @@ namespace QuanLyNhanSu.ViewModel
                 ResetControls_HSUT();
                 IsEditable_HSUT = true;
                 SelectedHoSoUngTuyen = null;
-                
+                SelectedTrangThai = "Chưa xử lý";
 
                 HoSoUngTuyenWindow hoSoUngTuyen = new HoSoUngTuyenWindow();
                 hoSoUngTuyen.ShowDialog();
 
             });
+            #endregion
 
+            #region Lưu HSUT command
             //Lưu hồ sơ ứng tuyển Command
             Luu_HSUTCommand = new RelayCommand<Window>((p) =>
             {
@@ -395,7 +429,7 @@ namespace QuanLyNhanSu.ViewModel
                            //Thêm hồ sơ ứng tuyển hiển thị
                            ListHoSoUngTuyen.Add(HSUTMoi);
 
-                           MessageBox.Show("Thêm hồ sơ ứng tuyển mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                           MessageBox.Show("Thêm hồ sơ ứng tuyển thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                        }
 
@@ -417,7 +451,7 @@ namespace QuanLyNhanSu.ViewModel
                            DataProvider.Ins.model.HOSOUNGTUYEN.Add(HSUTMoi);
 
 
-                           MessageBox.Show("Thêm hồ sơ ứng tuyển mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                           MessageBox.Show("Thêm hồ sơ ứng tuyển thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                        }
                        p.Close();
@@ -441,13 +475,15 @@ namespace QuanLyNhanSu.ViewModel
                            HSUTSua.NGAYNOP_HSUT = NgayNop;
                            HSUTSua.CV_HSUT = CV_HoSoUngTuyen;
                        }
-                       MessageBox.Show("Sửa chi tiết phiếu chi mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                       MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                        p.Close();
                    }
                }
 
            });
+            #endregion
 
+            #region Sort HSUT command
             //Sort hồ sơ ứng tuyển command
             Sort_HSUTCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -464,27 +500,31 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort_HSUT = !sort_HSUT;
             });
+            #endregion
 
+            #region Hủy HSUT command
             //Hủy hồ sơ ứng tuyểncommand
             Huy_HSUTCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Mọi chỉnh sửa sẽ không được lưu\nXác nhận hủy??", "Xác nhận hủy", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     p.Close();                   
                 }
                 else return;
             });
+            #endregion
 
+            #region Sửa HSUT command
             //Sửa hồ sơ ứng tuyển Command
             Sua_HSUTCommand = new RelayCommand<Object>((p) =>
             {
                 if (SelectedHoSoUngTuyen == null)
                 {
-                    MessageBox.Show("Không thể sửa khi đang thêm mới.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn hồ sơ ứng tuyển trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -493,7 +533,9 @@ namespace QuanLyNhanSu.ViewModel
                 IsEditable_HSUT = true;
             }
             );
+            #endregion
 
+            #region Hiển thị HSUT command
             //Hiển thị hồ sơ ứng tuyển Command
             HienThi_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -502,7 +544,6 @@ namespace QuanLyNhanSu.ViewModel
             }, (p) =>
             {
 
-                IsEditable = false;
                 ViTriCongViec = SelectedHoSoUngTuyen.VITRICONGVIEC_HSUT;
                 SelectedTrangThai = SelectedHoSoUngTuyen.TRANGTHAI_HSUT;
                 NgayNop = SelectedHoSoUngTuyen.NGAYNOP_HSUT;
@@ -515,7 +556,9 @@ namespace QuanLyNhanSu.ViewModel
                 HoSoUngTuyenWindow hoSoUngTuyenWindow = new HoSoUngTuyenWindow();
                 hoSoUngTuyenWindow.ShowDialog();
             });
+            #endregion
 
+            #region Chọn file command
             // Chọn file command
             ChonFile_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -546,10 +589,17 @@ namespace QuanLyNhanSu.ViewModel
                     CV_HoSoUngTuyen = FileToBinaryString(openFileDialog.FileName);
                 }
             });
+            #endregion
 
+            #region Xem file command
             // Xem file command
             XemFile_HSUTCommand = new RelayCommand<Object>((p) =>
             {
+                if (CV_HoSoUngTuyen==null)
+                {
+                    MessageBox.Show("Vui lòng chọn file CV cho hồ sơ ứng tuyển!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
                 return true;
             }, (p) =>
             {
@@ -563,7 +613,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
-
+            #endregion
         }
 
         void LoadListUngVien()
@@ -685,6 +735,7 @@ namespace QuanLyNhanSu.ViewModel
             ListHoSoUngTuyen = new ObservableCollection<HOSOUNGTUYEN>(DataProvider.Ins.model.HOSOUNGTUYEN);
 
         }
+
         public void ReloadListHoSoUngTuyen()
         {
             if (SelectedUngVien == null)

@@ -1,4 +1,4 @@
-﻿<Window x:Class="QuanLyNhanSu.KhoanNghiPhepWindow"
+﻿<Window x:Class="QuanLyNhanSu.NgayNghiLeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin khoản nghỉ phép" Height="650" Width="700" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin ngày nghỉ lễ" Height="650" Width="700" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
-        DataContext="{StaticResource KhoanNghiPhepVM}" ResizeMode="CanMinimize"
-        Name="khoanNghiPhepWindow">
+        DataContext="{StaticResource NgayNghiLeVM}" ResizeMode="CanMinimize"
+        Name="ngayNghiLeWindow">
     <Grid Margin="20 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
@@ -34,38 +34,33 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                    <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                                                   CommandParameter="{Binding ElementName=ngayNghiLeWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
 
-        <!-- Thông tin phòng ban -->
+        <!-- Thông tin ngày nghỉ lễ -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ComboBox Grid.Row="0" materialDesign:HintAssist.Hint="Chọn nhân viên" IsEditable="True" 
-                      materialDesign:HintAssist.HintOpacity=".26" FontFamily="Segoe UI Semibold" 
-                      FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding ListNhanVien}" DisplayMemberPath="HOTEN_NV" 
-                      SelectedItem="{Binding SelectedCmbNV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            >
-                <ComboBox.Style>
-                    <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSelectNV}" Value="true">
-                                <Setter Property="IsEnabled" Value="True"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox>
-
-            <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding ListKhoanNghiPhep_KNPWD, UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.Resources>
-                        <Style TargetType="ItemsControl">
+            <TextBlock Grid.Row="0" Text="Thông tin ngày nghỉ lễ" FontFamily="Segoe UI Semibold" FontSize="22" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
+            <ListView Grid.Row="1">
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                             <Setter Property="IsEnabled" Value="False"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsEditable}" Value="true">
@@ -73,27 +68,35 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </ItemsControl.Resources>
+                    </ListViewItem.Style>
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Name="panelKhoanNghiPhepNV"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
+                                       Text="Tên ngày nghỉ lễ"></TextBlock>
+                        <TextBox Text="{Binding TenNgayNghiLe, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="16" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <ListViewItem.Style>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListViewItem.Style>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Width="600">
-                                <TextBlock Foreground="#6F7A80" 
-                                    Text="{Binding LOAINGHIPHEP.TEN_LNP}"></TextBlock>
-                                <TextBox Text="{Binding SONGAYNGHI_KNP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    FontSize="16" Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
+                                       Text="Ngày"></TextBlock>
+                        <DatePicker SelectedDate="{Binding Ngay, UpdateSourceTrigger=PropertyChanged}"
+                                        FontSize="16" Margin="0,5,0,0" Name="datePicker" />
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
         </Grid>
         <!-- Lưu và huỷ -->
         <Grid Grid.Row="2" Margin="20 10">
@@ -102,7 +105,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=khoanNghiPhepWindow}">
+                                                   CommandParameter="{Binding ElementName=ngayNghiLeWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -112,7 +115,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=khoanNghiPhepWindow}">
+                                                   CommandParameter="{Binding ElementName=ngayNghiLeWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

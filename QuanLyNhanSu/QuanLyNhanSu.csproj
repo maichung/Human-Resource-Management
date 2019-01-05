@@ -175,12 +175,14 @@
     </Compile>
     <Compile Include="Model\ThongTinBangLuong.cs" />
     <Compile Include="Model\ThongTinChamCong.cs" />
-    <Compile Include="Model\ThongTinKhoanLuong.cs" />
-    <Compile Include="Model\ThongTinKhoanNghiPhep.cs" />
-    <Compile Include="Model\ThongTinPhieuChi.cs" />
+    <Compile Include="Model\ThongTinNgayNghiLe.cs" />
+    <Compile Include="Model\ThongTinNhanVien.cs" />
     <Compile Include="Model\ThongTinTaikhoan.cs" />
     <Compile Include="Model\UNGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NgayNghiLeWindow.xaml.cs">
+      <DependentUpon>NgayNghiLeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NghiPhepWindow.xaml.cs">
       <DependentUpon>NghiPhepWindow.xaml</DependentUpon>
@@ -197,6 +199,7 @@
     <Compile Include="UngVienWindow.xaml.cs">
       <DependentUpon>UngVienWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\NgayNghiLeViewModel.cs" />
     <Compile Include="ViewModel\TuyenDungViewModel.cs" />
     <Compile Include="ViewModel\ChamCongViewModel.cs" />
     <Compile Include="ViewModel\KhoanLuongViewModel.cs" />
@@ -271,6 +274,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NgayNghiLeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NghiPhepWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

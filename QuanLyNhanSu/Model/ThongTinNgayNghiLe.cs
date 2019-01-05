@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhanSu.Model
 {
-    class ThongTinPhieuChi
+    public class ThongTinNgayNghiLe
     {
-        public PHIEUCHI PhieuChi { get; set; }
-        public NHANVIEN NhanVien { get; set; }
+        public String Ten { get; set; }
+        public int Ngay { get; set; }
+        public String Thang { get; set; }
     }
 }
