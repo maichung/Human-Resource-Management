@@ -294,7 +294,7 @@ namespace QuanLyNhanSu.ViewModel
         }
 
         #region Các hàm hỗ trợ
-        public void LoadListAvatarNghiPhep1Ngay()
+        public void LoadListNghiPhep1Ngay()
         {
             DateTime today = DateTime.Today;
 
