@@ -94,7 +94,7 @@
                     <StackPanel Width="600">
                         <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
-                        <TextBox Text="{Binding TriGia_CTPC, StringFormat='0', UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding TriGia_CTPC, StringFormat='N0', UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                     </StackPanel>
                 </ListViewItem>

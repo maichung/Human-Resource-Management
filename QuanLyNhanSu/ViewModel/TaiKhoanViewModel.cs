@@ -19,8 +19,8 @@ namespace QuanLyNhanSu.ViewModel
     class TaiKhoanViewModel : BaseViewModel
     {
         #region DataContext
-        private ObservableCollection<ThongTinTaikhoan> _ListTaiKhoan;
-        public ObservableCollection<ThongTinTaikhoan> ListTaiKhoan { get => _ListTaiKhoan; set { _ListTaiKhoan = value; OnPropertyChanged(); } }
+        private ObservableCollection<TAIKHOAN> _ListTaiKhoan;
+        public ObservableCollection<TAIKHOAN> ListTaiKhoan { get => _ListTaiKhoan; set { _ListTaiKhoan = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -46,8 +46,8 @@ namespace QuanLyNhanSu.ViewModel
         private string _SelectedQuyenHan;
         public string SelectedQuyenHan { get => _SelectedQuyenHan; set { _SelectedQuyenHan = value; OnPropertyChanged(); } }
 
-        private ThongTinTaikhoan _SelectedThongTinTaiKhoan;
-        public ThongTinTaikhoan SelectedThongTinTaiKhoan { get => _SelectedThongTinTaiKhoan; set { _SelectedThongTinTaiKhoan = value; OnPropertyChanged(); } }
+        private TAIKHOAN _SelectedTaiKhoan;
+        public TAIKHOAN SelectedTaiKhoan { get => _SelectedTaiKhoan; set { _SelectedTaiKhoan = value; OnPropertyChanged(); } }
         #endregion
 
         #region Combobox Itemsource
@@ -58,7 +58,7 @@ namespace QuanLyNhanSu.ViewModel
         public ObservableCollection<NHANVIEN> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
 
 
- 
+
 
         #endregion
 
@@ -69,20 +69,24 @@ namespace QuanLyNhanSu.ViewModel
         private string _SearchTaiKhoan;
         public string SearchTaiKhoan { get => _SearchTaiKhoan; set { _SearchTaiKhoan = value; OnPropertyChanged(); } }
 
+        private bool _sort;
+        public bool sort { get => _sort; set { _sort = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region Binding Command
-        public ICommand ThemTaiKhoanCommand { get; set; }
+        public ICommand TaoMoiCommand { get; set; }
         public ICommand ThoatCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
         public ICommand RepeatPasswordChangedCommand { get; set; }
         public ICommand LuuCommand { get; set; }
         public ICommand HuyCommand { get; set; }
 
-        public ICommand SearchTaiKhoanCommand { get; set; }
-        public ICommand XoaTaiKhoanCommand { get; set; }
-        public ICommand SuaTaiKhoanCommand { get; set; }
-        public ICommand HienThiTaiKhoanCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand XoaCommand { get; set; }
+        public ICommand SuaCommand { get; set; }
+        public ICommand HienThiCommand { get; set; }
+        public ICommand SortCommand { get; set; }
         #endregion
 
         #region Thuộc tính ẩn hiện tab
@@ -120,25 +124,25 @@ namespace QuanLyNhanSu.ViewModel
             LoadListTaiKhoan();
             string[] DSQuyenHan = new string[] { "Trưởng bộ phận Hành chính-Nhân sự", "Quản trị hệ thống", "Trưởng các bộ phận khác", "Nhân viên hành chính nhân sự" };
             ListQuyenHan = new ObservableCollection<string>(DSQuyenHan);
-            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
             LoadListNhanVien();
             IsEditable = true;
 
 
+            #region Xóa tài khoản command
             //Xóa tài khoản command
-            XoaTaiKhoanCommand = new RelayCommand<Window>((p) =>
+            XoaCommand = new RelayCommand<Window>((p) =>
             {
 
-                if ( SelectedThongTinTaiKhoan.TaiKhoan == null)
+                if (SelectedTaiKhoan == null)
                 {
-                     MessageBox.Show("Không thể xóa khi đang thêm mới.", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBox.Show("Vui lòng chọn tài khoản trước khi xoá!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
-               
+
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Xác nhận xóa?", "Xóa tài khoản", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Thao tác này không thể hoàn tác! Bạn có chắc chắn xoá nhân viên này không? ", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
 
@@ -147,11 +151,11 @@ namespace QuanLyNhanSu.ViewModel
                     {
                         try
                         {
-                            var tk = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedThongTinTaiKhoan.TaiKhoan.MA_TK).FirstOrDefault();
+                            var tk = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedTaiKhoan.MA_TK).FirstOrDefault();
                             DataProvider.Ins.model.TAIKHOAN.Remove(tk);
                             DataProvider.Ins.model.SaveChanges();
                             transactions.Commit();
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                          
                             ResetControl();
                             p.Close();
 
@@ -168,18 +172,20 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     return;
                 }
-                    
-                
-            });
 
+
+            });
+            #endregion
+
+            #region Tạo mới command
             //Thêm tài khoản command
-            ThemTaiKhoanCommand = new RelayCommand<Object>(
+            TaoMoiCommand = new RelayCommand<Object>(
                 (p) =>
                 {
                     LoadListNhanVien();
                     if (ListNhanVien.Count == 0)
                     {
-                        MessageBox.Show("Không có nhân viên chưa có tài khoản.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Hiện tại không có nhân viên chưa có tài khoản.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return false;
                     }
                     return true;
@@ -187,29 +193,49 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     IsEditable = true;
                     ResetControl();
-                   // LoadListNhanVien();
+                    LoadListNhanVien();
 
                     TaiKhoanWindow taiKhoanWindow = new TaiKhoanWindow();
                     taiKhoanWindow.ShowDialog();
                 });
+            #endregion
 
+            #region  Hiển thị command
             //Hiển thị tài khoản command
-            HienThiTaiKhoanCommand = new RelayCommand<Window>(
+            HienThiCommand = new RelayCommand<Window>(
                 (p) =>
                 {
-                    if (SelectedThongTinTaiKhoan == null) return false;
+                    if (SelectedTaiKhoan == null) return false;
                     return true;
                 }, (p) =>
                  {
                      IsEditable = false;
-                     TenTaiKhoan = SelectedThongTinTaiKhoan.TaiKhoan.TENDANGNHAP_TK;
-                     SelectedQuyenHan = SelectedThongTinTaiKhoan.TaiKhoan.QUYEN_TK;                    
-                     ListNhanVien.Add(SelectedThongTinTaiKhoan.NhanVien);
-                     SelectedNhanVien = SelectedThongTinTaiKhoan.NhanVien;
+                     LoadListNhanVien();
+                     TenTaiKhoan = SelectedTaiKhoan.TENDANGNHAP_TK;
+                     SelectedQuyenHan = SelectedTaiKhoan.QUYEN_TK;
+                     SelectedNhanVien = SelectedTaiKhoan.NHANVIEN;
                      TaiKhoanWindow taiKhoanWindow = new TaiKhoanWindow();
                      taiKhoanWindow.ShowDialog();
                  });
+            #endregion
 
+            #region Huỷ command
+            HuyCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    IsEditable = false;
+                    p.Close();
+                }
+
+            });
+            #endregion
+
+            #region Passwordchanged command
             //Password changed command
             PasswordChangedCommand = new RelayCommand<PasswordBox>(
                 (p) =>
@@ -219,7 +245,9 @@ namespace QuanLyNhanSu.ViewModel
                  {
                      _MatKhauMaHoa = LoginViewModel.MD5Hash(LoginViewModel.Base64Encode(p.Password));
                  });
+            #endregion
 
+            #region RepeatPasswordchanged command
             RepeatPasswordChangedCommand = new RelayCommand<PasswordBox>(
                   (p) =>
                     {
@@ -228,22 +256,24 @@ namespace QuanLyNhanSu.ViewModel
                      {
                          _NhapLaiMatKhauMaHoa = LoginViewModel.MD5Hash(LoginViewModel.Base64Encode(p.Password));
                      });
+            #endregion
 
+            #region Lưu command
             //Lưu command
             LuuCommand = new RelayCommand<Window>(
                 (p) =>
                 {
 
-                    if (TenTaiKhoan == "")
+                    if (TenTaiKhoan == null)
                     {
-                        MessageBox.Show("Chưa nhập tên tài khoản");
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return false;
                     }
 
                     if (SelectedNhanVien == null
                        || SelectedQuyenHan == null)
                     {
-                        MessageBox.Show("Vui lòng chọn nhân viên và quyền hạn cho tài khoản.");
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return false;
                     }
                     if (_MatKhauMaHoa != _NhapLaiMatKhauMaHoa
@@ -251,11 +281,16 @@ namespace QuanLyNhanSu.ViewModel
                     {
                         MessageBox.Show("Nhập lại mật khẩu và mật khẩu chưa được nhập hoặc không trùng khớp");
                         return false;
-                    }                                 
+                    }
+                    if (IsEditable == false)
+                    {
+                        MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return false;
+                    }
                     return true;
                 }, (p) =>
                  {
-                     if (SelectedThongTinTaiKhoan == null)
+                     if (SelectedTaiKhoan == null)
                      {
                          var TaiKhoanMoi = new TAIKHOAN()
                          {
@@ -266,30 +301,32 @@ namespace QuanLyNhanSu.ViewModel
                          };
                          DataProvider.Ins.model.TAIKHOAN.Add(TaiKhoanMoi);
                          DataProvider.Ins.model.SaveChanges();
-                         MessageBox.Show("Thêm tài khoản mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
+                         MessageBox.Show("Thêm tài khoản thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                      }
                      else
                      {
-                         var TaiKhoanSua = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedThongTinTaiKhoan.TaiKhoan.MA_TK).SingleOrDefault();
+                         var TaiKhoanSua = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedTaiKhoan.MA_TK).SingleOrDefault();
                          TaiKhoanSua.TENDANGNHAP_TK = TenTaiKhoan;
                          TaiKhoanSua.MATKHAU_TK = _MatKhauMaHoa;
                          TaiKhoanSua.QUYEN_TK = SelectedQuyenHan;
                          TaiKhoanSua.MA_NV = SelectedNhanVien.MA_NV;
                          DataProvider.Ins.model.SaveChanges();
-                         MessageBox.Show("Cập nhật tài khoản thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                         MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                      }
                      LoadListTaiKhoan();
                      LoadListNhanVien();
                      p.Close();
                  });
+            #endregion
 
+            #region Sửa command
             //Sửa tài khoản command
-            SuaTaiKhoanCommand = new RelayCommand<Object>((p) =>
+            SuaCommand = new RelayCommand<Object>((p) =>
               {
-                  if (SelectedThongTinTaiKhoan==null)
+                  if (SelectedTaiKhoan == null)
                   {
-                      MessageBox.Show("Vui lòng thêm tài khoản trước khi chỉnh sửa", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                      MessageBoxResult result = MessageBox.Show("Vui lòng chọn tài khoản trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                       return false;
                   }
                   return true;
@@ -297,9 +334,11 @@ namespace QuanLyNhanSu.ViewModel
              {
                  IsEditable = true;
              });
+            #endregion
 
+            #region Search command
             //Search tài khoản command
-            SearchTaiKhoanCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchTaiKhoan))
                 {
@@ -309,60 +348,68 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     CollectionViewSource.GetDefaultView(ListTaiKhoan).Filter = (searchTaiKhoan) =>
                     {
-                        return (searchTaiKhoan as ThongTinTaikhoan).TaiKhoan.TENDANGNHAP_TK.IndexOf(SearchTaiKhoan, StringComparison.OrdinalIgnoreCase) >= 0;
+                        return (searchTaiKhoan as TAIKHOAN).TENDANGNHAP_TK.IndexOf(SearchTaiKhoan, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
                 }
 
             });
-        }
-        void ResetControl()
-        {
-            TenTaiKhoan = null;
-            MatKhau = null;
-            NhapLaiMatKhau = null;
-            SelectedNhanVien = null;
-            SelectedQuyenHan = null;
-        }
+            #endregion
 
-        void LoadListTaiKhoan()
-        {
-            ListTaiKhoan = new ObservableCollection<ThongTinTaikhoan>();
-            var query = from nv in DataProvider.Ins.model.NHANVIEN
-                        join tk in DataProvider.Ins.model.TAIKHOAN
-                        on nv.MA_NV equals tk.MA_NV
-                        select new ThongTinTaikhoan()
-                        {
-                            NhanVien = nv,
-                            TaiKhoan = tk
-                        };
-            foreach (ThongTinTaikhoan item in query)
+            #region Sort commmand
+            //Sort command
+            SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
-                if (item.NhanVien.TRANGTHAI_NV==true)
-                ListTaiKhoan.Add(item);
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTaiKhoan);
+                if (sort)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Ascending));
+                }
+                else
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription(p.Tag.ToString(), ListSortDirection.Descending));
+                }
+                sort = !sort;
+            });
+            #endregion
+        }
+            void ResetControl()
+            {
+                TenTaiKhoan = null;
+                MatKhau = null;
+                NhapLaiMatKhau = null;
+                SelectedNhanVien = null;
+                SelectedQuyenHan = null;
             }
 
-        }
-        void LoadListNhanVien()
-        {
-            ListNhanVien = new ObservableCollection<NHANVIEN>();
-       
-            var query1 = from nv in DataProvider.Ins.model.NHANVIEN
-                         where
-                               (from tk in DataProvider.Ins.model.TAIKHOAN
-                                where
-                                    nv.MA_NV == tk.MA_NV
-                                select
-                                    tk
-                                ).FirstOrDefault() == null
-                         select nv;
-
-            foreach (NHANVIEN item in query1)
-            {               
-                ListNhanVien.Add(item);
+            void LoadListTaiKhoan()
+            {
+                ListTaiKhoan = new ObservableCollection<TAIKHOAN>(DataProvider.Ins.model.TAIKHOAN);
             }
 
+            void LoadListNhanVien()
+            {
+                ListNhanVien = new ObservableCollection<NHANVIEN>();
+
+                var query1 = from nv in DataProvider.Ins.model.NHANVIEN
+                             where
+                                   (from tk in DataProvider.Ins.model.TAIKHOAN
+                                    where
+                                        nv.MA_NV == tk.MA_NV
+                                    select
+                                        tk
+                                    ).FirstOrDefault() == null
+                             select nv;
+
+                foreach (NHANVIEN item in query1)
+                {
+                    if (item.TRANGTHAI_NV == true)
+                        ListNhanVien.Add(item);
+                }
+
+            }
+
+
         }
-
-
-    }
 }
