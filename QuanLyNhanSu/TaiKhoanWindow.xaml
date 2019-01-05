@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin phòng ban" Height="750" Width="700" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin tài khoản" Height="750" Width="1000" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         DataContext="{StaticResource TaiKhoanVM}" ResizeMode="CanMinimize"
         Name="taiKhoanWindow">

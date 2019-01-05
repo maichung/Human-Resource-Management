@@ -11,6 +11,12 @@
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="14"
         DataContext="{StaticResource MainVM}"
         Name="mainWindow">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding SetupQuyenCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"></ColumnDefinition>
@@ -32,7 +38,9 @@
                             <ImageBrush ImageSource="{Binding AvatarSource}" Stretch="Uniform" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <TextBlock Text="{Binding NhanVien.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
+                    <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
+                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.CHUCVU_NV}" HorizontalAlignment="Left" FontSize="12" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
                     <Button Content="Đăng xuất" HorizontalAlignment="Left" 
                                Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0">
@@ -471,7 +479,7 @@
                                             <TextBlock Text="Hôm nay" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="10,0,0,0"></TextBlock>
                                         </Grid>
                                         <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding ListAVTNhanVienNP1}">
+                                            <ItemsControl ItemsSource="{Binding ListNhanVienNP1}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel/>
@@ -480,9 +488,9 @@
 
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Ellipse Width="35" Height="35" Margin="10">
+                                                        <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
                                                             <Ellipse.Fill>
-                                                                <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                                <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
                                                             </Ellipse.Fill>
                                                         </Ellipse>
                                                     </DataTemplate>
@@ -500,7 +508,7 @@
                                         </Grid>
 
                                         <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding ListAVTNhanVienNP7}">
+                                            <ItemsControl ItemsSource="{Binding ListNhanVienNP7}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel/>
@@ -509,9 +517,9 @@
 
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Ellipse Width="35" Height="35" Margin="10">
+                                                        <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
                                                             <Ellipse.Fill>
-                                                                <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                                <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
                                                             </Ellipse.Fill>
                                                         </Ellipse>
                                                     </DataTemplate>
@@ -559,7 +567,7 @@
 
                                 <!-- Nội dung thẻ -->
                                 <ScrollViewer  Grid.Row="1" Margin="10 0" VerticalScrollBarVisibility="Auto">
-                                    <ItemsControl ItemsSource="{Binding ListAVTNhanVienMoi}">
+                                    <ItemsControl ItemsSource="{Binding ListNhanVienMoi}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel/>
@@ -568,9 +576,9 @@
 
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Ellipse Width="35" Height="35" Margin="10">
+                                                <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="{Binding}" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </DataTemplate>
@@ -624,12 +632,12 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <Ellipse Width="35" Height="35" HorizontalAlignment="Left">
+                                                <Ellipse Width="35" Height="35" HorizontalAlignment="Left" ToolTip="{Binding NhanVien.HOTEN_NV}">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="{Binding Key}" Stretch="Uniform" />
+                                                        <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
-                                                <TextBlock Text="{Binding Value}" Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80"/>
+                                                <TextBlock Text="{Binding NgaySinh}" Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -742,7 +750,22 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
 
-                                    <Grid Grid.Column="0">
+                                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
+                                        <TextBlock Margin="0 20" Text="Không có ngày nghỉ lễ kế tiếp" HorizontalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HienNgayLe}" Value="false">
+                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <Grid Grid.Column="0" Visibility="{Binding Path=NgayNghiKeTiep1, TargetNullValue=Collapsed}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"></RowDefinition>
                                             <RowDefinition></RowDefinition>
@@ -755,20 +778,20 @@
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
                                                 <Grid>
-                                                    <TextBlock Text="DEC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                                    <TextBlock Text="{Binding NgayNghiKeTiep1.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
                                                 <Grid>
-                                                    <TextBlock Text="25" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                                    <TextBlock Text="{Binding NgayNghiKeTiep1.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
                                                 </Grid>
                                             </Border>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <TextBlock Text="Lễ Giáng sinh" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                            <TextBlock Text="{Binding NgayNghiKeTiep1.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
                                         </Grid>
                                     </Grid>
-                                    <Grid Grid.Column="1">
+                                    <Grid Grid.Column="1" Visibility="{Binding Path=NgayNghiKeTiep2, TargetNullValue=Collapsed}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"></RowDefinition>
                                             <RowDefinition></RowDefinition>
@@ -781,17 +804,17 @@
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
                                                 <Grid>
-                                                    <TextBlock Text="JAN" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                                    <TextBlock Text="{Binding NgayNghiKeTiep2.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
                                                 <Grid>
-                                                    <TextBlock Text="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                                    <TextBlock Text="{Binding NgayNghiKeTiep2.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
                                                 </Grid>
                                             </Border>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <TextBlock Text="Tết Dương lịch" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                            <TextBlock Text="{Binding NgayNghiKeTiep2.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -802,7 +825,7 @@
                                     <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
+                                                <i:InvokeCommandAction Command="{Binding BtnCaiDatCommand}">
                                                 </i:InvokeCommandAction>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
@@ -1071,13 +1094,6 @@
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Tên phòng ban" Width="250">
-                                        </GridViewColumnHeader>
-                                    </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding MATRUONGPHONG_PB}">
-                                        <GridViewColumnHeader Tag="MATRUONGPHONG_PB" 
-                                                              Command="{Binding SortCommand}" 
-                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Mã trưởng phòng" Width="100">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
                                     <GridViewColumn DisplayMemberBinding="{Binding NGAYTHANHLAP_PB, StringFormat=dd/MM/yyyy}">
@@ -1419,8 +1435,8 @@
 
                             <!-- Nội dung -->
                             <ListView Grid.Row="1" Name="listKhoanNghiPhep" DataContext="{StaticResource KhoanNghiPhepVM}"
-                                  ItemsSource="{Binding ListTTKhoanNghiPhep_MainWD}" 
-                                  SelectedItem="{Binding SelectedTTKhoanNghiPhep, Mode=OneWayToSource}">
+                                  ItemsSource="{Binding ListKhoanNghiPhep_MainWD}" 
+                                  SelectedItem="{Binding SelectedKhoanNghiPhep, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding HienThiCommand}">
@@ -1430,22 +1446,22 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}">
-                                            <GridViewColumnHeader Tag="NhanVien.HOTEN_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Họ tên nhân viên" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding LoaiNghiPhep.TEN_LNP}">
-                                            <GridViewColumnHeader Tag="LoaiNghiPhep.TEN_LNP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding LOAINGHIPHEP.TEN_LNP}">
+                                            <GridViewColumnHeader Tag="LOAINGHIPHEP.TEN_LNP" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Loại nghỉ phép" Width="300">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding SoNgayNghi}">
-                                            <GridViewColumnHeader Tag="SoNgayNghi" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding SONGAYNGHI_KNP}">
+                                            <GridViewColumnHeader Tag="SONGAYNGHI_KNP" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Số ngày nghỉ" Width="300">
@@ -1566,12 +1582,25 @@
                                                               VerticalAlignment="Center" Content="Tên loại nghỉ phép" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding COLUONG_LNP}">
+                                        <GridViewColumn>
                                             <GridViewColumnHeader Tag="COLUONG_LNP" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Có lương?" Width="300">
                                             </GridViewColumnHeader>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Name="CoLuongText" Text="{Binding Path=COLUONG_LNP, TargetNullValue='No Title Found'}"/>
+                                                    <DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding COLUONG_LNP}" Value="True">
+                                                            <Setter TargetName="CoLuongText" Property="Text" Value="Có" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding COLUONG_LNP}" Value="False">
+                                                            <Setter TargetName="CoLuongText" Property="Text" Value="Không" />
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
@@ -2023,8 +2052,8 @@
 
                             <!-- Nội dung -->
                             <ListView Grid.Row="1" DataContext="{StaticResource KhoanLuongVM}"
-                                  ItemsSource="{Binding ListTTKhoanLuong_MainWD}" 
-                                  SelectedItem="{Binding SelectedTTKhoanLuong, Mode=OneWayToSource}">
+                                  ItemsSource="{Binding ListKhoanLuong_MainWD}" 
+                                  SelectedItem="{Binding SelectedKhoanLuong, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding HienThiCommand}">
@@ -2034,22 +2063,22 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}">
-                                            <GridViewColumnHeader Tag="NhanVien.HOTEN_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Họ tên nhân viên" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding LoaiLuong.TEN_LL}">
-                                            <GridViewColumnHeader Tag="LoaiLuong.TEN_LL" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding LOAILUONG.TEN_LL}">
+                                            <GridViewColumnHeader Tag="LOAILUONG.TEN_LL" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Loại lương" Width="300">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding SoTien, StringFormat='N0'}">
-                                            <GridViewColumnHeader Tag="SoTien" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding SOTIEN_KL, StringFormat='N0'}">
+                                            <GridViewColumnHeader Tag="SOTIEN_KL" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Số tiền" Width="300">
@@ -2551,7 +2580,7 @@
                     <!-- Nội dung các tab -->
                     <Grid Grid.Row="1">
                         <!-- Tab Tài khoản -->
-                        <Grid>
+                        <Grid DataContext="{StaticResource TaiKhoanVM}">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -2667,14 +2696,14 @@
                             </Grid.RowDefinitions>
 
                             <!-- Thanh chức năng-->
-                            <Grid Grid.Row="0" Margin="0,0,0,20">
+                            <Grid Grid.Row="0" Margin="0,0,0,20" DataContext="{StaticResource NgayNghiLeVM}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
-                                 Text="{Binding SearchTaiKhoan, UpdateSourceTrigger=PropertyChanged}">
+                                 Text="{Binding SearchNgayNghiLe, UpdateSourceTrigger=PropertyChanged}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
@@ -2707,8 +2736,46 @@
                             </Grid>
 
                             <!-- Nội dung -->
-                            <Grid Grid.Row="1">
-                                <TextBlock>Ngày nghỉ lễ</TextBlock>
+                            <Grid Grid.Row="1" DataContext="{StaticResource NgayNghiLeVM}">
+                                <Grid Grid.Row="1">
+                                    <ListView Name="listNgayNghiLe"
+                                  ItemsSource="{Binding ListNgayNghiLe}" 
+                                  SelectedItem="{Binding SelectedNgayNghiLe, Mode=OneWayToSource}" >
+
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding HienThiCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn DisplayMemberBinding="{Binding MA_NNL}" >
+                                                    <GridViewColumnHeader Tag="MA_NNL" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="100">
+                                                    </GridViewColumnHeader>
+                                                </GridViewColumn>
+                                                <GridViewColumn DisplayMemberBinding="{Binding TEN_NNL}">
+                                                    <GridViewColumnHeader Tag="TEN_PB" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên ngày nghỉ lễ" Width="250">
+                                                    </GridViewColumnHeader>
+                                                </GridViewColumn>
+                                                <GridViewColumn DisplayMemberBinding="{Binding NGAY_NNL, StringFormat=dd/MM/yyyy}">
+                                                    <GridViewColumnHeader Tag="NGAY_NNL" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Ngày" Width="150">
+                                                    </GridViewColumnHeader>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>

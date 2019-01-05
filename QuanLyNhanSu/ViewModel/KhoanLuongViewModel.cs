@@ -16,12 +16,12 @@ namespace QuanLyNhanSu.ViewModel
     public class KhoanLuongViewModel : BaseViewModel
     {
         #region List item source
-        private ObservableCollection<ThongTinKhoanLuong> _ListTTKhoanLuong_MainWD;
-        public ObservableCollection<ThongTinKhoanLuong> ListTTKhoanLuong_MainWD { get => _ListTTKhoanLuong_MainWD; set { _ListTTKhoanLuong_MainWD = value; OnPropertyChanged(); } }
-        private ObservableCollection<ThongTinKhoanLuong> _ListTTKhoanLuong_KLWD;
-        public ObservableCollection<ThongTinKhoanLuong> ListTTKhoanLuong_KLWD { get => _ListTTKhoanLuong_KLWD; set { _ListTTKhoanLuong_KLWD = value; OnPropertyChanged(); } }
-        private ObservableCollection<ThongTinKhoanLuong> _ListTTKhoanLuong_CapNhat;
-        public ObservableCollection<ThongTinKhoanLuong> ListTTKhoanLuong_CapNhat { get => _ListTTKhoanLuong_CapNhat; set { _ListTTKhoanLuong_CapNhat = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANLUONG> _ListKhoanLuong_MainWD;
+        public ObservableCollection<KHOANLUONG> ListKhoanLuong_MainWD { get => _ListKhoanLuong_MainWD; set { _ListKhoanLuong_MainWD = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANLUONG> _ListKhoanLuong_KLWD;
+        public ObservableCollection<KHOANLUONG> ListKhoanLuong_KLWD { get => _ListKhoanLuong_KLWD; set { _ListKhoanLuong_KLWD = value; OnPropertyChanged(); } }
+        private ObservableCollection<KHOANLUONG> _ListKhoanLuong_CapNhat;
+        public ObservableCollection<KHOANLUONG> ListKhoanLuong_CapNhat { get => _ListKhoanLuong_CapNhat; set { _ListKhoanLuong_CapNhat = value; OnPropertyChanged(); } }
         private ObservableCollection<KHOANLUONG> _ListKhoanLuong;
         public ObservableCollection<KHOANLUONG> ListKhoanLuong { get => _ListKhoanLuong; set { _ListKhoanLuong = value; OnPropertyChanged(); } }
         #endregion
@@ -36,8 +36,8 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Thuộc tính binding
-        private ThongTinKhoanLuong _SelectedTTKhoanLuong;
-        public ThongTinKhoanLuong SelectedTTKhoanLuong { get => _SelectedTTKhoanLuong; set { _SelectedTTKhoanLuong = value; OnPropertyChanged(); } }
+        private KHOANLUONG _SelectedKhoanLuong;
+        public KHOANLUONG SelectedKhoanLuong { get => _SelectedKhoanLuong; set { _SelectedKhoanLuong = value; OnPropertyChanged(); } }
         private bool _IsEditable;
         public bool IsEditable { get => _IsEditable; set { _IsEditable = value; OnPropertyChanged(); } }
         private bool _IsSelectNV;
@@ -45,8 +45,8 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Thuộc tính khác
-        private string _SearchTTKhoanLuong;
-        public string SearchTTKhoanLuong { get => _SearchTTKhoanLuong; set { _SearchTTKhoanLuong = value; OnPropertyChanged(); } }
+        private string _SearchKhoanLuong;
+        public string SearchKhoanLuong { get => _SearchKhoanLuong; set { _SearchKhoanLuong = value; OnPropertyChanged(); } }
         public bool sort;
         #endregion
 
@@ -63,36 +63,38 @@ namespace QuanLyNhanSu.ViewModel
         public KhoanLuongViewModel()
         {
             //Màn hình chính tab Khoản nghỉ phép
-            LoadTTKhoanLuong_MainWD();
+            LoadListKhoanLuong_MainWD();
 
-            //Tạo mới command
+            #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 IsEditable = true;
                 IsSelectNV = true;
-                SelectedTTKhoanLuong = null;
-                LoadTTKhoanLuong_KLWD();
+                SelectedKhoanLuong = null;
+                LoadListKhoanLuong_KLWD();
                 LoadListNhanVien();
 
                 KhoanLuongWindow khoanLuongWindow = new KhoanLuongWindow();
                 khoanLuongWindow.ShowDialog();
             });
+            #endregion
 
-            //Hiển thị Command
-            HienThiCommand = new RelayCommand<Object>((p) => { return SelectedTTKhoanLuong == null ? false : true; }, (p) =>
+            #region Hiển thị Command
+            HienThiCommand = new RelayCommand<Object>((p) => { return SelectedKhoanLuong == null ? false : true; }, (p) =>
             {
-                LoadTTKhoanLuong_KLWD();
+                LoadListKhoanLuong_KLWD();
                 LoadListNhanVien();
                 IsEditable = false;
                 IsSelectNV = false;
-                SelectedCmbNV = SelectedTTKhoanLuong.NhanVien;
+                SelectedCmbNV = SelectedKhoanLuong.NHANVIEN;
 
 
                 KhoanLuongWindow khoanLuongWindow = new KhoanLuongWindow();
                 khoanLuongWindow.ShowDialog();
             });
+            #endregion
 
-            // Lưu command
+            #region Lưu command
             LuuCommand = new RelayCommand<Window>((p) => {
                 if (SelectedCmbNV == null)
                 {
@@ -103,15 +105,15 @@ namespace QuanLyNhanSu.ViewModel
                 return true;
             }, (p) =>
             {
-                if (SelectedTTKhoanLuong == null)
+                if (SelectedKhoanLuong == null)
                 {
-                    foreach (ThongTinKhoanLuong item in ListTTKhoanLuong_KLWD)
+                    foreach (KHOANLUONG item in ListKhoanLuong_KLWD)
                     {
                         var KhoanLuongMoi = new KHOANLUONG()
                         {
                             MA_NV = SelectedCmbNV.MA_NV,
-                            MA_LL = item.LoaiLuong.MA_LL,
-                            SOTIEN_KL = item.SoTien
+                            MA_LL = item.MA_LL,
+                            SOTIEN_KL = item.SOTIEN_KL
                         };
 
                         DataProvider.Ins.model.KHOANLUONG.Add(KhoanLuongMoi);
@@ -122,29 +124,29 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else
                 {
-                    var listKhoanLuongSua = DataProvider.Ins.model.KHOANLUONG.Where(x => x.MA_NV == SelectedTTKhoanLuong.NhanVien.MA_NV);
-                    foreach (KHOANLUONG kl in listKhoanLuongSua)
+                    var listKhoanLuongSua = DataProvider.Ins.model.KHOANLUONG.Where(x => x.MA_NV == SelectedKhoanLuong.MA_NV);
+                    foreach (KHOANLUONG klCu in listKhoanLuongSua)
                     {
-                        foreach (ThongTinKhoanLuong ttkl in ListTTKhoanLuong_KLWD)
+                        foreach (KHOANLUONG klMoi in ListKhoanLuong_KLWD)
                         {
-                            if (kl.MA_LL == ttkl.LoaiLuong.MA_LL)
+                            if (klCu.MA_LL == klMoi.MA_LL)
                             {
-                                kl.SOTIEN_KL = ttkl.SoTien;
+                                klCu.SOTIEN_KL = klMoi.SOTIEN_KL;
                                 break;
                             }
                         }
                     }
                     DataProvider.Ins.model.SaveChanges();
 
-                    if (ListTTKhoanLuong_CapNhat != null)
+                    if (ListKhoanLuong_CapNhat != null)
                     {
-                        foreach (ThongTinKhoanLuong item in ListTTKhoanLuong_CapNhat)
+                        foreach (KHOANLUONG item in ListKhoanLuong_CapNhat)
                         {
                             var KhoanLuongMoi = new KHOANLUONG()
                             {
-                                MA_NV = SelectedTTKhoanLuong.NhanVien.MA_NV,
-                                MA_LL = item.LoaiLuong.MA_LL,
-                                SOTIEN_KL = item.SoTien
+                                MA_NV = SelectedKhoanLuong.MA_NV,
+                                MA_LL = item.MA_LL,
+                                SOTIEN_KL = item.SOTIEN_KL
                             };
 
                             DataProvider.Ins.model.KHOANLUONG.Add(KhoanLuongMoi);
@@ -154,11 +156,12 @@ namespace QuanLyNhanSu.ViewModel
 
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                LoadTTKhoanLuong_MainWD();
+                LoadListKhoanLuong_MainWD();
                 p.Close();
             });
+            #endregion
 
-            //Hủy command
+            #region Hủy command
             HuyCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn chắc chứ?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
@@ -169,36 +172,48 @@ namespace QuanLyNhanSu.ViewModel
                     p.Close();
                 }
             });
+            #endregion
 
-            //Sửa Command
-            SuaCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            #region Sửa Command
+            SuaCommand = new RelayCommand<Object>((p) => 
+            {
+                if (SelectedKhoanLuong == null)
+                {
+                    MessageBox.Show("Đang tạo mới không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                return true;
+            }, (p) =>
             {
                 IsEditable = true;
                 IsSelectNV = false;
             });
+            #endregion
 
-            //Search command
+            #region Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
-                if (string.IsNullOrEmpty(SearchTTKhoanLuong))
+                if (string.IsNullOrEmpty(SearchKhoanLuong))
                 {
-                    CollectionViewSource.GetDefaultView(ListTTKhoanLuong_MainWD).Filter = (all) => { return true; };
+                    CollectionViewSource.GetDefaultView(ListKhoanLuong_MainWD).Filter = (all) => { return true; };
                 }
                 else
                 {
-                    CollectionViewSource.GetDefaultView(ListTTKhoanLuong_MainWD).Filter = (searchTTKhoanLuong) =>
+                    CollectionViewSource.GetDefaultView(ListKhoanLuong_MainWD).Filter = (searchKhoanLuong) =>
                     {
-                        return (searchTTKhoanLuong as ThongTinKhoanLuong).NhanVien.HOTEN_NV.IndexOf(SearchTTKhoanLuong, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                               (searchTTKhoanLuong as ThongTinKhoanLuong).LoaiLuong.TEN_LL.IndexOf(SearchTTKhoanLuong, StringComparison.OrdinalIgnoreCase) >= 0;
+                        return (searchKhoanLuong as KHOANLUONG).NHANVIEN.HOTEN_NV.IndexOf(SearchKhoanLuong, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                               (searchKhoanLuong as KHOANLUONG).LOAILUONG.TEN_LL.IndexOf(SearchKhoanLuong, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
                 }
 
             });
+            #endregion
 
-            //Sort command
+            #region Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTTKhoanLuong_MainWD);
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanLuong_MainWD);
                 if (sort)
                 {
                     view.SortDescriptions.Clear();
@@ -211,13 +226,12 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
         }
 
         void LoadListNhanVien()
         {
-            ListNhanVien = null;
-
-            if (SelectedTTKhoanLuong == null)
+            if (SelectedKhoanLuong == null)
             {
                 ListNhanVien = new ObservableCollection<NHANVIEN>();
                 var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
@@ -227,6 +241,18 @@ namespace QuanLyNhanSu.ViewModel
                                          .FirstOrDefault() == null
                                    select nv;
 
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+                {
+                    foreach (NHANVIEN item in listNhanVien)
+                    {
+                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
+                        {
+                            ListNhanVien.Add(item);
+                        }
+                    }
+                    return;
+                }
+
                 foreach (NHANVIEN item in listNhanVien)
                 {
                     ListNhanVien.Add(item);
@@ -234,98 +260,100 @@ namespace QuanLyNhanSu.ViewModel
             }
             else
             {
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+                {
+                    ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+                    return;
+                }
+
                 ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
             }
 
 
         }
 
-        public void LoadTTKhoanLuong_KLWD()
+        public void LoadListKhoanLuong_KLWD()
         {
-            ListTTKhoanLuong_KLWD = null;
-            ListTTKhoanLuong_CapNhat = null;
-            ListTTKhoanLuong_KLWD = new ObservableCollection<ThongTinKhoanLuong>();
-            if (SelectedTTKhoanLuong == null)
+            ListKhoanLuong_CapNhat = null;
+            ListKhoanLuong_KLWD = new ObservableCollection<KHOANLUONG>();
+            if (SelectedKhoanLuong == null)
             {
                 var listLoaiLuong = from ll in DataProvider.Ins.model.LOAILUONG
-                                       select new ThongTinKhoanLuong()
-                                       {
-                                           NhanVien = null,
-                                           LoaiLuong = ll,
-                                           SoTien = 0
-                                       };
-                foreach (ThongTinKhoanLuong item in listLoaiLuong)
+                                    select ll;
+
+                foreach (LOAILUONG item in listLoaiLuong)
                 {
-                    ListTTKhoanLuong_KLWD.Add(item);
+                    ListKhoanLuong_KLWD.Add(new KHOANLUONG()
+                    {
+                        LOAILUONG = item,
+                        MA_LL = item.MA_LL,
+                        SOTIEN_KL = 0
+                    });
                 }
             }
             else
             {
                 var listLoaiLuongNV = from kl in DataProvider.Ins.model.KHOANLUONG
-                                         join nv in DataProvider.Ins.model.NHANVIEN
-                                         on kl.MA_NV equals nv.MA_NV
-                                         join ll in DataProvider.Ins.model.LOAILUONG
-                                         on kl.MA_LL equals ll.MA_LL
-                                         where nv.MA_NV == SelectedTTKhoanLuong.NhanVien.MA_NV
-                                         select new ThongTinKhoanLuong()
-                                         {
-                                             NhanVien = nv,
-                                             LoaiLuong = ll,
-                                             SoTien = (int)kl.SOTIEN_KL
-                                         };
+                                      where kl.MA_NV == SelectedKhoanLuong.MA_NV
+                                      select kl;
 
-                foreach (ThongTinKhoanLuong item in listLoaiLuongNV)
+                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
                 {
-                    ListTTKhoanLuong_KLWD.Add(item);
+                    foreach (KHOANLUONG item in listLoaiLuongNV)
+                    {
+                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.NHANVIEN.MA_PB)
+                        {
+                            ListKhoanLuong_KLWD.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (KHOANLUONG item in listLoaiLuongNV)
+                    {
+                        ListKhoanLuong_KLWD.Add(item);
+                    }
                 }
 
                 //Xử lý việc có thêm loại lương cho nhân viên khi nhân viên đã được tạo khoản nghỉ phép
                 var listLoaiLuong = from ll in DataProvider.Ins.model.LOAILUONG
-                                       where (from llNV in listLoaiLuongNV
-                                              where ll.MA_LL == llNV.LoaiLuong.MA_LL
-                                              select ll).FirstOrDefault() == null
-                                       select new ThongTinKhoanLuong()
-                                       {
-                                           NhanVien = null,
-                                           LoaiLuong = ll,
-                                           SoTien = 0
-                                       };
+                                    where (from llNV in listLoaiLuongNV
+                                           where ll.MA_LL == llNV.MA_LL
+                                           select ll).FirstOrDefault() == null
+                                    select ll;
 
                 if (listLoaiLuong.Count() > 0)
                 {
-                    ListTTKhoanLuong_CapNhat = new ObservableCollection<ThongTinKhoanLuong>();
-                    foreach (ThongTinKhoanLuong item in listLoaiLuong)
+                    ListKhoanLuong_CapNhat = new ObservableCollection<KHOANLUONG>();
+                    foreach (LOAILUONG item in listLoaiLuong)
                     {
-                        ListTTKhoanLuong_KLWD.Add(item);
-                        ListTTKhoanLuong_CapNhat.Add(item);
+                        KHOANLUONG kl = new KHOANLUONG()
+                        {
+                            MA_LL = item.MA_LL,
+                            SOTIEN_KL = 0
+                        };
+                        ListKhoanLuong_KLWD.Add(kl);
+                        ListKhoanLuong_CapNhat.Add(kl);
                     }
                 }
             }
 
         }
 
-        public void LoadTTKhoanLuong_MainWD()
+        public void LoadListKhoanLuong_MainWD()
         {
-            ListTTKhoanLuong_MainWD = new ObservableCollection<ThongTinKhoanLuong>();
-            var listKhoanLuong = from kl in DataProvider.Ins.model.KHOANLUONG
-                                    join nv in DataProvider.Ins.model.NHANVIEN
-                                    on kl.MA_NV equals nv.MA_NV
-                                    join ll in DataProvider.Ins.model.LOAILUONG
-                                    on kl.MA_LL equals ll.MA_LL
-                                    select new ThongTinKhoanLuong()
-                                    {
-                                        NhanVien = nv,
-                                        LoaiLuong = ll,
-                                        SoTien = (int)kl.SOTIEN_KL
-                                    };
-            foreach (ThongTinKhoanLuong item in listKhoanLuong)
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
             {
-                ListTTKhoanLuong_MainWD.Add(item);
+                ListKhoanLuong_MainWD = new ObservableCollection<KHOANLUONG>(DataProvider.Ins.model.KHOANLUONG.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+            }
+            else
+            {
+                ListKhoanLuong_MainWD = new ObservableCollection<KHOANLUONG>(DataProvider.Ins.model.KHOANLUONG);
             }
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTTKhoanLuong_MainWD);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanLuong_MainWD);
             view.GroupDescriptions.Clear();
-            view.GroupDescriptions.Add(new PropertyGroupDescription("NhanVien.HOTEN_NV"));
+            view.GroupDescriptions.Add(new PropertyGroupDescription("NHANVIEN.HOTEN_NV"));
         }
     }
 }
