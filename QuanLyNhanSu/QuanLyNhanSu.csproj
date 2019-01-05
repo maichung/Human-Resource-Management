@@ -82,6 +82,9 @@
     <Compile Include="ChiTietChamCongWindow.xaml.cs">
       <DependentUpon>ChiTietChamCongWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChiTietLuongWindow.xaml.cs">
+      <DependentUpon>ChiTietLuongWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChiTietPhieuChiWindow.xaml.cs">
       <DependentUpon>ChiTietPhieuChiWindow.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,7 @@
     <Compile Include="Model\TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ThongTinBangLuong.cs" />
     <Compile Include="Model\ThongTinChamCong.cs" />
     <Compile Include="Model\ThongTinKhoanLuong.cs" />
     <Compile Include="Model\ThongTinKhoanNghiPhep.cs" />
@@ -212,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChiTietChamCongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChiTietLuongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
