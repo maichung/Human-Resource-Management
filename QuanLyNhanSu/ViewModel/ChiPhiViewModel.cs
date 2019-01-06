@@ -78,6 +78,7 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVien();
             IsEditable = false;
 
+            #region Đóng window command
             //Dong Window command
             ClosedCommand = new RelayCommand<Object>((p) =>
             {
@@ -86,8 +87,9 @@ namespace QuanLyNhanSu.ViewModel
             {
                 UnchangedAllActions();
             });
+            #endregion
 
-
+            #region Tạo mới command
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
@@ -100,11 +102,13 @@ namespace QuanLyNhanSu.ViewModel
                  ResetControls();
                  SelectedPhieuChi = null;
                  ReloadListChiTietPhieuChi();
+                 LoadListNhanVien();
                  PhieuChiWindow phieuChiWindow = new PhieuChiWindow();
                  phieuChiWindow.ShowDialog();
              });
+            #endregion
 
-
+            #region Xóa command
             // Xóa phiếu chi
             XoaCommand = new RelayCommand<Window>((p) =>
             {
@@ -150,7 +154,10 @@ namespace QuanLyNhanSu.ViewModel
                 return;
               
             }
-                });     
+                });
+            #endregion
+
+            #region Lưu command
             //Lưu Command
             LuuCommand = new RelayCommand<Window>((p) =>
               {
@@ -206,8 +213,9 @@ namespace QuanLyNhanSu.ViewModel
                    LoadListPhieuChi();
                    p.Close();
                });
+            #endregion
 
-
+            #region Sort command
             //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -224,7 +232,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
@@ -241,7 +251,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
+            #region Hủy command
             //Hủy command
             HuyCommand = new RelayCommand<Window>((p) =>
               {
@@ -256,7 +268,9 @@ namespace QuanLyNhanSu.ViewModel
                      p.Close();
                  }
              });
+            #endregion
 
+            #region Sửa command
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
               {
@@ -271,7 +285,9 @@ namespace QuanLyNhanSu.ViewModel
                  IsEditable = true;
              }
             );
+            #endregion
 
+            #region Hiển thị command
             //Hiển thị Command
             HienThiCommand = new RelayCommand<Object>((p) =>
               {
@@ -286,14 +302,17 @@ namespace QuanLyNhanSu.ViewModel
                  ThoiGianLap = SelectedPhieuChi.THOIGIANLAP_PC.ToString();
                  PhieuChiWindow phieuChiWindow = new PhieuChiWindow();
                  ReloadListChiTietPhieuChi();
+                 LoadListNhanVien();
                  phieuChiWindow.ShowDialog();
              });
+            #endregion
 
 
 
             /* --------------------------------------------------------------------------------------*/
 
 
+            #region Xóa CTPC command
             //Xóa Chi tiết phiếu chi command
             Xoa_CTPCCommand = new RelayCommand<Window>((p) =>
             {
@@ -327,7 +346,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else return;
             });
+            #endregion
 
+            #region Tạo mới CTPC command
             //Tạo mới chi tiết phiếu chi command
             TaoMoi_CTPCCommand = new RelayCommand<Object>((p) =>
             {
@@ -345,7 +366,9 @@ namespace QuanLyNhanSu.ViewModel
                 chiTietPhieuChiWindow.ShowDialog();
                
             });
+            #endregion
 
+            #region  Lưu CTPC command            
             //Lưu Chi tiết phiếu chi Command
             Luu_CTPCCommand = new RelayCommand<Window>((p) =>
             {
@@ -430,7 +453,9 @@ namespace QuanLyNhanSu.ViewModel
               
 
             });
+            #endregion
 
+            #region Sort CTPC command
             //Sort command
             Sort_CTPCCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -447,8 +472,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort_CTPC = !sort_CTPC;
             });
+            #endregion
 
-            //Hủy command
+            #region Hủy CTPC command
             Huy_CTPCCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
@@ -457,11 +483,13 @@ namespace QuanLyNhanSu.ViewModel
                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
-                    p.Close();                   
+                    p.Close();
                 }
                 else return;
             });
+            #endregion
 
+            #region Sửa CTPC command
             //Sửa Command
             Sua_CTPCCommand = new RelayCommand<Object>((p) =>
             {
@@ -477,13 +505,16 @@ namespace QuanLyNhanSu.ViewModel
 
             }
             );
+            #endregion
 
+            #region Hiển thị CTPC command
             //Hiển thị Command
             HienThi_CTPCCommand = new RelayCommand<Object>((p) =>
             {
                 return SelectedChiTietPhieuChi == null ? false : true;
             }, (p) =>
             {
+                LoadListNhanVien();
                 NoiDung_CTPC = SelectedChiTietPhieuChi.NOIDUNG_CTPC;
                 TriGia_CTPC = SelectedChiTietPhieuChi.TRIGIA_CTPC;
                 IsEditable_CTPC = false;
@@ -492,6 +523,7 @@ namespace QuanLyNhanSu.ViewModel
                 chiTietPhieuChiWindow.ShowDialog();
 
             });
+            #endregion
 
         }
 
@@ -503,7 +535,7 @@ namespace QuanLyNhanSu.ViewModel
 
         void LoadListNhanVien()
         {
-            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+            ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
 
         }
 

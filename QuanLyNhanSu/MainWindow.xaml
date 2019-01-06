@@ -2647,7 +2647,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding ThemTaiKhoanCommand}">
+                                            <i:InvokeCommandAction Command="{Binding TaoMoiCommand}">
                                             </i:InvokeCommandAction>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2658,32 +2658,32 @@
                             <Grid Grid.Row="1">
                                 <ListView Name="listTaiKhoan"
                                   ItemsSource="{Binding ListTaiKhoan}" 
-                                  SelectedItem="{Binding SelectedThongTinTaiKhoan, Mode=OneWayToSource}" >
+                                  SelectedItem="{Binding SelectedTaiKhoan, Mode=OneWayToSource}" >
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding HienThiTaiKhoanCommand}">
+                                            <i:InvokeCommandAction Command="{Binding HienThiCommand}">
                                             </i:InvokeCommandAction>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn DisplayMemberBinding="{Binding TaiKhoan.TENDANGNHAP_TK}" >
+                                            <GridViewColumn DisplayMemberBinding="{Binding TENDANGNHAP_TK}" >
                                                 <GridViewColumnHeader Tag="TENDANGNHAP_TK" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Tên tài khoản" Width="250">
                                                 </GridViewColumnHeader>
                                             </GridViewColumn>
-                                            <GridViewColumn DisplayMemberBinding="{Binding TaiKhoan.QUYEN_TK}" >
+                                            <GridViewColumn DisplayMemberBinding="{Binding QUYEN_TK}" >
                                                 <GridViewColumnHeader Tag="QUYEN_TK" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Quyền hạn" Width="200">
                                                 </GridViewColumnHeader>
                                             </GridViewColumn>
-                                            <GridViewColumn DisplayMemberBinding="{Binding NhanVien.HOTEN_NV}" >
+                                            <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}" >
                                                 <GridViewColumnHeader Tag="HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 

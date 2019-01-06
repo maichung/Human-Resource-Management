@@ -140,7 +140,7 @@
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
-                            <TextBox Text="{Binding TriGia, StringFormat='0', UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding TriGia, StringFormat='N0', UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
 

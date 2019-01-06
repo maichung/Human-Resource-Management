@@ -90,6 +90,7 @@ namespace QuanLyNhanSu.ViewModel
             string[] DSTrangThai = new string[] { "Chưa xử lý", "Chấp nhận", "Từ chối" };
             ListTrangThai_HSUT = new ObservableCollection<string>(DSTrangThai);
 
+            #region Tạo mới command
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
              {
@@ -103,7 +104,9 @@ namespace QuanLyNhanSu.ViewModel
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  ungVienWindow.ShowDialog();
              });
+            #endregion
 
+            #region Đóng window command
             //Dong Window command
             ClosedCommand = new RelayCommand<Object>((p) =>
             {
@@ -112,8 +115,9 @@ namespace QuanLyNhanSu.ViewModel
             {
                 UnchangedAllActions();
             });
+            #endregion
 
-
+            #region Xóa command
             // Xóa ứng viên
             XoaCommand = new RelayCommand<Window>((p) =>
             {
@@ -158,6 +162,9 @@ namespace QuanLyNhanSu.ViewModel
 
                 }
             });
+            #endregion
+
+            #region Lưu command
             //Lưu Command
             LuuCommand = new RelayCommand<Window>((p) =>
               {
@@ -226,8 +233,9 @@ namespace QuanLyNhanSu.ViewModel
                    p.Close();
 
                });
+            #endregion
 
-
+            #region Sort command
             //Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -244,7 +252,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             //Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
@@ -261,7 +271,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
+            #region Hủy command
             //Hủy command
             HuyCommand = new RelayCommand<Window>((p) =>
               {
@@ -276,7 +288,9 @@ namespace QuanLyNhanSu.ViewModel
                      p.Close();
                  }
              });
+            #endregion
 
+            #region Sửa command
             //Sửa Command
             SuaCommand = new RelayCommand<Object>((p) =>
             {
@@ -291,7 +305,9 @@ namespace QuanLyNhanSu.ViewModel
                  IsEditable = true;
              }
             );
+            #endregion
 
+            #region Hiển thị command
             //Hiển thị Command
             HienThiCommand = new RelayCommand<Object>((p) =>
               {
@@ -310,12 +326,14 @@ namespace QuanLyNhanSu.ViewModel
                  UngVienWindow ungVienWindow = new UngVienWindow();
                  ungVienWindow.ShowDialog();
              });
+            #endregion
 
 
 
             /* --------------------------------------------------------------------------------------*/
 
 
+            #region Xóa hSUT command
             //Xóa hồ sơ ứng tuyển command
             Xoa_HSUTCommand = new RelayCommand<Window>((p) =>
             {
@@ -348,7 +366,9 @@ namespace QuanLyNhanSu.ViewModel
                 else return;
 
             });
+            #endregion
 
+            #region Tạo mới HSUT
             //Tạo mới hồ sơ ứng tuyển command
             TaoMoi_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -369,7 +389,9 @@ namespace QuanLyNhanSu.ViewModel
                 hoSoUngTuyen.ShowDialog();
 
             });
+            #endregion
 
+            #region Lưu HSUT command
             //Lưu hồ sơ ứng tuyển Command
             Luu_HSUTCommand = new RelayCommand<Window>((p) =>
             {
@@ -459,7 +481,9 @@ namespace QuanLyNhanSu.ViewModel
                }
 
            });
+            #endregion
 
+            #region Sort HSUT command
             //Sort hồ sơ ứng tuyển command
             Sort_HSUTCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
@@ -476,7 +500,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort_HSUT = !sort_HSUT;
             });
+            #endregion
 
+            #region Hủy HSUT command
             //Hủy hồ sơ ứng tuyểncommand
             Huy_HSUTCommand = new RelayCommand<Window>((p) =>
             {
@@ -490,7 +516,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 else return;
             });
+            #endregion
 
+            #region Sửa HSUT command
             //Sửa hồ sơ ứng tuyển Command
             Sua_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -505,7 +533,9 @@ namespace QuanLyNhanSu.ViewModel
                 IsEditable_HSUT = true;
             }
             );
+            #endregion
 
+            #region Hiển thị HSUT command
             //Hiển thị hồ sơ ứng tuyển Command
             HienThi_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -526,7 +556,9 @@ namespace QuanLyNhanSu.ViewModel
                 HoSoUngTuyenWindow hoSoUngTuyenWindow = new HoSoUngTuyenWindow();
                 hoSoUngTuyenWindow.ShowDialog();
             });
+            #endregion
 
+            #region Chọn file command
             // Chọn file command
             ChonFile_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -557,7 +589,9 @@ namespace QuanLyNhanSu.ViewModel
                     CV_HoSoUngTuyen = FileToBinaryString(openFileDialog.FileName);
                 }
             });
+            #endregion
 
+            #region Xem file command
             // Xem file command
             XemFile_HSUTCommand = new RelayCommand<Object>((p) =>
             {
@@ -579,7 +613,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
-
+            #endregion
         }
 
         void LoadListUngVien()
@@ -701,6 +735,7 @@ namespace QuanLyNhanSu.ViewModel
             ListHoSoUngTuyen = new ObservableCollection<HOSOUNGTUYEN>(DataProvider.Ins.model.HOSOUNGTUYEN);
 
         }
+
         public void ReloadListHoSoUngTuyen()
         {
             if (SelectedUngVien == null)
