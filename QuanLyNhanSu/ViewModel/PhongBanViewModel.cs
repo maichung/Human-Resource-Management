@@ -243,12 +243,17 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     try
                     {
-                        var pb = DataProvider.Ins.model.PHONGBAN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).FirstOrDefault();
-                        DataProvider.Ins.model.PHONGBAN.Remove(pb);
-                        DataProvider.Ins.model.SaveChanges();
-                        transactions.Commit();
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        p.Close();
+                        int soNhanVienPhongBan = DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).Count();
+                        if (soNhanVienPhongBan > 0)
+                            MessageBox.Show("Xóa không thành công! Tồn tại nhân viên thuộc phòng ban này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        else
+                        {
+                            var pb = DataProvider.Ins.model.PHONGBAN.Where(x => x.MA_PB == SelectedPhongBan.MA_PB).FirstOrDefault();
+                            DataProvider.Ins.model.PHONGBAN.Remove(pb);
+                            DataProvider.Ins.model.SaveChanges();
+                            transactions.Commit();
+                            p.Close();
+                        }
                     }
                     catch (Exception e)
                     {

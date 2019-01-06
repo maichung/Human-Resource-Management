@@ -484,7 +484,7 @@ namespace QuanLyNhanSu.ViewModel
             }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Mọi thay đổi nếu có sẽ không được lưu, bạn có chắc chắn không?", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-                if (result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.OK)
                 {
                     p.Close();                   
                 }
