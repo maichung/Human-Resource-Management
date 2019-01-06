@@ -14,7 +14,7 @@ using System.Windows.Media;
 
 namespace QuanLyNhanSu.ViewModel
 {
-    class NgayNghiLeViewModel : BaseViewModel
+    public class NgayNghiLeViewModel : BaseViewModel
     {
         #region DataContext
         private ObservableCollection<NGAYNGHILE> _ListNgayNghiLe;
