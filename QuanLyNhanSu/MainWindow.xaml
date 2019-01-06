@@ -41,9 +41,9 @@
                     <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
                     <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.CHUCVU_NV}" HorizontalAlignment="Left" FontSize="12" 
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
+                               Foreground="#6F7A80" TextWrapping="Wrap"></TextBlock>
                     <Button Content="Đăng xuất" HorizontalAlignment="Left" 
-                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0">
+                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0" FontWeight="Normal">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding DangXuatCommand}"
@@ -1811,7 +1811,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -1849,7 +1849,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -1887,7 +1887,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -1912,60 +1912,75 @@
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ChucNang}" Value="0">
+                                        <DataTrigger Binding="{Binding ChucNangBL}" Value="0">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="70"></RowDefinition>
+                                <RowDefinition Height="100"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <!-- Thanh chức năng-->
-                            <Grid Grid.Row="0" Margin="0,0,0,20">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
-                                 Text="{Binding SearchLuong, UpdateSourceTrigger=PropertyChanged}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                                <Button Grid.Column="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE">
-                                    <Grid Width="100">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Image Stretch="None" Source="Resources\Icons\btnThem_white.png"></Image>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="Tạo mới" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                       FontSize="16" Margin="5,0,0,0" FontWeight="Normal" ></TextBlock>
-                                        </Grid>
-                                    </Grid>
-
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding TaoMoiCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </Grid>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                <StackPanel Width="125" VerticalAlignment="Center" Margin="0 0 50 0">
+                                    <TextBlock Foreground="#6F7A80" 
+                                       Text="Chọn năm"></TextBlock>
+                                    <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Width="125" VerticalAlignment="Center" Margin="0 0 50 0">
+                                    <TextBlock Foreground="#6F7A80" 
+                                       Text="Chọn tháng"></TextBlock>
+                                    <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Width="250" VerticalAlignment="Center" Margin="0 0 50 0">
+                                    <TextBlock Foreground="#6F7A80" 
+                                       Text="Chọn phòng ban"></TextBlock>
+                                    <ComboBox ItemsSource="{Binding ListPhongBan}" SelectedItem="{Binding SelectedPhongBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0" DisplayMemberPath="TEN_PB">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+                                </StackPanel>                                
+                            </StackPanel>
+                            
+                            <Button Grid.Row="0" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                        BorderBrush="{x:Null}" Background="#8062FE"
+                                    Content="Tính lương" FontWeight="Normal" FontSize="16">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding TinhLuongCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
 
                             <!-- Nội dung -->
-                            <ListView Grid.Row="1"
-                                  ItemsSource="{Binding ListNghiPhep}" 
-                                  SelectedItem="{Binding SelectedNghiPhep, Mode=OneWayToSource}">
+                            <ListView Grid.Row="2"
+                                  ItemsSource="{Binding ListBangLuong}" 
+                                  SelectedItem="{Binding SelectedBangLuong, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding HienThiCommand}">
@@ -1975,38 +1990,44 @@
 
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding MA_NP}" >
-                                            <GridViewColumnHeader Tag="MA_NP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.MA_NV}" >
+                                            <GridViewColumnHeader Tag="NHANVIEN.MA_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="ID" Width="100">
+                                                              VerticalAlignment="Center" Content="Mã nhân viên" Width="150">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding MA_NV}">
-                                            <GridViewColumnHeader Tag="MA_NV" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Nhân viên" Width="250">
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NGAYBATDAU_NP}">
-                                            <GridViewColumnHeader Tag="NGAYBATDAU_NP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.CHUCVU_NV}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.CHUCVU_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Ngày bắt đầu" Width="300">
+                                                              VerticalAlignment="Center" Content="Chức vụ" Width="200">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding NGAYKETTHUC_NP}">
-                                            <GridViewColumnHeader Tag="NGAYKETTHUC_NP" 
+                                        <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.PHONGBAN.TEN_PB}">
+                                            <GridViewColumnHeader Tag="NHANVIEN.PHONGBAN.TEN_PB" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Ngày kết thúc" Width="300">
+                                                              VerticalAlignment="Center" Content="Phòng ban" Width="200">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                    </GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding TONGLUONG_BL, StringFormat='N0'}">
+                                            <GridViewColumnHeader Tag="TONGLUONG_BL" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tổng lương" Width="200">
+                                            </GridViewColumnHeader>
+                                        </GridViewColumn>
+                                    </GridView>                                    
                                 </ListView.View>
                             </ListView>
-
 
                         </Grid>
 
@@ -2964,7 +2985,7 @@
                         </Button>
 
 
-                        <!-- Danh sách chấm công -->
+                        <!-- Danh sách lương -->
                         <ListView Grid.Row="1"
                             Name="listLuong_BaoCao"
                                   ItemsSource="{Binding ListBangLuong}" Grid.ColumnSpan="2" 
@@ -3022,33 +3043,8 @@
                         </Grid.RowDefinitions>
 
                         <!-- Thanh chức năng-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
-                            <StackPanel Width="125" Margin="0 0 25 0">
-                                <TextBlock Foreground="#6F7A80" 
-                                       Text="Tháng"></TextBlock>
-                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                            </StackPanel>
-                            <StackPanel  Width="125" Margin="0 0 25 0">
-                                <TextBlock Foreground="#6F7A80" 
-                                       Text="Năm"></TextBlock>
-                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      FontSize="16" Margin="0,5,0,0">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">                            
+                           
                         </StackPanel>
                         <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
                             <i:Interaction.Triggers>
@@ -3440,7 +3436,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding SearchTaiKhoanCommand}"/>
+                                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBox>

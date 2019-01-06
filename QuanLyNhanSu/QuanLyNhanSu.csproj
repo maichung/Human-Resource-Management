@@ -82,6 +82,9 @@
     <Compile Include="ChiTietChamCongWindow.xaml.cs">
       <DependentUpon>ChiTietChamCongWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChiTietLuongWindow.xaml.cs">
+      <DependentUpon>ChiTietLuongWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChiTietPhieuChiWindow.xaml.cs">
       <DependentUpon>ChiTietPhieuChiWindow.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChiTietChamCongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChiTietLuongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -376,6 +383,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icons\logo2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\TempFiles\avatar.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

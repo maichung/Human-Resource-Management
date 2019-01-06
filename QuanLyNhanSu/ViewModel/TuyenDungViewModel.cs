@@ -20,7 +20,7 @@ namespace QuanLyNhanSu.ViewModel
 {
     class TuyenDungViewModel : BaseViewModel
     {
-        #region Phiếu chi ViewModel
+        #region Ứng viên ViewModel
         #region DataContext
         private ObservableCollection<UNGVIEN> _ListUngVien;
         public ObservableCollection<UNGVIEN> ListUngVien { get => _ListUngVien; set { _ListUngVien = value; OnPropertyChanged(); } }

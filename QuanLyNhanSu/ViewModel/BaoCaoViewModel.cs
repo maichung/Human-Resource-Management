@@ -99,19 +99,19 @@ namespace QuanLyNhanSu.ViewModel
 
         public BaoCaoViewModel()
         {
-            string[] DSChucNangBC = new string[] { "Nhân viên", "Phòng ban", "Nghỉ phép trong tháng", "Chấm công trong tháng","Lương trong tháng",
-                "Ứng viên trong tháng", "Chi phí trong tháng", "Ngày nghỉ lễ năm" };
+            string[] DSChucNangBC = new string[] { "Nhân viên", "Phòng ban", "Nghỉ phép", "Chấm công","Lương",
+                "Ứng viên", "Chi phí", "Ngày nghỉ lễ" };
             ListChucNangBaoCao = new ObservableCollection<string>(DSChucNangBC);
             SelectedChucNangBaoCao = "Nhân viên";
 
             string[] DSTrangThaiNV = new string[] { "Đang làm việc","Đã nghỉ việc"};
             ListTrangThaiNhanVien = new ObservableCollection<string>(DSTrangThaiNV);
 
-            int[] DsThang = new int[] { 1,2,3,4,5,6,7,8,9,10,11,12 };
+            int[] DsThang = new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12 };
             ListThang = new ObservableCollection<int>(DsThang);
             SelectedThang = 0;
 
-            int[] DsNam = new int[] { 2018,2019,2020,2021,2022,2023 };
+            int[] DsNam = new int[] { 0,2018,2019,2020,2021,2022,2023 };
             ListNam = new ObservableCollection<int>(DsNam);
             SelectedNam = 0;
 
@@ -151,22 +151,22 @@ namespace QuanLyNhanSu.ViewModel
                     case "Phòng ban":
                         ChucNangBC = (int)ChucNangBaoCao.PhongBan;
                         break;
-                    case "Nghỉ phép trong tháng":
+                    case "Nghỉ phép":
                         ChucNangBC = (int)ChucNangBaoCao.NghiPhep;
                         break;
-                    case "Chấm công trong tháng":
+                    case "Chấm công":
                         ChucNangBC = (int)ChucNangBaoCao.ChamCong;
                         break;
-                    case "Lương trong tháng":
+                    case "Lương":
                         ChucNangBC = (int)ChucNangBaoCao.Luong;
                         break;
-                    case "Ứng viên trong tháng":
+                    case "Ứng viên":
                         ChucNangBC = (int)ChucNangBaoCao.UngVien;
                         break;
-                    case "Chi phí trong tháng":
+                    case "Chi phí":
                         ChucNangBC = (int)ChucNangBaoCao.ChiPhi;
                         break;
-                    case "Ngày nghỉ lễ năm":
+                    case "Ngày nghỉ lễ":
                         ChucNangBC = (int)ChucNangBaoCao.NgayNghiLe;
                         break;
                    
@@ -176,13 +176,61 @@ namespace QuanLyNhanSu.ViewModel
 
             #region ChangedThangCommand
 
+            ChangedThangCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                switch (ChucNangBC)
+                {
+                    case (int)ChucNangBaoCao.ChamCong:
+                        LoadListChamCong();
+                        break;
+                    case (int)ChucNangBaoCao.Luong:
+                        LoadListBangLuong();
+                        break;
+                    case (int)ChucNangBaoCao.ChiPhi:
+                        LoadListPhieuChi();
+                        break;
+                    case (int)ChucNangBaoCao.NgayNghiLe:
+                        LoadListNgayNghiLe();
+                        break;
+                    case (int)ChucNangBaoCao.NghiPhep:
+                        LoadListNghiPhep();
+                        break;
+                }
+            });
             #endregion
 
             #region ChangedNamCommand
-
+            ChangedNamCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                switch (ChucNangBC)
+                {
+                    case (int)ChucNangBaoCao.ChamCong:
+                        LoadListChamCong();
+                        break;
+                    case (int)ChucNangBaoCao.Luong:
+                        LoadListBangLuong();
+                        break;
+                    case (int)ChucNangBaoCao.ChiPhi:
+                        LoadListPhieuChi();
+                        break;
+                    case (int)ChucNangBaoCao.NgayNghiLe:
+                        LoadListNgayNghiLe();
+                        break;
+                    case (int)ChucNangBaoCao.NghiPhep:
+                        LoadListNghiPhep();
+                        break;                        
+                }
+                
+            });
             #endregion
 
-            #region Báo cáo ứng viên command
+            #region Xuất báo cáo command
             XuatBaoCaoCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -190,10 +238,32 @@ namespace QuanLyNhanSu.ViewModel
             {
                 switch (ChucNangBC)
                 {
+
+                    case (int)ChucNangBaoCao.ChamCong:
+                         XuatBaoCaoChamCong("Báo cáo chấm công", "Báo cáo chấm công");
+                        break;
+                    case (int)ChucNangBaoCao.ChiPhi:
+                        XuatBaoCaoChiPhi("Báo cáo chi phí", "Báo cáo chi phí");
+                        break;
+                    case (int)ChucNangBaoCao.Luong:
+                        XuatBaoCaoLuong("Báo cáo lương", "Báo cáo lương");
+                        break;
+                    case (int)ChucNangBaoCao.NgayNghiLe:
+                        XuatBaoCaoNgayNghiLe("Báo cáo ngày nghỉ lễ", "Báo cáo ngày nghỉ lễ");
+                        break;
+                    case (int)ChucNangBaoCao.NghiPhep:
+                        XuatBaoCaoNghiPhep("Báo cáo nghỉ phép", "Báo cáo nghỉ phép");
+                        break;
+                    case (int)ChucNangBaoCao.NhanVien:
+                        XuatBaoCaoNhanVien("Báo cáo nhân viên", "Báo cáo nhân viên");
+                        break;
+                    case (int)ChucNangBaoCao.PhongBan:
+                        XuatBaoCaoPhongBan("Báo cáo phòng ban", "Báo cáo phòng ban");
+                        break;
                     case (int)ChucNangBaoCao.UngVien:
                         XuatBaoCaoUngVien("Báo cáo ứng viên", "Báo cáo ứng viên");
                         break;
-            }
+                }
             });
             #endregion
         }
@@ -215,40 +285,143 @@ namespace QuanLyNhanSu.ViewModel
             ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
             else
             {
-                ObservableCollection<NGHIPHEP> listNghiPhepAll = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
+                ListNghiPhep = new ObservableCollection<NGHIPHEP>();
+               ObservableCollection <NGHIPHEP> listNghiPhepAll = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
                 foreach (NGHIPHEP np in listNghiPhepAll)
                 {
                    if (SelectedThang!=0 && SelectedNam !=0)
                     {
-                      //  if ( np.NGAYBATDAU_NP)
+                        if (np.NGAYBATDAU_NP.Value.Month == SelectedThang && np.NGAYBATDAU_NP.Value.Year == SelectedNam)
+                            ListNghiPhep.Add(np);
                     }
-                        
+                   else
+                    {
+                        if (np.NGAYBATDAU_NP.Value.Month == SelectedThang)
+                            ListNghiPhep.Add(np);
+                        else
+                        if (np.NGAYBATDAU_NP.Value.Year == SelectedNam)
+                            ListNghiPhep.Add(np);
+                    }                        
                 }
             }
         }
 
         public void LoadListChamCong()
         {
-            ListChamCong = new ObservableCollection<CHAMCONGNGAY>(DataProvider.Ins.model.CHAMCONGNGAY);
+            if (SelectedThang == 0 && SelectedNam == 0)
+                ListChamCong = new ObservableCollection<CHAMCONGNGAY>(DataProvider.Ins.model.CHAMCONGNGAY);
+            else
+            {
+                ListChamCong = new ObservableCollection<CHAMCONGNGAY>();
+                ObservableCollection<CHAMCONGNGAY> ListChamCongAll = new ObservableCollection<CHAMCONGNGAY>(DataProvider.Ins.model.CHAMCONGNGAY);
+                foreach (CHAMCONGNGAY ccn in ListChamCongAll)
+                {
+                    if (SelectedThang != 0 && SelectedNam != 0)
+                    {
+                        if (ccn.THOIGIANBATDAU_CCN.Value.Month == SelectedThang && ccn.THOIGIANBATDAU_CCN.Value.Year == SelectedNam)
+                            ListChamCong.Add(ccn);
+                    }
+                    else
+                    {
+                        if (ccn.THOIGIANBATDAU_CCN.Value.Month == SelectedThang)
+                            ListChamCong.Add(ccn);
+                        else
+                        if (ccn.THOIGIANBATDAU_CCN.Value.Year == SelectedNam)
+                            ListChamCong.Add(ccn);
+                    }
+                }
+            }
         }
 
         public void LoadListBangLuong()
         {
             ListBangLuong = new ObservableCollection<BANGLUONG>(DataProvider.Ins.model.BANGLUONG);
+            if (SelectedThang == 0 && SelectedNam == 0)
+                ListBangLuong = new ObservableCollection<BANGLUONG>(DataProvider.Ins.model.BANGLUONG);
+            else
+            {
+                ListBangLuong = new ObservableCollection<BANGLUONG>();
+                ObservableCollection<BANGLUONG> ListBangLuongAll = new ObservableCollection<BANGLUONG>(DataProvider.Ins.model.BANGLUONG);
+                foreach (BANGLUONG bl in ListBangLuongAll)
+                {
+                    if (SelectedThang != 0 && SelectedNam != 0)
+                    {
+                        if (bl.THANG_BL.Value.Month == SelectedThang && bl.THANG_BL.Value.Year == SelectedNam)
+                            ListBangLuong.Add(bl);
+                    }
+                    else
+                    {
+                        
+                        if (bl.THANG_BL.Value.Month == SelectedThang)
+                            ListBangLuong.Add(bl);
+                        else
+                        if (bl.THANG_BL.Value.Year == SelectedNam)
+                            ListBangLuong.Add(bl);
+                    }
+                }
+            }
         }
 
         public void LoadListUngvien()
         {
             ListUngVien = new ObservableCollection<UNGVIEN>(DataProvider.Ins.model.UNGVIEN);
+                       
         }
 
         public void LoadListPhieuChi()
         {
             ListPhieuChi = new ObservableCollection<PHIEUCHI>(DataProvider.Ins.model.PHIEUCHI);
+            if (SelectedThang == 0 && SelectedNam == 0)
+                ListPhieuChi = new ObservableCollection<PHIEUCHI>(DataProvider.Ins.model.PHIEUCHI);
+            else
+            {
+                ListPhieuChi = new ObservableCollection<PHIEUCHI>();
+                ObservableCollection<PHIEUCHI> ListPhieuChiAll = new ObservableCollection<PHIEUCHI>(DataProvider.Ins.model.PHIEUCHI);
+                foreach (PHIEUCHI pc in ListPhieuChiAll)
+                {
+                    if (SelectedThang != 0 && SelectedNam != 0)
+                    {
+                        if (pc.THOIGIANLAP_PC.Value.Month == SelectedThang && pc.THOIGIANLAP_PC.Value.Year == SelectedNam)
+                            ListPhieuChi.Add(pc);
+                    }
+                    else
+                    {
+
+                        if (pc.THOIGIANLAP_PC.Value.Month == SelectedThang)
+                            ListPhieuChi.Add(pc);
+                        else
+                        if (pc.THOIGIANLAP_PC.Value.Year == SelectedNam)
+                            ListPhieuChi.Add(pc);
+                    }
+                }
+            }
         }
         public void LoadListNgayNghiLe()
         {
             ListNgayNghiLe = new ObservableCollection<NGAYNGHILE>(DataProvider.Ins.model.NGAYNGHILE);
+            if (SelectedThang == 0 && SelectedNam == 0)
+                ListNgayNghiLe = new ObservableCollection<NGAYNGHILE>(DataProvider.Ins.model.NGAYNGHILE);
+            else
+            {
+                ListNgayNghiLe = new ObservableCollection<NGAYNGHILE>();
+                ObservableCollection<NGAYNGHILE> ListNgayNghiLeAll = new ObservableCollection<NGAYNGHILE>(DataProvider.Ins.model.NGAYNGHILE);
+                foreach (NGAYNGHILE nnl in ListNgayNghiLeAll)
+                {
+                    if (SelectedThang != 0 && SelectedNam != 0)
+                    {
+                        if (nnl.NGAY_NNL.Value.Month == SelectedThang && nnl.NGAY_NNL.Value.Year == SelectedNam)
+                            ListNgayNghiLe.Add(nnl);
+                    }
+                    else
+                    {
+                        if (nnl.NGAY_NNL.Value.Month == SelectedThang)
+                            ListNgayNghiLe.Add(nnl);
+                        else
+                        if (nnl.NGAY_NNL.Value.Year == SelectedNam)
+                            ListNgayNghiLe.Add(nnl);
+                    }
+                }
+            }
         }
 
         public void XuatBaoCaoUngVien(string sheetName, string title)
@@ -284,13 +457,14 @@ namespace QuanLyNhanSu.ViewModel
 
             oSheet.Name = sheetName;
 
+            #region Tạo header
             // Tạo phần đầu nếu muốn
 
-            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "C1");
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "F1");
 
             head.MergeCells = true;
 
-            head.Value2 = title;
+            head.Value2 = "Danh sách ứng viên";
 
             head.Font.Bold = true;
 
@@ -299,30 +473,50 @@ namespace QuanLyNhanSu.ViewModel
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
 
+            #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range cl1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
 
-            cl1.Value2 = "Mã ứng viên";
+            column1.Value2 = "Mã ứng viên";
 
-            cl1.ColumnWidth = 13.5;
+            column1.ColumnWidth = 11;
 
-            Microsoft.Office.Interop.Excel.Range cl2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
 
-            cl2.Value2 = "Tên ứng viên";
+            column2.Value2 = "Họ tên ứng viên";
 
-            cl2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 25.0;
 
-            Microsoft.Office.Interop.Excel.Range cl3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
 
-            cl3.Value2 = "Địa chỉ";
+            column3.Value2 = "Ngày sinh";
 
-            cl3.ColumnWidth = 40.0;
+            column3.ColumnWidth = 14.0;
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "C3");
+            column4.Value2 = "Giới tính";
+
+            column4.ColumnWidth = 10.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Số điện thoại";
+
+            column5.ColumnWidth = 15.0;
+
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+
+            column6.Value2 = "Địa chỉ";
+
+            column6.ColumnWidth = 40.0;
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
 
             rowHead.Font.Bold = true;
+            #endregion  
 
             // Kẻ viền
 
@@ -334,37 +528,1053 @@ namespace QuanLyNhanSu.ViewModel
 
             rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
-
-            ListUngVien.GroupBy(x => x.MA_UV);
-            object[,] arr = new object[5, 5];
-            for (int r = 0; r < ListUngVien.Count; r++)
-
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListUngVien.Count, 6];
+            for (int row = 0; row < ListUngVien.Count; row++)
             {
-
-
-                for (int c = 0; c < 3; c++)
+                for (int column = 0; column < 6; column++)
                 {
                     string value = "";
-                    switch (c)
+                    switch (column)
                     {
                         case 0:
-                            value = ListUngVien.ElementAt(r).MA_UV.ToString();
+                            value = ListUngVien.ElementAt(row).MA_UV.ToString();
                             break;
                         case 1:
-                            value = ListUngVien.ElementAt(r).HOTEN_UV.ToString();
+                            value = ListUngVien.ElementAt(row).HOTEN_UV.ToString();
                             break;
                         case 2:
-                            value = ListUngVien.ElementAt(r).NGAYSINH_UV.ToString();
+                            value = ListUngVien.ElementAt(row).NGAYSINH_UV.ToString();
+                            break;
+                        case 3:
+                            value = ListUngVien.ElementAt(row).GIOITINH_UV == true ? "Nữ" : "Nam" ;
+                            break;
+                        case 4:
+                            value = ListUngVien.ElementAt(row).SODIENTHOAI_UV.ToString();
+                            break;
+                        case 5:
+                            value = ListUngVien.ElementAt(row).DIACHI_UV.ToString();
                             break;
                     }
-                    arr[r, c] = value;
+                    arrValue[row, column] = value;
                 }
             }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
             Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListUngVien.Count - 1, 3];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListUngVien.Count - 1, 6];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
-            range.Value2 = arr;
+            range.Value2 = arrValue;
+            #endregion
         }
+
+        public void XuatBaoCaoNhanVien(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "H1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách nhân viên " + SelectedTrangThaiNhanVien.ToLower();
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã nhân viên";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Họ tên nhân viên";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Chức vụ";
+
+            column3.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Phòng ban";
+
+            column4.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Ngày vào làm";
+
+            column5.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+
+            column6.Value2 = "Email";
+
+            column6.ColumnWidth = 15.0;
+
+            Microsoft.Office.Interop.Excel.Range column7 = oSheet.get_Range("G3", "G3");
+
+            column7.Value2 = "Số điện thoại";
+
+            column7.ColumnWidth = 15.0;
+
+            Microsoft.Office.Interop.Excel.Range column8 = oSheet.get_Range("H3", "H3");
+
+            column8.Value2 = "Địa chỉ";
+
+            column8.ColumnWidth = 40.0;
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "H3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListNhanVien.Count, 8];
+            for (int row = 0; row < ListNhanVien.Count; row++)
+            {
+                for (int column = 0; column < 8; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListNhanVien.ElementAt(row).MA_NV.ToString();
+                            break;
+                        case 1:
+                            value = ListNhanVien.ElementAt(row).HOTEN_NV.ToString();
+                            break;
+                        case 2:
+                            value = ListNhanVien.ElementAt(row).CHUCVU_NV.ToString();
+                            break;
+                        case 3:
+                            value = ListNhanVien.ElementAt(row).PHONGBAN.TEN_PB.ToString();
+                            break;
+                        case 4:
+                            value = ListNhanVien.ElementAt(row).NGAYVAOLAM_NV.Value.ToString();
+                            break;
+                        case 5:
+                            value = ListNhanVien.ElementAt(row).EMAIL_NV.ToString();
+                            break;
+                        case 6:
+                            value = ListNhanVien.ElementAt(row).SODIENTHOAI_NV.ToString();
+                            break;
+                        case 7:
+                            value = ListNhanVien.ElementAt(row).DIACHI_NV.ToString();
+                            break;
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 8];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+        public void XuatBaoCaoPhongBan(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "D1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách phòng ban";
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã phòng ban";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Tên phòng ban";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Địa chỉ";
+
+            column3.ColumnWidth = 14.0;
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Ngày thành lập";
+
+            column4.ColumnWidth = 14.0;
+
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "D3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListPhongBan.Count, 4];
+            for (int row = 0; row < ListPhongBan.Count; row++)
+            {
+                for (int column = 0; column < 4; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListPhongBan.ElementAt(row).MA_PB.ToString();
+                            break;
+                        case 1:
+                            value = ListPhongBan.ElementAt(row).TEN_PB.ToString();
+                            break;
+                        case 2:
+                            value = ListPhongBan.ElementAt(row).DIACHI_PB.ToString();
+                            break;
+                        case 3:
+                            value = ListPhongBan.ElementAt(row).NGAYTHANHLAP_PB.Value.ToString();
+                            break;
+
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListPhongBan.Count - 1, 4];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+        public void XuatBaoCaoNghiPhep(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "F1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách nghỉ phép " ;
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã nghỉ phép";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Họ tên nhân viên";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Tên loại nghỉ phép";
+
+            column3.ColumnWidth = 24.0;
+
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Ngày bắt đầu";
+
+            column4.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Ngày kết thúc";
+
+            column5.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+
+            column6.Value2 = "Lí do";
+
+            column6.ColumnWidth = 20.0;          
+            
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListNghiPhep.Count, 6];
+            for (int row = 0; row < ListNghiPhep.Count; row++)
+            {
+                for (int column = 0; column < 6; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListNghiPhep.ElementAt(row).MA_NV.ToString();
+                            break;
+                        case 1:
+                            value = ListNghiPhep.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
+                            break;
+                        case 2:
+                            value = ListNghiPhep.ElementAt(row).KHOANNGHIPHEP.LOAINGHIPHEP.TEN_LNP.ToString();
+                            break;
+                        case 3:
+                            value = ListNghiPhep.ElementAt(row).NGAYBATDAU_NP.Value.ToString();
+                            break;
+                        case 4:
+                            value = ListNghiPhep.ElementAt(row).NGAYKETTHUC_NP.Value.ToString();
+                            break;
+                        case 5:
+                            value = ListNghiPhep.ElementAt(row).LIDO_NP.ToString();
+                            break;
+                      
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNghiPhep.Count - 1, 6];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+        public void XuatBaoCaoNgayNghiLe(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "C1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách ngày nghỉ lễ ";
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã ngày nghỉ lễ";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Ngày";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Tên ngày nghỉ lễ";
+
+            column3.ColumnWidth = 24.0;
+
+         
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "C3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListNgayNghiLe.Count, 3];
+            for (int row = 0; row < ListNgayNghiLe.Count; row++)
+            {
+                for (int column = 0; column < 3; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListNgayNghiLe.ElementAt(row).MA_NNL.ToString();
+                            break;
+                        case 1:
+                            value = ListNgayNghiLe.ElementAt(row).NGAY_NNL.Value.ToString();
+                            break;
+                        case 2:
+                            value = ListNgayNghiLe.ElementAt(row).TEN_NNL.ToString();
+                            break;
+                     
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNgayNghiLe.Count - 1, 3];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+        public void XuatBaoCaoLuong(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "H1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách lương tháng " + SelectedThang +" năm "+SelectedNam;
+            if (SelectedThang == 0 || SelectedNam == 0)
+                head.Value2 = "Danh sách lương tháng ";
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã nhân viên";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = " Tên nhân viên";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Tháng";
+
+            column3.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Năm";
+
+            column4.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Tổng lương";
+
+            column5.ColumnWidth = 10.0;
+
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+
+            column6.Value2 = "Phòng ban";
+
+            column6.ColumnWidth = 15.0;                    
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListBangLuong.Count, 6];
+            for (int row = 0; row < ListBangLuong.Count; row++)
+            {
+                for (int column = 0; column < 6; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListBangLuong.ElementAt(row).MA_BL.ToString();
+                            break;
+                        case 1:
+                            value = ListBangLuong.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
+                            break;
+                        case 2:
+                            value = ListBangLuong.ElementAt(row).THANG_BL.Value.Month.ToString();
+                            break;
+                        case 3:
+                            value = ListBangLuong.ElementAt(row).THANG_BL.Value.Year.ToString();
+                            break;
+                        case 4:
+                            value = ListBangLuong.ElementAt(row).TONGLUONG_BL.ToString();
+                            break;
+                        case 5:
+                            value = ListBangLuong.ElementAt(row).NHANVIEN.PHONGBAN.TEN_PB.ToString();
+                            break;
+                      
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListBangLuong.Count - 1, 6];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+        public void XuatBaoCaoChiPhi(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "E1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách phiếu chi " + SelectedThang + " năm " + SelectedNam;
+            if (SelectedThang == 0 || SelectedNam == 0)
+                head.Value2 = "Danh sách phiếu chi ";
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã phiếu chi";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Họ tên nhân viên";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Trị giá";
+
+            column3.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Thời gian lập";
+
+            column4.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Phòng ban";
+
+            column5.ColumnWidth = 10.0;            
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "E3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListPhieuChi.Count, 5];
+            for (int row = 0; row < ListPhieuChi.Count; row++)
+            {
+                for (int column = 0; column < 5; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListPhieuChi.ElementAt(row).MA_PC.ToString();
+                            break;
+                        case 1:
+                            value = ListPhieuChi.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
+                            break;
+                        case 2:
+                            value = ListPhieuChi.ElementAt(row).TRIGIA_PC.ToString();
+                            break;
+                        case 3:
+                            value = ListPhieuChi.ElementAt(row).THOIGIANLAP_PC.Value.ToString();
+                            break;
+                        case 4:
+                            value = ListPhieuChi.ElementAt(row).NHANVIEN.PHONGBAN.TEN_PB.ToString();
+                            break;                      
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 5];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
+
+        public void XuatBaoCaoChamCong(string sheetName, string title)
+        {
+
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "F1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Danh sách chấm công " + SelectedThang + " năm " + SelectedNam;
+            if (SelectedThang == 0 || SelectedNam == 0)
+                head.Value2 = "Danh sách chấm công ";
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Tahoma";
+
+            head.Font.Size = "18";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
+
+            #region Tạo tiêu đề cột
+            // Tạo tiêu đề cột 
+
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+
+            column1.Value2 = "Mã chấm công";
+
+            column1.ColumnWidth = 11;
+
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+
+            column2.Value2 = "Họ tên nhân viên";
+
+            column2.ColumnWidth = 25.0;
+
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+
+            column3.Value2 = "Loại chấm công";
+
+            column3.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+
+            column4.Value2 = "Thời gian bắt đâu";
+
+            column4.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+
+            column5.Value2 = "Thời gian kết thúc";
+
+            column5.ColumnWidth = 14.0;
+
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+
+            column6.Value2 = "Phòng ban";
+
+            column6.ColumnWidth = 20.0;
+
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+
+            rowHead.Font.Bold = true;
+            #endregion  
+
+            // Kẻ viền
+
+            rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Thiết lập màu nền
+
+            rowHead.Interior.ColorIndex = 15;
+
+            rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListChamCong.Count, 6];
+            for (int row = 0; row < ListChamCong.Count; row++)
+            {
+                for (int column = 0; column < 6; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListChamCong.ElementAt(row).MA_CCN.ToString();
+                            break;
+                        case 1:
+                            value = ListChamCong.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
+                            break;
+                        case 2:
+                            value = ListChamCong.ElementAt(row).LOAICHAMCONG.TEN_LCC.ToString();
+                            break;
+                        case 3:
+                            value = ListChamCong.ElementAt(row).THOIGIANBATDAU_CCN.Value.ToString();
+                            break;
+                        case 4:
+                            value = ListChamCong.ElementAt(row).THOIGIANKETTHUC_CCN.Value.ToString();
+                            break;
+                        case 5:
+                            value = (ListChamCong.ElementAt(row).NHANVIEN).PHONGBAN.TEN_PB.ToString();
+                            break;
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 6];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+            #endregion
+        }
+
     }
 }
