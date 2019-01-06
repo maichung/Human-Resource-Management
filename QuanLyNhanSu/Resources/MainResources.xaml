@@ -17,5 +17,6 @@
     <viewmodel:LoaiLuongViewModel x:Key="LoaiLuongVM"></viewmodel:LoaiLuongViewModel>
     <viewmodel:KhoanLuongViewModel x:Key="KhoanLuongVM"></viewmodel:KhoanLuongViewModel>
     <viewmodel:NgayNghiLeViewModel x:Key="NgayNghiLeVM"></viewmodel:NgayNghiLeViewModel>
+    <viewmodel:BaoCaoViewModel x:Key="BaoCaoVM"></viewmodel:BaoCaoViewModel>
 
 </ResourceDictionary>

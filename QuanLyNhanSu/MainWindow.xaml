@@ -847,14 +847,14 @@
                                     <Rectangle VerticalAlignment="Top" Height="3" Fill="#989CA0"></Rectangle>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
                                         <TextBlock Text="Thông báo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
-                                        
+
                                     </StackPanel>
                                     <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
                                 <ListView Grid.Row="1" Margin="10 0 10 20">
-                                    
+
                                     <ListViewItem>
                                         <TextBlock Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Center" FontSize="14"/>
                                     </ListViewItem>
@@ -1726,7 +1726,7 @@
                                                               VerticalAlignment="Center" Content="Chức vụ" Width="300">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                                    
+
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -2422,7 +2422,7 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding MA_PC}" >
-                                        <GridViewColumnHeader Tag="Ma_PC" 
+                                        <GridViewColumnHeader Tag="MA_PC" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="ID" Width="80">
@@ -2455,9 +2455,824 @@
                             </ListView.View>
                         </ListView>
                     </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Báo cáo -->
+            <Grid Name="gridBaoCao">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ChucNangNS}" Value="8">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="130"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Tiêu đề trang -->
+                <Grid Grid.Row="0" Margin="0 0 -20 10">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
+                    </Grid.Background>
+                    <TextBlock Text="Báo cáo" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                </Grid>
+
+                <!-- Nội dung trang -->
+                <Grid Grid.Row="1" DataContext="{StaticResource BaoCaoVM}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!-- Chọn loại báo cáo -->
+                    <Grid Grid.Row="0">
+                        <StackPanel Width="300" Margin="0 0 25 0" HorizontalAlignment="Left">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Loại báo cáo"></TextBlock>
+                            <ComboBox ItemsSource="{Binding ListChucNangBaoCao}" SelectedItem="{Binding SelectedChucNangBaoCao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangedChucNangBaoCaoCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Báo cáo nhân viên -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Trạng thái nhân viên"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListTrangThaiNhanVien}" SelectedItem="{Binding SelectedTrangThaiNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedTrangThaiNhanVienCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>                           
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách nhân viên -->
+                        <ListView Grid.Row="1"
+                            Name="listNhanVien_BaoCao"
+                                  ItemsSource="{Binding ListNhanVien}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_NV}" >
+                                        <GridViewColumnHeader Tag="MA_NV" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding HOTEN_NV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_NV" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="220">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYSINH_NV,StringFormat=dd/MM/yyyy}">
+                                        <GridViewColumnHeader Tag="TRIGIA_PC" 
+                                                              Command="{Binding SortCommand}" 
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Ngày sinh" Width="100">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding PHONGBAN.TEN_PB}">
+                                        <GridViewColumnHeader Tag="THOIGIANLAP_PC"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Phòng ban" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                    <!-- Báo cáo phòng ban -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="1">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách phòng ban -->
+                        <ListView Grid.Row="1"
+                            Name="listPhongBan_BaoCao"
+                                  ItemsSource="{Binding ListPhongBan}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_PB}" >
+                                        <GridViewColumnHeader Tag="MA_PB" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TEN_PB}" >
+                                        <GridViewColumnHeader Tag="TEN_PB"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên phòng ban" Width="220">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding DIACHI_PB}">
+                                        <GridViewColumnHeader Tag="DIACHI_PB"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="100">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>                                 
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                    <!-- Báo cáo nghỉ phép -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="2">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                            <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                            <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách nghỉ phép -->
+                        <ListView Grid.Row="1"
+                            Name="listNghiPhep_BaoCao"
+                                  ItemsSource="{Binding ListNghiPhep}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_NP}" >
+                                        <GridViewColumnHeader Tag="MA_PB" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_NV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="250">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding KHOANNGHIPHEP.LOAINGHIPHEP.TEN_LNP}">
+                                        <GridViewColumnHeader Tag="TEN_KNP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên loại nghỉ phép" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYBATDAU_NP,StringFormat=dd/MM/yyyy}">
+                                        <GridViewColumnHeader Tag="NGAYBATDAU_NP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Ngày bắt đầu" Width="115">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYKETTHUC_NP,StringFormat=dd/MM/yyyy}">
+                                        <GridViewColumnHeader Tag="NGAYKETTHUC_NP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Ngày kết thúc" Width="115">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding LIDO_NP}">
+                                        <GridViewColumnHeader Tag="LIDO_NP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Lí do" Width="115">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        
+                    </Grid>
+
+                    <!-- Báo cáo chấm công -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="3">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách chấm công -->
+                        <ListView Grid.Row="1"
+                            Name="listChamCong_BaoCao"
+                                  ItemsSource="{Binding ListChamCong}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_CCN}" >
+                                        <GridViewColumnHeader Tag="MA_PB" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_NV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding LOAICHAMCONG.TEN_LCC}" >
+                                        <GridViewColumnHeader Tag="TEN_LCC"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên loại chấm công" Width="150">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding THOIGIANBATDAU_CCN}">
+                                        <GridViewColumnHeader Tag="NGAYBATDAU_NP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Thời gian bắt đầu" Width="215">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding THOIGIANKETTHUC_CCN}">
+                                        <GridViewColumnHeader Tag="NGAYKETTHUC_NP"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Thời gian kết thúc" Width="215">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </Grid>
+
+                    <!-- Báo cáo Lương -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="4">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách chấm công -->
+                        <ListView Grid.Row="1"
+                            Name="listLuong_BaoCao"
+                                  ItemsSource="{Binding ListBangLuong}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_CCN}" >
+                                        <GridViewColumnHeader Tag="MA_PB" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_NV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TONGLUONG_BL,StringFormat='N0'}" >
+                                        <GridViewColumnHeader Tag="TONGLUONG_BL"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tổng lương" Width="250">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                              
 
 
 
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </Grid>
+
+                    <!-- Báo cáo Ứng viên -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="5">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        <!-- Danh sách ứng viên -->
+                        <ListView Grid.Row="1"
+                            Name="listUngVien_BaoCao"
+                                  ItemsSource="{Binding ListUngVien}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_UV}" >
+                                        <GridViewColumnHeader Tag="MA_UV" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding HOTEN_UV}" >
+                                        <GridViewColumnHeader Tag="HOTEN_UV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên ứng viên" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding EMAIL_UV}" >
+                                        <GridViewColumnHeader Tag="EMAIL_UV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Email" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding SODIENTHOAI_UV}" >
+                                        <GridViewColumnHeader Tag="SODIENTHOAI_UV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Số điện thoại" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    
+                                    <GridViewColumn DisplayMemberBinding="{Binding DIACHI_UV}" >
+                                        <GridViewColumnHeader Tag="DIACHI_UV"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </Grid>
+
+                    <!-- Báo cáo Chi phí  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="6">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <!-- Danh sách phiếu chi -->
+                        <ListView Grid.Row="1"
+                            Name="listPhieuChi_BaoCao"
+                                  ItemsSource="{Binding ListPhieuChi}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_PC}" >
+                                        <GridViewColumnHeader Tag="MA_UV" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_PC,StringFormat='N0'}" >
+                                        <GridViewColumnHeader Tag="TRIGIA_PC"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Trị giá" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding THOIGIANLAP_PC}" >
+                                        <GridViewColumnHeader Tag="THOIGIANLAP_PC"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Thời gian lập" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>                     
+
+                    </Grid>
+
+                    <!-- Báo cáo Ngày nghỉ lễ  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="343*"/>
+                            <ColumnDefinition Width="660*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChucNangBC}" Value="7">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Thanh chức năng-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+                            <StackPanel Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Tháng"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListThang}" SelectedItem="{Binding SelectedThang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedThangCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel  Width="125" Margin="0 0 25 0">
+                                <TextBlock Foreground="#6F7A80" 
+                                       Text="Năm"></TextBlock>
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="16" Margin="0,5,0,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding XuatBaoCaoCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <!-- Danh sách ngày nghỉ lễ -->
+                        <ListView Grid.Row="1"
+                            Name="listNgayNghiLe_BaoCao"
+                                  ItemsSource="{Binding ListNgayNghiLe}" Grid.ColumnSpan="2" 
+                                  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MA_NNL}" >
+                                        <GridViewColumnHeader Tag="MA_NNL" 
+                                                              
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="ID" Width="80">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>                                  
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding NGAYNGHILE_NNL}" >
+                                        <GridViewColumnHeader Tag="THOIGIANLAP_PC"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Ngày" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TEN_NNL}" >
+                                        <GridViewColumnHeader Tag="TEN_NNL"                                                               
+                                                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                              VerticalAlignment="Center" Content="Tên ngày nghỉ lễ" Width="200">
+                                        </GridViewColumnHeader>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </Grid>
 
                 </Grid>
             </Grid>
@@ -2781,6 +3596,7 @@
                     </Grid>
                 </Grid>
             </Grid>
+
         </Grid>
     </Grid>
 </Window>
