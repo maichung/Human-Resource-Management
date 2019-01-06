@@ -58,8 +58,7 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand SortCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand LuuCommand { get; set; }
-        public ICommand ChangeCmbCommand { get; set; }
-        public ICommand DoiNgayChamCongCommand { get; set; }        
+        public ICommand ChangeThangNamCommand { get; set; }
         #endregion
 
         #region Thuộc tính khác
@@ -89,24 +88,10 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
-            #region ChangeCmb command
-            ChangeCmbCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            #region Thay đổi tháng, năm command
+            ChangeThangNamCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 LoadListTTChamCong_1NV();
-            });
-            #endregion
-
-            #region Đổi ngày chấm công command
-            DoiNgayChamCongCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                if(NgayChamCong.Value < DateTime.Now.Date)
-                {
-                    IsEditable = false;
-                }
-                else
-                {
-                    IsEditable = true;
-                }
             });
             #endregion
 
@@ -312,6 +297,7 @@ namespace QuanLyNhanSu.ViewModel
                                             }
                                             catch (Exception e)
                                             {
+                                                MessageBox.Show("Sửa thất bại, có ngày chấm công đã được tính lương bạn không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                                 transactions.Rollback();
                                             }
                                         }                                        
@@ -328,8 +314,7 @@ namespace QuanLyNhanSu.ViewModel
                                         };
                                         DataProvider.Ins.model.CHAMCONGNGAY.Add(chamCongNgayMoi);
                                         DataProvider.Ins.model.SaveChanges();
-                                    }
-                                    
+                                    }                                    
                                 }
                                 //TH2: thay đổi chấm công tăng ca
                                 if (item.TangCa != temp.TangCa)
@@ -350,6 +335,7 @@ namespace QuanLyNhanSu.ViewModel
                                             }
                                             catch (Exception e)
                                             {
+                                                MessageBox.Show("Sửa thất bại, có ngày chấm công đã được tính lương bạn không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                                 transactions.Rollback();
                                             }
                                         }
@@ -392,12 +378,11 @@ namespace QuanLyNhanSu.ViewModel
                                     }                                    
                                 }
                                 break;
-                            }
-                            
+                            }                            
                         }
                     }
 
-                    MessageBox.Show("Chỉnh sửa chấm công thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 p.Close();
@@ -408,29 +393,13 @@ namespace QuanLyNhanSu.ViewModel
         #region Các hàm hỗ trợ
         public void LoadListNhanVien()
         {
-            ListNhanVien = new ObservableCollection<NHANVIEN>();
-
-            var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
-                             where (from ccn in DataProvider.Ins.model.CHAMCONGNGAY
-                                    where ccn.MA_NV == nv.MA_NV
-                                    select ccn).FirstOrDefault() != null
-                             select nv;
-
             if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
             {
-                foreach (NHANVIEN item in listNhanVien)
-                {
-                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
-                    {
-                        ListNhanVien.Add(item);
-                    }
-                }
-                return;
+                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true && MainViewModel.TaiKhoan.NHANVIEN.MA_PB == x.MA_PB));
             }
-
-            foreach (NHANVIEN item in listNhanVien)
+            else
             {
-                ListNhanVien.Add(item);
+                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
             }
         }
 

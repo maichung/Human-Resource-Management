@@ -152,7 +152,6 @@ namespace QuanLyNhanSu.ViewModel
                         DataProvider.Ins.model.LOAILUONG.Remove(lnp);
                         DataProvider.Ins.model.SaveChanges();
                         transactions.Commit();
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         p.Close();
                     }
                     catch (Exception e)

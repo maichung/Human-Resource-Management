@@ -164,7 +164,6 @@ namespace QuanLyNhanSu.ViewModel
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
-                //LoadListKhoanNghiPhep_MainWD();
                 p.Close();
             });
             #endregion
