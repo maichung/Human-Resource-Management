@@ -50,6 +50,7 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Binding Command
+        public ICommand LoadDataCCCommand { get; set; }
         public ICommand TaoMoiCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
         public ICommand HuyCommand { get; set; }
@@ -70,16 +71,23 @@ namespace QuanLyNhanSu.ViewModel
 
         public ChamCongViewModel()
         {
-            if (DataProvider.Ins.model.LOAICHAMCONG.Count() == 0)
-            {
-                CreateLoaiChamCong();
-            }                
-            LoadListNhanVien();
+            #region Tạo dữ liệu source ban đầu
             NgayChamCong = DateTime.Now;
             int[] DSNam = new int[] { 2019, 2020, 2021, 2022, 2023 };
             ListNam = new ObservableCollection<int>(DSNam);
             int[] DSThang = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
             ListThang = new ObservableCollection<int>(DSThang);
+            #endregion
+
+            #region Load dữ liệu chấm công command
+            LoadDataCCCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                LoadListNhanVien();
+            });
+            #endregion
 
             #region ChangeCmb command
             ChangeCmbCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
@@ -397,6 +405,7 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void LoadListNhanVien()
         {
             ListNhanVien = new ObservableCollection<NHANVIEN>();
@@ -423,13 +432,6 @@ namespace QuanLyNhanSu.ViewModel
             {
                 ListNhanVien.Add(item);
             }
-        }
-
-        public void CreateLoaiChamCong()
-        {
-            DataProvider.Ins.model.LOAICHAMCONG.Add(new LOAICHAMCONG() { TEN_LCC = "Hành chính" });
-            DataProvider.Ins.model.LOAICHAMCONG.Add(new LOAICHAMCONG() { TEN_LCC = "Tăng ca" });
-            DataProvider.Ins.model.SaveChanges();
         }
 
         public void LoadListTTChamCong_ALLNV()
@@ -602,5 +604,6 @@ namespace QuanLyNhanSu.ViewModel
                 backupListTTChamCong_1NV.Add(new ThongTinChamCong(item));
             }
         }
+        #endregion
     }
 }

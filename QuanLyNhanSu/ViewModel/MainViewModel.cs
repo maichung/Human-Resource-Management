@@ -49,7 +49,6 @@ namespace QuanLyNhanSu.ViewModel
 
         private ObservableCollection<ThongTinNhanVien> _ListNhanVienSinhNhatThang;
         public ObservableCollection<ThongTinNhanVien> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
-        
         #endregion
 
         static public TAIKHOAN TaiKhoan { get; set; }
@@ -81,7 +80,7 @@ namespace QuanLyNhanSu.ViewModel
 
         #endregion
 
-        #region Command cài đặt quyền
+        #region Set quyền command
         public ICommand SetupQuyenCommand { get; set; }
         #endregion
 
@@ -104,14 +103,16 @@ namespace QuanLyNhanSu.ViewModel
 
         public MainViewModel()
         {
-            SetupQuyenCommand = new RelayCommand<Object>((p) =>
+            #region Xử lý load dữ liệu khi đăng nhập thành công
+            SetupQuyenCommand = new RelayCommand<Grid>((p) =>
             {
                 return true;
             }, (p) =>
             {
                 SetupQuyenTaiKhoan();
             });
-            
+            #endregion
+
             #region Xử lý ẩn hiện Grid
             BtnTrangChuCommand = new RelayCommand<Object>((p) =>
             {
@@ -273,9 +274,10 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void SetupQuyenTaiKhoan()
         {
-            if(TaiKhoan.QUYEN_TK == "Trưởng bộ phận Hành chính-Nhân sự")
+            if (TaiKhoan.QUYEN_TK == "Trưởng bộ phận Hành chính-Nhân sự")
             {
                 QuyenTK = (int)QuyenTaiKhoan.TruongBoPhan_HCNS;
             }
@@ -293,8 +295,7 @@ namespace QuanLyNhanSu.ViewModel
             }
         }
 
-        #region Các hàm hỗ trợ
-        public void LoadListAvatarNghiPhep1Ngay()
+        public void LoadListNghiPhep1Ngay()
         {
             DateTime today = DateTime.Today;
 
