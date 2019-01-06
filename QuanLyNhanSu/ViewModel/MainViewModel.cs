@@ -49,7 +49,6 @@ namespace QuanLyNhanSu.ViewModel
 
         private ObservableCollection<ThongTinNhanVien> _ListNhanVienSinhNhatThang;
         public ObservableCollection<ThongTinNhanVien> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
-        
         #endregion
 
         static public TAIKHOAN TaiKhoan { get; set; }
@@ -81,7 +80,7 @@ namespace QuanLyNhanSu.ViewModel
 
         #endregion
 
-        #region Command cài đặt quyền
+        #region Set quyền command
         public ICommand SetupQuyenCommand { get; set; }
         #endregion
 
@@ -104,21 +103,29 @@ namespace QuanLyNhanSu.ViewModel
 
         public MainViewModel()
         {
-            SetupQuyenCommand = new RelayCommand<Object>((p) =>
+            #region Xử lý load dữ liệu khi đăng nhập thành công
+            SetupQuyenCommand = new RelayCommand<Grid>((p) =>
             {
                 return true;
             }, (p) =>
             {
                 SetupQuyenTaiKhoan();
             });
-            
+            #endregion
+
             #region Xử lý ẩn hiện Grid
             BtnTrangChuCommand = new RelayCommand<Object>((p) =>
             {
                   return true;
             }, (p) =>
             {
-                   ChucNangNS = (int)ChucNangNhanSu.TrangChu;
+                ChucNangNS = (int)ChucNangNhanSu.TrangChu;
+                LoadListNghiPhep1Ngay();
+                LoadListNghiPhep7Ngay();
+                LoadListNhanVienMoi();
+                LoadListNhanVienSinhNhatThang();
+                LoadSoLuongTuyenDung();
+                LoadNgayLeKeTiep();
             });
 
             BtnNhanVienCommand = new RelayCommand<Grid>((p) =>
@@ -273,9 +280,10 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void SetupQuyenTaiKhoan()
         {
-            if(TaiKhoan.QUYEN_TK == "Trưởng bộ phận Hành chính-Nhân sự")
+            if (TaiKhoan.QUYEN_TK == "Trưởng bộ phận Hành chính-Nhân sự")
             {
                 QuyenTK = (int)QuyenTaiKhoan.TruongBoPhan_HCNS;
             }
@@ -293,7 +301,6 @@ namespace QuanLyNhanSu.ViewModel
             }
         }
 
-        #region Các hàm hỗ trợ
         public void LoadListNghiPhep1Ngay()
         {
             DateTime today = DateTime.Today;
@@ -302,7 +309,7 @@ namespace QuanLyNhanSu.ViewModel
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
                              join np in DataProvider.Ins.model.NGHIPHEP
                              on nv.MA_NV equals np.MA_NV
-                             where (DbFunctions.DiffDays(np.NGAYBATDAU_NP, DateTime.Now) == 0)
+                             where (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) == 0)
                              select nv;
             foreach (NHANVIEN nv in listNhanVien)
             {
@@ -340,7 +347,7 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListNhanVienMoi = new ObservableCollection<ThongTinNhanVien>();
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                             where (DbFunctions.DiffDays(nv.NGAYVAOLAM_NV, DateTime.Now) <= 30)
+                             where (nv.NGAYVAOLAM_NV.Value.Month == DateTime.Now.Month && nv.NGAYVAOLAM_NV.Value.Year == DateTime.Now.Year)
                              select nv;
             foreach (NHANVIEN nv in listNhanVien)
             {
@@ -360,7 +367,8 @@ namespace QuanLyNhanSu.ViewModel
             ListNhanVienSinhNhatThang = new ObservableCollection<ThongTinNhanVien>();
 
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                               where (DbFunctions.DiffMonths(nv.NGAYSINH_NV, DateTime.Now) == 0)
+                               where (nv.NGAYSINH_NV.Value.Month == DateTime.Now.Month)
+                               orderby nv.NGAYSINH_NV.Value.Day
                                select nv;
 
             foreach (NHANVIEN nv in listNhanVien)
@@ -408,7 +416,7 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     Ten = sortedListNgayNghiLe[1].TEN_NNL,
                     Ngay = (sortedListNgayNghiLe[1].NGAY_NNL ?? DateTime.Now).Day,
-                    Thang = MonthNumberToString((sortedListNgayNghiLe[0].NGAY_NNL ?? DateTime.Now).Month)
+                    Thang = MonthNumberToString((sortedListNgayNghiLe[1].NGAY_NNL ?? DateTime.Now).Month)
                 };
             }
 

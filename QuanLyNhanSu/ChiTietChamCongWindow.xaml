@@ -63,7 +63,7 @@
                                       FontSize="16" Margin="0,5,0,0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                <i:InvokeCommandAction Command="{Binding ChangeThangNamCommand}">
                                 </i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
@@ -76,7 +76,7 @@
                                       FontSize="16" Margin="0,5,0,0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ChangeCmbCommand}">
+                                <i:InvokeCommandAction Command="{Binding ChangeThangNamCommand}">
                                 </i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>

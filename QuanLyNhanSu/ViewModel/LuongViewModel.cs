@@ -140,7 +140,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 ListBangLuong = new ObservableCollection<BANGLUONG>();
                 var lstBL = DataProvider.Ins.model.BANGLUONG.Where(x => x.NHANVIEN.MA_PB == SelectedPhongBan.MA_PB
-                                                                     && x.THANG_BL.Value.Month==SelectedThang && x.THANG_BL.Value.Year==SelectedNam);
+                                                                     && x.THANG_BL.Value.Month == SelectedThang && x.THANG_BL.Value.Year == SelectedNam);
                 foreach (BANGLUONG item in lstBL)
                 {
                     ListBangLuong.Add(item);
@@ -158,7 +158,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 var lstBL = DataProvider.Ins.model.BANGLUONG.Where(x => x.NHANVIEN.MA_PB == SelectedPhongBan.MA_PB
                                                                      && x.THANG_BL.Value.Month == SelectedThang && x.THANG_BL.Value.Year == SelectedNam);
-                if (lstBL.Count()>0)
+                if (lstBL.Count() > 0)
                 {
                     MessageBox.Show("Thời gian và phòng ban đã chọn đã được tính lương, vui lòng chọn thời gian hoặc phòng ban khác!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
@@ -168,7 +168,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 SoNgayLamViecChung = TinhSoNgayLamViecChung(SelectedNam, SelectedThang);
                 var listNhanVien = DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true && x.MA_PB == SelectedPhongBan.MA_PB);
-                if (listNhanVien.Count() ==0)
+                if (listNhanVien.Count() == 0)
                 {
                     MessageBox.Show("Không có nhân viên trong phòng ban đã chọn, vui lòng thêm nhân viên trước khi tính lương!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -208,7 +208,7 @@ namespace QuanLyNhanSu.ViewModel
                     };
 
                     DataProvider.Ins.model.BANGLUONG.Add(BangLuongMoi);
-                    ListBangLuong.Add(BangLuongMoi);                    
+                    ListBangLuong.Add(BangLuongMoi);
                 }
 
                 MessageBoxResult result = MessageBox.Show("Tính lương thành công! Bạn có muốn lưu bảng lương không? Bảng lương khi được lưu sẽ không thể xoá hoặc chỉnh sửa.", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -216,6 +216,28 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     DataProvider.Ins.model.SaveChanges();
                     MessageBox.Show("Lưu bảng lương thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    var changedEntries = DataProvider.Ins.model.ChangeTracker.Entries()
+               .Where(x => x.State != System.Data.Entity.EntityState.Unchanged).ToList();
+
+                    foreach (var entry in changedEntries)
+                    {
+                        switch (entry.State)
+                        {
+                            case System.Data.Entity.EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = System.Data.Entity.EntityState.Unchanged;
+                                break;
+                            case System.Data.Entity.EntityState.Added:
+                                entry.State = System.Data.Entity.EntityState.Detached;
+                                break;
+                            case System.Data.Entity.EntityState.Deleted:
+                                entry.State = System.Data.Entity.EntityState.Unchanged;
+                                break;
+                        }
+                    }
                 }
             });
             #endregion
@@ -247,7 +269,7 @@ namespace QuanLyNhanSu.ViewModel
 
             #region Huỷ command
             HuyCommand = new RelayCommand<Window>((p) =>
-            {                
+            {
                 return true;
             }, (p) =>
             {
@@ -266,7 +288,7 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListKhoanLuong = new ObservableCollection<KHOANLUONG>();
             var listKhoanLuong = DataProvider.Ins.model.KHOANLUONG.Where(x => x.MA_NV == manv);
-            foreach(KHOANLUONG item in listKhoanLuong)
+            foreach (KHOANLUONG item in listKhoanLuong)
             {
                 ListKhoanLuong.Add(item);
             }
@@ -298,8 +320,8 @@ namespace QuanLyNhanSu.ViewModel
             DateTime firstDay = new DateTime(year, month, 1);
             DateTime lastDay = new DateTime(year, month, SoNgayTrongThang);
 
-            var lstCoLuong = DataProvider.Ins.model.NGHIPHEP.Where(x => x.KHOANNGHIPHEP.LOAINGHIPHEP.COLUONG_LNP == true && x.MA_NV == manv 
-                                                                    && ((x.NGAYBATDAU_NP.Value.Month==month && x.NGAYBATDAU_NP.Value.Year==year) || (x.NGAYKETTHUC_NP.Value.Month == month && x.NGAYKETTHUC_NP.Value.Year == year)));
+            var lstCoLuong = DataProvider.Ins.model.NGHIPHEP.Where(x => x.KHOANNGHIPHEP.LOAINGHIPHEP.COLUONG_LNP == true && x.MA_NV == manv
+                                                                    && ((x.NGAYBATDAU_NP.Value.Month == month && x.NGAYBATDAU_NP.Value.Year == year) || (x.NGAYKETTHUC_NP.Value.Month == month && x.NGAYKETTHUC_NP.Value.Year == year)));
             foreach (var item in lstCoLuong)
             {
                 if (item.NGAYBATDAU_NP < firstDay)
@@ -326,7 +348,7 @@ namespace QuanLyNhanSu.ViewModel
             DateTime firstDay = new DateTime(year, month, 1);
             DateTime lastDay = new DateTime(year, month, SoNgayTrongThang);
 
-            var lstKhongLuong = DataProvider.Ins.model.NGHIPHEP.Where(x => x.KHOANNGHIPHEP.LOAINGHIPHEP.COLUONG_LNP == false && x.MA_NV == manv 
+            var lstKhongLuong = DataProvider.Ins.model.NGHIPHEP.Where(x => x.KHOANNGHIPHEP.LOAINGHIPHEP.COLUONG_LNP == false && x.MA_NV == manv
                                                                     && ((x.NGAYBATDAU_NP.Value.Month == month && x.NGAYBATDAU_NP.Value.Year == year) || (x.NGAYKETTHUC_NP.Value.Month == month && x.NGAYKETTHUC_NP.Value.Year == year)));
             foreach (var item in lstKhongLuong)
             {
@@ -350,7 +372,7 @@ namespace QuanLyNhanSu.ViewModel
 
         public int TinhSoNgayLamChinhThuc(int manv, int year, int month)
         {
-            return DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_LCC == 1 && x.MA_NV == manv && x.THOIGIANBATDAU_CCN.Value.Month==month && x.THOIGIANBATDAU_CCN.Value.Year==year).Count();
+            return DataProvider.Ins.model.CHAMCONGNGAY.Where(x => x.MA_LCC == 1 && x.MA_NV == manv && x.THOIGIANBATDAU_CCN.Value.Month == month && x.THOIGIANBATDAU_CCN.Value.Year == year).Count();
         }
 
         public int TinhSoGioLamTangCa(int manv, int year, int month)

@@ -35,18 +35,9 @@
 
             <!-- Chọn ngày chấm công -->
             <StackPanel Width="200" Grid.Row="0" HorizontalAlignment="Left">
-                <TextBlock Foreground="#6F7A80" 
-                                       Text="Chọn ngày chấm công"></TextBlock>
+                <TextBlock Foreground="#6F7A80" Text="Ngày chấm công"/>
                 <DatePicker SelectedDate="{Binding NgayChamCong, UpdateSourceTrigger=PropertyChanged}"
-                            FontSize="16" Margin="0,5,0,0">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedDateChanged">
-                            <i:InvokeCommandAction Command="{Binding DoiNgayChamCongCommand}"
-                                                   CommandParameter="{Binding ElementName=chamCongWindow}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </DatePicker>
+                            FontSize="16" Margin="0,5,0,0" IsEnabled="True"/>
             </StackPanel>
 
 

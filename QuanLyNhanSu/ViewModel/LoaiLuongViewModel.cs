@@ -49,11 +49,11 @@ namespace QuanLyNhanSu.ViewModel
 
         public LoaiLuongViewModel()
         {
+            #region Tạo dữ liệu ban đầu
             LoadListLoaiLuong();
+            #endregion
 
-            IsEditable = false;
-
-            // Tạo mới command
+            #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -65,8 +65,9 @@ namespace QuanLyNhanSu.ViewModel
                 LoaiLuongWindow loaiLuongWindow = new LoaiLuongWindow();
                 loaiLuongWindow.ShowDialog();
             });
+            #endregion
 
-            // Lưu command
+            #region Lưu command
             LuuCommand = new RelayCommand<Window>((p) =>
             {
                 if (string.IsNullOrEmpty(TenLoaiLuong))
@@ -79,6 +80,7 @@ namespace QuanLyNhanSu.ViewModel
                     MessageBox.Show("Vui lòng chỉnh sửa thông tin trước khi lưu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
+
 
                 return true;
             }, (p) =>
@@ -105,8 +107,9 @@ namespace QuanLyNhanSu.ViewModel
               
                 p.Close();
             });
+            #endregion
 
-            // Huỷ command
+            #region Huỷ command
             HuyCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
@@ -120,8 +123,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
-            // Xóa command
+            #region Xóa command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
@@ -148,7 +152,6 @@ namespace QuanLyNhanSu.ViewModel
                         DataProvider.Ins.model.LOAILUONG.Remove(lnp);
                         DataProvider.Ins.model.SaveChanges();
                         transactions.Commit();
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         p.Close();
                     }
                     catch (Exception e)
@@ -159,8 +162,9 @@ namespace QuanLyNhanSu.ViewModel
                     LoadListLoaiLuong();
                 }
             });
+            #endregion
 
-            // Sửa command
+            #region Sửa command
             SuaCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -168,11 +172,20 @@ namespace QuanLyNhanSu.ViewModel
             {
                 IsEditable = true;
             });
+            #endregion
 
-            // Hiển thị command
+            #region Hiển thị command
             HienThiCommand = new RelayCommand<Object>((p) =>
             {
-                return SelectedLoaiLuong == null ? false : true;
+                if (SelectedLoaiLuong == null)
+                    return false;
+                if (SelectedLoaiLuong.MA_LL == 1 || SelectedLoaiLuong.MA_LL == 2)
+                {
+                    MessageBox.Show("Không được chỉnh sửa loại lương này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }                    
+
+                return true;
             }, (p) =>
             {
                 IsEditable = false;
@@ -182,7 +195,9 @@ namespace QuanLyNhanSu.ViewModel
                 LoaiLuongWindow loaiLuongWindow = new LoaiLuongWindow();
                 loaiLuongWindow.ShowDialog();
             });
+            #endregion
 
+            #region Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListLoaiLuong);
@@ -198,7 +213,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchLoaiLuong))
@@ -212,10 +229,11 @@ namespace QuanLyNhanSu.ViewModel
                         return (searchLoaiLuong as LOAILUONG).TEN_LL.IndexOf(SearchLoaiLuong, StringComparison.OrdinalIgnoreCase) >= 0;
                     };
                 }
-
             });
+            #endregion
         }
 
+        #region Các hàm hỗ trợ
         public void LoadListLoaiLuong()
         {
             ListLoaiLuong = new ObservableCollection<LOAILUONG>(DataProvider.Ins.model.LOAILUONG);
@@ -226,5 +244,6 @@ namespace QuanLyNhanSu.ViewModel
             SelectedLoaiLuong = null;
             TenLoaiLuong = null;
         }
+        #endregion
     }
 }

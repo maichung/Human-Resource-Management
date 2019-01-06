@@ -109,15 +109,17 @@ namespace QuanLyNhanSu.ViewModel
                 {
                     foreach (KHOANLUONG item in ListKhoanLuong_KLWD)
                     {
-                        var KhoanLuongMoi = new KHOANLUONG()
+                        var khoanLuongMoi = new KHOANLUONG()
                         {
                             MA_NV = SelectedCmbNV.MA_NV,
                             MA_LL = item.MA_LL,
                             SOTIEN_KL = item.SOTIEN_KL
                         };
 
-                        DataProvider.Ins.model.KHOANLUONG.Add(KhoanLuongMoi);
+                        DataProvider.Ins.model.KHOANLUONG.Add(khoanLuongMoi);
                         DataProvider.Ins.model.SaveChanges();
+
+                        ListKhoanLuong_MainWD.Add(khoanLuongMoi);
                     }
 
                     MessageBox.Show("Thêm khoản lương thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -142,21 +144,23 @@ namespace QuanLyNhanSu.ViewModel
                     {
                         foreach (KHOANLUONG item in ListKhoanLuong_CapNhat)
                         {
-                            var KhoanLuongMoi = new KHOANLUONG()
+                            var khoanLuongMoi = new KHOANLUONG()
                             {
                                 MA_NV = SelectedKhoanLuong.MA_NV,
                                 MA_LL = item.MA_LL,
                                 SOTIEN_KL = item.SOTIEN_KL
                             };
 
-                            DataProvider.Ins.model.KHOANLUONG.Add(KhoanLuongMoi);
+                            DataProvider.Ins.model.KHOANLUONG.Add(khoanLuongMoi);
                             DataProvider.Ins.model.SaveChanges();
+
+                            ListKhoanLuong_MainWD.Add(khoanLuongMoi);
                         }
                     }
 
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                LoadListKhoanLuong_MainWD();
+
                 p.Close();
             });
             #endregion
@@ -179,7 +183,7 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (SelectedKhoanLuong == null)
                 {
-                    MessageBox.Show("Đang tạo mới không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Vui lòng chọn khoản lương trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
 
@@ -229,29 +233,18 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         void LoadListNhanVien()
         {
             if (SelectedKhoanLuong == null)
             {
                 ListNhanVien = new ObservableCollection<NHANVIEN>();
-                var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
+                var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
                                    where (from kl in DataProvider.Ins.model.KHOANLUONG
                                           where nv.MA_NV == kl.MA_NV
                                           select kl)
                                          .FirstOrDefault() == null
                                    select nv;
-
-                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
-                {
-                    foreach (NHANVIEN item in listNhanVien)
-                    {
-                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
-                        {
-                            ListNhanVien.Add(item);
-                        }
-                    }
-                    return;
-                }
 
                 foreach (NHANVIEN item in listNhanVien)
                 {
@@ -260,13 +253,7 @@ namespace QuanLyNhanSu.ViewModel
             }
             else
             {
-                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
-                {
-                    ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
-                    return;
-                }
-
-                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
             }
 
 
@@ -294,28 +281,15 @@ namespace QuanLyNhanSu.ViewModel
             else
             {
                 var listLoaiLuongNV = from kl in DataProvider.Ins.model.KHOANLUONG
-                                      where kl.MA_NV == SelectedKhoanLuong.MA_NV
+                                      where kl.MA_NV == SelectedKhoanLuong.MA_NV && kl.NHANVIEN.TRANGTHAI_NV == true
                                       select kl;
 
-                if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+                foreach (KHOANLUONG item in listLoaiLuongNV)
                 {
-                    foreach (KHOANLUONG item in listLoaiLuongNV)
-                    {
-                        if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.NHANVIEN.MA_PB)
-                        {
-                            ListKhoanLuong_KLWD.Add(item);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (KHOANLUONG item in listLoaiLuongNV)
-                    {
-                        ListKhoanLuong_KLWD.Add(item);
-                    }
+                    ListKhoanLuong_KLWD.Add(item);
                 }
 
-                //Xử lý việc có thêm loại lương cho nhân viên khi nhân viên đã được tạo khoản nghỉ phép
+                //Xử lý việc có thêm loại lương cho nhân viên khi nhân viên đã được tạo khoản lương
                 var listLoaiLuong = from ll in DataProvider.Ins.model.LOAILUONG
                                     where (from llNV in listLoaiLuongNV
                                            where ll.MA_LL == llNV.MA_LL
@@ -342,18 +316,12 @@ namespace QuanLyNhanSu.ViewModel
 
         public void LoadListKhoanLuong_MainWD()
         {
-            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
-            {
-                ListKhoanLuong_MainWD = new ObservableCollection<KHOANLUONG>(DataProvider.Ins.model.KHOANLUONG.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
-            }
-            else
-            {
-                ListKhoanLuong_MainWD = new ObservableCollection<KHOANLUONG>(DataProvider.Ins.model.KHOANLUONG);
-            }
+            ListKhoanLuong_MainWD = new ObservableCollection<KHOANLUONG>(DataProvider.Ins.model.KHOANLUONG.Where(x => x.NHANVIEN.TRANGTHAI_NV == true));
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanLuong_MainWD);
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(new PropertyGroupDescription("NHANVIEN.HOTEN_NV"));
         }
+        #endregion
     }
 }

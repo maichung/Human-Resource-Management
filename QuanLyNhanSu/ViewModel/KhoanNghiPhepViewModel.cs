@@ -49,6 +49,7 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Command binding
+        public ICommand LoadDataKNPCommand { get; set; }
         public ICommand TaoMoiCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
         public ICommand LuuCommand { get; set; }
@@ -59,9 +60,13 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         public KhoanNghiPhepViewModel()
-        {
-            //Màn hình chính tab Khoản nghỉ phép
-            LoadListKhoanNghiPhep_MainWD();
+        {         
+            #region Load dữ liệu khoản nghỉ phép Command
+            LoadDataKNPCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                LoadListKhoanNghiPhep_MainWD();
+            });
+            #endregion
 
             #region Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
@@ -116,7 +121,9 @@ namespace QuanLyNhanSu.ViewModel
 
                         DataProvider.Ins.model.KHOANNGHIPHEP.Add(KhoanNghiPhepMoi);
                         DataProvider.Ins.model.SaveChanges();
-                    }
+
+                        ListKhoanNghiPhep_MainWD.Add(KhoanNghiPhepMoi);
+                    }                    
                     
                     MessageBox.Show("Thêm khoản nghỉ phép thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -149,13 +156,14 @@ namespace QuanLyNhanSu.ViewModel
 
                             DataProvider.Ins.model.KHOANNGHIPHEP.Add(KhoanNghiPhepMoi);
                             DataProvider.Ins.model.SaveChanges();
+
+                            ListKhoanNghiPhep_MainWD.Add(KhoanNghiPhepMoi);
                         }
                     }
 
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
-                LoadListKhoanNghiPhep_MainWD();
                 p.Close();
             });
             #endregion
@@ -177,7 +185,7 @@ namespace QuanLyNhanSu.ViewModel
             SuaCommand = new RelayCommand<Object>((p) => {
                 if(SelectedKhoanNghiPhep == null)
                 {
-                    MessageBox.Show("Đang tạo mới không được phép sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Vui lòng chọn khoản nghỉ phép trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
                 return true;
@@ -226,12 +234,13 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Các hàm hỗ trợ
         void LoadListNhanVien()
         {
             if(SelectedKhoanNghiPhep == null)
             {
                 ListNhanVien = new ObservableCollection<NHANVIEN>();
-                var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
+                var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true)
                                    where (from knp in DataProvider.Ins.model.KHOANNGHIPHEP
                                           where nv.MA_NV == knp.MA_NV
                                           select knp)
@@ -259,11 +268,11 @@ namespace QuanLyNhanSu.ViewModel
             {
                 if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
                 {
-                    ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+                    ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB && x.TRANGTHAI_NV == true));
                     return;
                 }
 
-                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN);
+                ListNhanVien = new ObservableCollection<NHANVIEN>(DataProvider.Ins.model.NHANVIEN.Where(x => x.TRANGTHAI_NV == true));
             }
         }
 
@@ -339,16 +348,17 @@ namespace QuanLyNhanSu.ViewModel
         {
             if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
             {
-                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB));
+                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB && x.NHANVIEN.TRANGTHAI_NV == true));
             }
             else
             {
-                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP);
+                ListKhoanNghiPhep_MainWD = new ObservableCollection<KHOANNGHIPHEP>(DataProvider.Ins.model.KHOANNGHIPHEP.Where(x => x.NHANVIEN.TRANGTHAI_NV == true));
             }
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListKhoanNghiPhep_MainWD);
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(new PropertyGroupDescription("NHANVIEN.HOTEN_NV"));
         }
+        #endregion
     }
 }
