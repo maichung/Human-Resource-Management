@@ -20,7 +20,7 @@ namespace QuanLyNhanSu.ViewModel
 {
     class TuyenDungViewModel : BaseViewModel
     {
-        #region Phiếu chi ViewModel
+        #region Ứng viên ViewModel
         #region DataContext
         private ObservableCollection<UNGVIEN> _ListUngVien;
         public ObservableCollection<UNGVIEN> ListUngVien { get => _ListUngVien; set { _ListUngVien = value; OnPropertyChanged(); } }
@@ -90,6 +90,7 @@ namespace QuanLyNhanSu.ViewModel
             string[] DSTrangThai = new string[] { "Chưa xử lý", "Chấp nhận", "Từ chối" };
             ListTrangThai_HSUT = new ObservableCollection<string>(DSTrangThai);
 
+          
             #region Tạo mới command
             //Tạo mới command
             TaoMoiCommand = new RelayCommand<Object>((p) =>
@@ -636,7 +637,6 @@ namespace QuanLyNhanSu.ViewModel
 
         #endregion
 
-        
 
         #region Hồ sơ ứng tuyển
         #region DataContext
@@ -781,5 +781,8 @@ namespace QuanLyNhanSu.ViewModel
                    
         }
         #endregion
+
+       
     }
+
 }
