@@ -443,7 +443,7 @@
                 <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                     <WrapPanel Orientation="Horizontal">
                         <!-- Thẻ nghỉ phép -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -545,7 +545,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ nhên viên mới -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -602,7 +602,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ sinh nhật trong tháng -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -659,7 +659,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ tuyển dụng mới-->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -725,7 +725,7 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ ngày lễ tiếp theo -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
@@ -835,11 +835,12 @@
                         </materialDesign:Card>
 
                         <!-- Thẻ thông báo -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
+                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="7*"></RowDefinition>
+                                    <RowDefinition Height="5*"></RowDefinition>
+                                    <RowDefinition Height="2*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
                                 <!-- Tiêu đề thẻ -->
@@ -853,11 +854,20 @@
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
-                                <ListView Grid.Row="1" Margin="10 0 10 20" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    <ListViewItem>
-                                        <TextBlock TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Center" FontSize="14"/>
-                                    </ListViewItem>
-                                </ListView>
+                                <TextBlock Grid.Row="1" Foreground="#FF6F7A80" Margin="10" TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Top" FontSize="14"/>
+
+                                <!-- Xem chi tiết -->
+                                <Grid Grid.Row="2">
+                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                    <Button Content="Xoá thông báo" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding XoaThongBaoCommand}">
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </materialDesign:Card>
                     </WrapPanel>
@@ -1963,9 +1973,9 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ComboBox>
-                                </StackPanel>                                
+                                </StackPanel>
                             </StackPanel>
-                            
+
                             <Button Grid.Row="0" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" 
                                         BorderBrush="{x:Null}" Background="#8062FE"
                                     Content="Tính lương" FontWeight="Normal" FontSize="16">
@@ -2025,7 +2035,7 @@
                                                               VerticalAlignment="Center" Content="Tổng lương" Width="200">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
-                                    </GridView>                                    
+                                    </GridView>
                                 </ListView.View>
                             </ListView>
 
@@ -2054,7 +2064,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>                                
+                                </Grid.ColumnDefinitions>
 
                                 <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
                                  Text="{Binding SearchKhoanLuong, UpdateSourceTrigger=PropertyChanged}">
@@ -2500,7 +2510,7 @@
             <Grid Name="gridBaoCao">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="8">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -2581,7 +2591,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
-                            </StackPanel>                           
+                            </StackPanel>
                         </StackPanel>
                         <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
                             <i:Interaction.Triggers>
@@ -2657,7 +2667,7 @@
 
                         <!-- Thanh chức năng-->
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
-                            
+
                         </StackPanel>
                         <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
                             <i:Interaction.Triggers>
@@ -2695,7 +2705,7 @@
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Địa chỉ" Width="100">
                                         </GridViewColumnHeader>
-                                    </GridViewColumn>                                 
+                                    </GridViewColumn>
 
                                 </GridView>
                             </ListView.View>
@@ -2739,17 +2749,17 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel  Width="125" Margin="0 0 25 0">
-                            <TextBlock Foreground="#6F7A80" 
+                                <TextBlock Foreground="#6F7A80" 
                                        Text="Năm"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <ComboBox ItemsSource="{Binding ListNam}" SelectedItem="{Binding SelectedNam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontSize="16" Margin="0,5,0,0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
-                                        </i:InvokeCommandAction>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangedNamCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
                             </StackPanel>
                         </StackPanel>
                         <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
@@ -2789,7 +2799,7 @@
                                                               VerticalAlignment="Center" Content="Tên loại nghỉ phép" Width="200">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                                    
+
                                     <GridViewColumn DisplayMemberBinding="{Binding NGAYBATDAU_NP,StringFormat=dd/MM/yyyy}">
                                         <GridViewColumnHeader Tag="NGAYBATDAU_NP"                                                               
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
@@ -2814,7 +2824,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                     </Grid>
 
                     <!-- Báo cáo chấm công -->
@@ -2917,7 +2927,7 @@
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
 
-                                    
+
 
                                 </GridView>
                             </ListView.View>
@@ -3011,7 +3021,7 @@
                                                               VerticalAlignment="Center" Content="Tổng lương" Width="250">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                              
+
 
 
 
@@ -3043,8 +3053,8 @@
                         </Grid.RowDefinitions>
 
                         <!-- Thanh chức năng-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">                            
-                           
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+
                         </StackPanel>
                         <Button Grid.Column="1" Height="40" Content="Xuất báo cáo" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="#8062FE" FontWeight="Normal" Margin="0,15">
                             <i:Interaction.Triggers>
@@ -3088,7 +3098,7 @@
                                                               VerticalAlignment="Center" Content="Số điện thoại" Width="200">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                                    
+
                                     <GridViewColumn DisplayMemberBinding="{Binding DIACHI_UV}" >
                                         <GridViewColumnHeader Tag="DIACHI_UV"                                                               
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
@@ -3192,7 +3202,7 @@
 
                                 </GridView>
                             </ListView.View>
-                        </ListView>                     
+                        </ListView>
 
                     </Grid>
 
@@ -3267,7 +3277,7 @@
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="ID" Width="80">
                                         </GridViewColumnHeader>
-                                    </GridViewColumn>                                  
+                                    </GridViewColumn>
 
                                     <GridViewColumn DisplayMemberBinding="{Binding NGAYNGHILE_NNL}" >
                                         <GridViewColumnHeader Tag="THOIGIANLAP_PC"                                                               
@@ -3294,7 +3304,7 @@
             <Grid Name="gridCaiDat">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Setter Property="Visibility" Value="Visible"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="9">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -3401,6 +3411,44 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </StackPanel>
+
+                            <!-- Thông tin phần mềm -->
+                            <StackPanel>
+                                <Button Content="Thông tin phần mềm" Height="35" BorderBrush="{x:Null}" 
+                                    Background="{x:Null}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                            <Setter Property="FontWeight" Value="Normal"></Setter>
+                                            <Setter Property="Foreground" Value="#6F7A80"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangCD}" Value="2">
+                                                    <Setter Property="FontWeight" Value="DemiBold"></Setter>
+                                                    <Setter Property="Foreground" Value="#8062FE"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding TabThongTinPhanMemCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Rectangle Height="3" Margin="0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Fill" Value="{x:Null}"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ChucNangCD}" Value="2">
+                                                    <Setter Property="Fill" Value="#8062FE"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </StackPanel>
                         </StackPanel>
                         <GridSplitter Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" IsEnabled="False" Background="#FFD6D6D6"></GridSplitter>
                     </Grid>
@@ -3408,7 +3456,7 @@
                     <!-- Nội dung các tab -->
                     <Grid Grid.Row="1">
                         <!-- Tab Tài khoản -->
-                        <Grid DataContext="{StaticResource TaiKhoanVM}">
+                        <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -3483,21 +3531,21 @@
                                                 <GridViewColumnHeader Tag="TENDANGNHAP_TK" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Tên tài khoản" Width="250">
+                                                              VerticalAlignment="Center" Content="Tên tài khoản" Width="200">
                                                 </GridViewColumnHeader>
                                             </GridViewColumn>
                                             <GridViewColumn DisplayMemberBinding="{Binding QUYEN_TK}" >
                                                 <GridViewColumnHeader Tag="QUYEN_TK" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Quyền hạn" Width="200">
+                                                              VerticalAlignment="Center" Content="Quyền hạn" Width="300">
                                                 </GridViewColumnHeader>
                                             </GridViewColumn>
                                             <GridViewColumn DisplayMemberBinding="{Binding NHANVIEN.HOTEN_NV}" >
                                                 <GridViewColumnHeader Tag="HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="200">
+                                                              VerticalAlignment="Center" Content="Tên nhân viên" Width="300">
                                                 </GridViewColumnHeader>
                                             </GridViewColumn>
                                         </GridView>
@@ -3605,6 +3653,22 @@
                                     </ListView>
                                 </Grid>
                             </Grid>
+                        </Grid>
+
+                        <!-- Tab Thông tin phần mềm -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ChucNangCD}" Value="2">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <TextBlock>Thông tin phần mềm</TextBlock>
                         </Grid>
                     </Grid>
                 </Grid>

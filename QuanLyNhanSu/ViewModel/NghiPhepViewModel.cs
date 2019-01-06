@@ -175,7 +175,6 @@ namespace QuanLyNhanSu.ViewModel
                 IsNVChangeable = false;
 
                 HienThiNghiPhep();
-                //LoadListNhanVien();
 
                 NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
                 nghiphepWindow.ShowDialog();

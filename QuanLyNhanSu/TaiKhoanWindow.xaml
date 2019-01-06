@@ -7,61 +7,47 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Thông tin tài khoản" Height="680" Width="700" WindowStartupLocation="CenterScreen" 
+        Title="Thông tin tài khoản" Height="700" Width="700" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         DataContext="{StaticResource TaiKhoanVM}" ResizeMode="CanMinimize"
         Name="taiKhoanWindow">
     <Grid Margin="20 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- Hình ảnh và thanh công cụ-->
-        <Grid Grid.Row="0" Margin="0 0 0 20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <!-- Thanh công cụ-->
+        <Grid Grid.Row="0" Margin="0 0 -20 10">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <!-- Sửa thông tin -->
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
+                    <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
 
-            <!--  -->
-            <Grid Grid.Column="0">
-                <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
-                    <TextBlock Text="" FontSize="22" HorizontalAlignment="Left"
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"/>
-                </StackPanel>
-            </Grid>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SuaCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
 
-            <!-- Thanh công cụ -->
-            <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="WhiteSmoke">
-                    <!-- Sửa thông tin -->
-                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Chỉnh sửa">
-                        <Image Stretch="None" Source="Resources\Icons\btnSua.png"></Image>
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
+                    <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
 
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding SuaCommand}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
-                    <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="40" ToolTip="Xoá">
-                        <Image Stretch="None" Source="Resources\Icons\btnXoa.png"></Image>
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding XoaCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding XoaCommand}"
                                                        CommandParameter="{Binding ElementName=taiKhoanWindow}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                </StackPanel>
-
-            </Grid>
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!-- Thông tin tài khoản -->
@@ -83,18 +69,18 @@
                 </StackPanel>
 
                 <ListView Grid.Row="1">
+                    <ListView.Style>
+                        <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
+                    
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
-
                         <StackPanel Width="600">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Tên đăng nhập"></TextBlock>
@@ -102,31 +88,26 @@
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
 
+                    <ListViewItem>
                         <StackPanel Width="600">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Mật khẩu"></TextBlock>
-                            <PasswordBox Name="pbxMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center" HorizontalAlignment="Stretch"  VerticalContentAlignment="Center" BorderBrush="#FFD6D6D6" Background="{x:Null}" SelectionBrush="#FF0078D7" FontSize="14">
+                            <PasswordBox Name="pbxMatKhau" FontSize="14" Margin="0,5,0,0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PasswordChanged">
                                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </PasswordBox>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Width="600">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Nhập lại mật khẩu"></TextBlock>
-                            <PasswordBox Name="pbxNhapLaiMatKhau" materialDesign:HintAssist.Hint="Nhập lại mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center" HorizontalAlignment="Stretch"  VerticalContentAlignment="Center" BorderBrush="#FFD6D6D6" Background="{x:Null}" SelectionBrush="#FF0078D7" FontSize="14">
+                            <PasswordBox Name="pbxNhapLaiMatKhau" FontSize="14"  Margin="0,5,0,0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PasswordChanged">
                                         <i:InvokeCommandAction Command="{Binding RepeatPasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxNhapLaiMatKhau}"/>
@@ -135,20 +116,9 @@
 
                             </PasswordBox>
                         </StackPanel>
-
                     </ListViewItem>
-                    <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
 
+                    <ListViewItem>
                         <StackPanel Width="600">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Quyền hạn"></TextBlock>
@@ -156,18 +126,8 @@
                                       FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
+                    
                     <ListViewItem>
-                        <ListViewItem.Style>
-                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                        <Setter Property="IsEnabled" Value="True"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListViewItem.Style>
-
                         <StackPanel Width="600">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Nhân viên"></TextBlock>

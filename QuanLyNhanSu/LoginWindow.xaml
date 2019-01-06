@@ -27,7 +27,7 @@
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
                     <StackPanel Margin="0,0,0,100">
                         <Image Source="Resources/Icons/logo2.png" Height="70" Stretch="Uniform" Margin="0,0,0,10"/>
-                        <TextBlock TextAlignment="Center" FontStyle="Italic">Focus on what matters.</TextBlock>
+                        <TextBlock TextAlignment="Center" FontSize="16" FontFamily="Segoe UI Light">Focus on what matters.</TextBlock>
                     </StackPanel>
 
                     <StackPanel>

@@ -30,7 +30,7 @@
                     </Ellipse.Fill>
                 </Ellipse>
                 <Button BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Thay đổi ảnh đại diện" Margin="-10 0 0 0"
-                        Content="Thay đổi ảnh" Height="Auto" FontSize="12" HorizontalAlignment="Left" Foreground="#8062FE">   
+                        Content="Thay đổi ảnh" Height="Auto" FontSize="12" HorizontalAlignment="Left" Foreground="#6F7A80" FontWeight="Normal">   
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ThayAnhCommand}">

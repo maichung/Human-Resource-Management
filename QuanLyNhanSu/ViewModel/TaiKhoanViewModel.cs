@@ -92,13 +92,14 @@ namespace QuanLyNhanSu.ViewModel
         #region Thuộc tính ẩn hiện tab
         public enum ChucNangCaiDat
         {
-            TaiKhoan, NgayNghiLe
+            TaiKhoan, NgayNghiLe, ThongTinPhanMem
         };
         private int _ChucNangCD;
         public int ChucNangCD { get => _ChucNangCD; set { _ChucNangCD = value; OnPropertyChanged(); } }
 
         public ICommand TabTaiKhoanCommand { get; set; }
         public ICommand TabNgayNghiLeCommand { get; set; }
+        public ICommand TabThongTinPhanMemCommand { get; set; }
         #endregion
 
         public TaiKhoanViewModel()
@@ -118,6 +119,14 @@ namespace QuanLyNhanSu.ViewModel
             }, (p) =>
             {
                 ChucNangCD = (int)ChucNangCaiDat.NgayNghiLe;
+            });
+
+            TabThongTinPhanMemCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ChucNangCD = (int)ChucNangCaiDat.ThongTinPhanMem;
             });
             #endregion
 
