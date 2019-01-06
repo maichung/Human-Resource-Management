@@ -7,32 +7,36 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLyNhanSu"
         mc:Ignorable="d"
-        Title="Đăng nhập" Height="500" Width="600" WindowStartupLocation="CenterScreen" 
+        Title="Đăng nhập" Height="500" Width="500" WindowStartupLocation="CenterScreen" 
         Icon="Resources/Icons/logo.png" Foreground="#FF232C3A" FontSize="13"
         ResizeMode="CanMinimize"  DataContext="{StaticResource LoginVM}" Name="dangNhap">
-    <Grid Margin="70 0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0 0 -70 0">
+        <Grid Grid.Row="0">
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
-            <TextBlock Text="Đăng nhập" VerticalAlignment="Bottom" FontFamily="Segoe UI SemiBold" FontSize="28" Foreground="#232C3A"></TextBlock>
+            <Image Source="Resources/Icons/logo2.png" Height="50" Stretch="Uniform" VerticalAlignment="Bottom" />
         </Grid>
 
-        <TextBox Name="tboxUserName" Grid.Row="1" materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"/>
-        <PasswordBox Grid.Row="2" Name="pbxMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PasswordChanged">
-                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </PasswordBox>
-        <Button Grid.Row="3" Height="40" Background="#8062FE" IsDefault="True" VerticalAlignment="Center"  
+        <materialDesign:Card Grid.Row="1" VerticalAlignment="Center" Width="350" Padding="30 50">
+            <StackPanel >
+                <TextBox Name="tboxUserName" Margin="0 0 0 20" materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"/>
+                <PasswordBox Name="pbxMatKhau" materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PasswordChanged">
+                            <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </PasswordBox>
+            </StackPanel>           
+        </materialDesign:Card>
+        
+        <Button Grid.Row="2" Height="40" Width="350" Background="#8062FE" IsDefault="True" VerticalAlignment="Center"  
                 Command="{Binding DangNhapCommand}" CommandParameter="{Binding ElementName=dangNhap}"
                 Content="Đăng nhập" BorderBrush="{x:Null}">
         </Button>       

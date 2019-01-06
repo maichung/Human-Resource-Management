@@ -173,7 +173,6 @@
     <Compile Include="Model\TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ThongTinBangLuong.cs" />
     <Compile Include="Model\ThongTinChamCong.cs" />
     <Compile Include="Model\ThongTinNgayNghiLe.cs" />
     <Compile Include="Model\ThongTinNhanVien.cs" />
@@ -383,6 +382,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Icons\logo2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\TempFiles\avatar.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

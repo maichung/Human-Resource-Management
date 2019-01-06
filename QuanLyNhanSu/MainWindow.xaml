@@ -41,9 +41,9 @@
                     <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.HOTEN_NV}" HorizontalAlignment="Left" FontSize="16" 
                                FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
                     <TextBlock Text="{Binding TaiKhoanHienThi.NHANVIEN.CHUCVU_NV}" HorizontalAlignment="Left" FontSize="12" 
-                               FontFamily="Segoe UI Semibold" TextWrapping="Wrap"></TextBlock>
+                               Foreground="#6F7A80" TextWrapping="Wrap"></TextBlock>
                     <Button Content="Đăng xuất" HorizontalAlignment="Left" 
-                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0">
+                               Foreground="#6F7A80" FontSize="12" Background="{x:Null}" BorderBrush="{x:Null}" Margin="-15,0,0,0" FontWeight="Normal">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding DangXuatCommand}"
@@ -1794,7 +1794,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -1832,7 +1832,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>
@@ -1870,7 +1870,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Rectangle Height="4" Margin="0">
+                                <Rectangle Height="3" Margin="0">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
                                             <Setter Property="Fill" Value="{x:Null}"></Setter>

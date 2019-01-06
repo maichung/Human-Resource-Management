@@ -90,12 +90,12 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel VerticalAlignment="Center" Grid.Column="0">
-                        <TextBlock Foreground="#6F7A80" Text="Nghỉ phép có lương (ngày)" Margin="0,0,0,5"></TextBlock>
+                        <TextBlock Foreground="#6F7A80" Text="Nghỉ phép có lương (ngày) [1]" Margin="0,0,0,5"></TextBlock>
                         <TextBlock FontSize="14" Text="{Binding SoNgayNghiCoLuong}" TextWrapping="Wrap"></TextBlock>
                     </StackPanel>
 
                     <StackPanel VerticalAlignment="Center" Grid.Column="1">
-                        <TextBlock Foreground="#6F7A80" Text="Nghỉ phép không lương (ngày}" Margin="0,0,0,5"></TextBlock>
+                        <TextBlock Foreground="#6F7A80" Text="Nghỉ phép không lương (ngày)" Margin="0,0,0,5"></TextBlock>
                         <TextBlock FontSize="14" Text="{Binding SoNgayNghiKhongLuong}" TextWrapping="Wrap"></TextBlock>
                     </StackPanel>
                 </Grid>
@@ -110,12 +110,12 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel VerticalAlignment="Center" Grid.Column="0">
-                        <TextBlock Foreground="#6F7A80" Text="Thời gian đi làm chính thức (ngày)" Margin="0,0,0,5"></TextBlock>
+                        <TextBlock Foreground="#6F7A80" Text="Thời gian đi làm chính thức (ngày) [2]" Margin="0,0,0,5"></TextBlock>
                         <TextBlock FontSize="14" Text="{Binding SoNgayLamChinhThuc}" TextWrapping="Wrap"></TextBlock>
                     </StackPanel>
 
                     <StackPanel VerticalAlignment="Center" Grid.Column="1">
-                        <TextBlock Foreground="#6F7A80" Text="Thời gian tăng ca (giờ)" Margin="0,0,0,5"></TextBlock>
+                        <TextBlock Foreground="#6F7A80" Text="Thời gian tăng ca (giờ) [3]" Margin="0,0,0,5"></TextBlock>
                         <TextBlock FontSize="14" Text="{Binding SoGioLamTangCa}" TextWrapping="Wrap"></TextBlock>
                     </StackPanel>
                 </Grid>
@@ -123,14 +123,14 @@
 
             <!-- Thông tin lương -->
             <Border Grid.Row="3" BorderThickness="1" BorderBrush="#FFd6d6d6" CornerRadius="3" Padding="5" Margin="0,0,0,5">
-                <ListView  ItemsSource="{Binding ListTTLuong}" FontSize="12">
+                <ListView  ItemsSource="{Binding ListKhoanLuong}" FontSize="12">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding KHOANLUONG.LOAILUONG.TEN_LL}">
+                            <GridViewColumn DisplayMemberBinding="{Binding LOAILUONG.TEN_LL}">
                                 <GridViewColumnHeader VerticalAlignment="Center" Content="Loại lương" Width="300">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding SoTien}">
+                            <GridViewColumn DisplayMemberBinding="{Binding SOTIEN_KL, StringFormat='N0'}">
                                 <GridViewColumnHeader VerticalAlignment="Center" Content="Số tiền" Width="200">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
@@ -143,13 +143,30 @@
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="1" BorderThickness="1" BorderBrush="#FFd6d6d6" CornerRadius="3" Padding="5" Margin="0,0,0,5">
+                <Border Grid.Column="0" BorderThickness="1" BorderBrush="#FFd6d6d6" CornerRadius="3" Padding="5" Margin="0,0,5,5">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Foreground="#6F7A80" Text="Số ngày trong tháng [4]" Margin="0,0,0,5"></TextBlock>
+                        <TextBlock FontSize="14" Text="{Binding SoNgayLamViecChung}" TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" BorderThickness="1" BorderBrush="#FFd6d6d6" CornerRadius="3" Padding="5" Margin="0,0,5,5">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Foreground="#6F7A80" Text="Tổng lương = Lương cơ bản/[4]*([1]+[2]) + Lương tăng ca*[3]+ Các khoản lương khác." TextWrapping="Wrap" FontStyle="Italic"></TextBlock>
+                        
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderThickness="1" BorderBrush="#FFd6d6d6" CornerRadius="3" Padding="5" Margin="0,0,0,5">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Foreground="#6F7A80" Text="Tổng lương" Margin="0,0,0,5"></TextBlock>
-                        <TextBlock FontSize="14" Text="6,780,000 VNĐ" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="14" Text="{Binding TongLuong, StringFormat='N0'}" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
+                            <TextBlock FontSize="14" Text=" VNĐ" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </Border>
             </Grid>
@@ -171,7 +188,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding HuyCommand}"
-                                                   CommandParameter="{Binding ElementName=phongBanWindow}">
+                                                   CommandParameter="{Binding ElementName=chiTietLuongWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
