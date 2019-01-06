@@ -56,6 +56,7 @@ namespace QuanLyNhanSu.ViewModel
         #endregion
 
         #region Binding Command
+        public ICommand LoadDataNPCommand { get; set; }
         public ICommand HienThiKhoanNghiPhepCommand { get; set; }
         public ICommand TaoMoiCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
@@ -94,7 +95,6 @@ namespace QuanLyNhanSu.ViewModel
         public NghiPhepViewModel()
         {
             #region Khởi tạo
-            LoadListNghiPhep();
             LoadListNhanVien();
             #endregion
 
@@ -124,6 +124,16 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
+            #region Load dữ liệu nghỉ phép command
+            LoadDataNPCommand = new RelayCommand<Object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                LoadListNghiPhep();
+            });
+            #endregion
+
             #region Hiển thị khoản nghỉ phép command
             HienThiKhoanNghiPhepCommand = new RelayCommand<Object>((p) =>
             {
@@ -148,6 +158,7 @@ namespace QuanLyNhanSu.ViewModel
                 IsEditable = true;
                 IsNVChangeable = true;
                 ResetControls();
+                LoadListNhanVien();
 
                 NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
                 nghiphepWindow.ShowDialog();
@@ -164,6 +175,7 @@ namespace QuanLyNhanSu.ViewModel
                 IsNVChangeable = false;
 
                 HienThiNghiPhep();
+                LoadListNhanVien();
 
                 NghiPhepWindow nghiphepWindow = new NghiPhepWindow();
                 nghiphepWindow.ShowDialog();
@@ -188,7 +200,7 @@ namespace QuanLyNhanSu.ViewModel
             {                
                 if (SelectedNghiPhep == null)
                 {
-                    MessageBoxResult result = MessageBox.Show("Vui lòng chọn ngày nghỉ phép trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Vui lòng chọn ngày nghỉ phép trước khi chỉnh sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     IsNVChangeable = true;
                 }
                 else
@@ -381,7 +393,14 @@ namespace QuanLyNhanSu.ViewModel
 
         public void LoadListNghiPhep()
         {
-            ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP.Where(x => x.NHANVIEN.MA_PB == MainViewModel.TaiKhoan.NHANVIEN.MA_PB && x.NHANVIEN.TRANGTHAI_NV == true));
+            }
+            else
+            {
+                ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP.Where(x => x.NHANVIEN.TRANGTHAI_NV == true));
+            }
         }
 
         public void LoadListKhoanNghiPhep(int maNV)
@@ -403,6 +422,18 @@ namespace QuanLyNhanSu.ViewModel
                                 where knp.MA_NV == nv.MA_NV
                                 select knp).FirstOrDefault() != null
                          select nv;
+
+            if (MainViewModel.TaiKhoan.QUYEN_TK == "Trưởng các bộ phận khác")
+            {
+                foreach (NHANVIEN item in listNV)
+                {
+                    if (MainViewModel.TaiKhoan.NHANVIEN.MA_PB == item.MA_PB)
+                    {
+                        ListNhanVien.Add(item);
+                    }
+                }
+                return;
+            }
 
             foreach (NHANVIEN item in listNV)
             {

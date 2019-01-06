@@ -73,6 +73,13 @@ namespace QuanLyNhanSu.ViewModel
         private ObservableCollection<int> _ListThang;
         public ObservableCollection<int> ListThang { get => _ListThang; set { _ListThang = value; OnPropertyChanged(); } }
 
+        private int _SelectedThang;
+        public int SelectedThang { get => _SelectedThang; set { _SelectedThang = value; OnPropertyChanged(); } }
+
+        private int _SelectedNam;
+        public int SelectedNam { get => _SelectedNam; set { _SelectedNam = value; OnPropertyChanged(); } }
+
+
         private ObservableCollection<int> _ListNam;
         public ObservableCollection<int> ListNam { get => _ListNam; set { _ListNam = value; OnPropertyChanged(); } }
 
@@ -102,8 +109,11 @@ namespace QuanLyNhanSu.ViewModel
 
             int[] DsThang = new int[] { 1,2,3,4,5,6,7,8,9,10,11,12 };
             ListThang = new ObservableCollection<int>(DsThang);
+            SelectedThang = 0;
+
             int[] DsNam = new int[] { 2018,2019,2020,2021,2022,2023 };
             ListNam = new ObservableCollection<int>(DsNam);
+            SelectedNam = 0;
 
             SelectedTrangThaiNhanVien = "Đang làm việc";
             LoadListNhanVien();
@@ -201,7 +211,20 @@ namespace QuanLyNhanSu.ViewModel
 
         public void LoadListNghiPhep()
         {
+            if (SelectedThang==0 && SelectedNam==0)
             ListNghiPhep = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
+            else
+            {
+                ObservableCollection<NGHIPHEP> listNghiPhepAll = new ObservableCollection<NGHIPHEP>(DataProvider.Ins.model.NGHIPHEP);
+                foreach (NGHIPHEP np in listNghiPhepAll)
+                {
+                   if (SelectedThang!=0 && SelectedNam !=0)
+                    {
+                      //  if ( np.NGAYBATDAU_NP)
+                    }
+                        
+                }
+            }
         }
 
         public void LoadListChamCong()

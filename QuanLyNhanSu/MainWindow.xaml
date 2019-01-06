@@ -440,7 +440,7 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}">
+                <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                     <WrapPanel Orientation="Horizontal">
                         <!-- Thẻ nghỉ phép -->
                         <materialDesign:Card Width="280" Height="250" Margin="5,0,35,40">
@@ -853,10 +853,9 @@
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
-                                <ListView Grid.Row="1" Margin="10 0 10 20">
-
+                                <ListView Grid.Row="1" Margin="10 0 10 20" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                     <ListViewItem>
-                                        <TextBlock Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Center" FontSize="14"/>
+                                        <TextBlock TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Center" FontSize="14"/>
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
@@ -1107,7 +1106,7 @@
                                         <GridViewColumnHeader Tag="DIACHI_PB" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="150">
+                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="250">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
                                 </GridView>
@@ -1149,6 +1148,13 @@
                         <RowDefinition Height="50"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding LoadDataNPCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                     <!-- Tiêu đề các tab -->
                     <Grid Grid.Row="0">
@@ -1372,8 +1378,6 @@
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-
-
                         </Grid>
 
                         <!-- Tab Khoản nghỉ phép -->
@@ -1401,8 +1405,14 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding LoadDataKNPCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
                                 <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
-                                 Text="{Binding SearchTTKhoanNghiPhep, UpdateSourceTrigger=PropertyChanged}">
+                                 Text="{Binding SearchKhoanNghiPhep, UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
                                             <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
@@ -1435,7 +1445,7 @@
 
                             <!-- Nội dung -->
                             <ListView Grid.Row="1" Name="listKhoanNghiPhep" DataContext="{StaticResource KhoanNghiPhepVM}"
-                                  ItemsSource="{Binding ListKhoanNghiPhep_MainWD}" 
+                                  ItemsSource="{Binding ListKhoanNghiPhep_MainWD}"
                                   SelectedItem="{Binding SelectedKhoanNghiPhep, Mode=OneWayToSource}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
@@ -1643,6 +1653,13 @@
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding LoadDataCCCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                     <!-- Thanh chức năng -->
                     <Grid Grid.Row="0" Margin="0,0,0,20">
@@ -2016,10 +2033,10 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
+                                </Grid.ColumnDefinitions>                                
 
                                 <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Tìm kiếm"
-                                 Text="{Binding SearchTTKhoanLuong, UpdateSourceTrigger=PropertyChanged}">
+                                 Text="{Binding SearchKhoanLuong, UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
                                             <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
