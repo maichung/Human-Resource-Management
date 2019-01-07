@@ -323,13 +323,16 @@ namespace QuanLyNhanSu.ViewModel
                      }
                      else
                      {
-                         if (KiemTraTenDangNhap(TenTaiKhoan) == false)
+                         
+
+                         var TaiKhoanSua = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedTaiKhoan.MA_TK).SingleOrDefault();
+
+                         if (KiemTraTenDangNhap(TaiKhoanSua) == false)
                          {
                              MessageBox.Show("Tên đăng nhập đã tồn tại, vui lòng nhập tên đăng nhập khác!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                              return;
                          }
 
-                         var TaiKhoanSua = DataProvider.Ins.model.TAIKHOAN.Where(x => x.MA_TK == SelectedTaiKhoan.MA_TK).SingleOrDefault();
                          TaiKhoanSua.TENDANGNHAP_TK = TenTaiKhoan;
                          TaiKhoanSua.MATKHAU_TK = _MatKhauMaHoa;
                          TaiKhoanSua.QUYEN_TK = SelectedQuyenHan;
@@ -436,6 +439,19 @@ namespace QuanLyNhanSu.ViewModel
         bool KiemTraTenDangNhap(string tdn)
         {
             var taiKhoan = DataProvider.Ins.model.TAIKHOAN.Where(x => x.TENDANGNHAP_TK == tdn).SingleOrDefault();
+
+            if (taiKhoan != null)
+                return false;
+
+            return true;
+        }
+
+        bool KiemTraTenDangNhap(TAIKHOAN tk)
+        {
+            if (tk.TENDANGNHAP_TK == TenTaiKhoan)
+                return true;
+
+            var taiKhoan = DataProvider.Ins.model.TAIKHOAN.Where(x => x.TENDANGNHAP_TK == tk.TENDANGNHAP_TK).SingleOrDefault();
 
             if (taiKhoan != null)
                 return false;

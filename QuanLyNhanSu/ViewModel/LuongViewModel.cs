@@ -73,6 +73,8 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand TinhLuongCommand { get; set; }
         public ICommand HienThiCommand { get; set; }
         public ICommand HuyCommand { get; set; }
+
+        public ICommand InCommand { get; set; }
         #endregion
 
         #region Thuộc tính ẩn hiện tab
@@ -276,6 +278,17 @@ namespace QuanLyNhanSu.ViewModel
                 p.Close();
             });
             #endregion
+
+            #region
+            InCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                InChiTietLuong("Chi tiết lương","Chi tiết lương");
+                p.Close();
+            });
+            #endregion
         }
 
         #region Các hàm hỗ trợ
@@ -396,6 +409,160 @@ namespace QuanLyNhanSu.ViewModel
             TongLuong = 0;
             ListKhoanLuong = null;
         }
+
+        public void InChiTietLuong(string sheetName, string title)
+        {
+            //Tạo các đối tượng Excel
+
+            Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
+
+            Microsoft.Office.Interop.Excel.Workbooks oBooks;
+
+            Microsoft.Office.Interop.Excel.Sheets oSheets;
+
+            Microsoft.Office.Interop.Excel.Workbook oBook;
+
+            Microsoft.Office.Interop.Excel.Worksheet oSheet;
+
+            //Tạo mới một Excel WorkBook 
+
+            oExcel.Visible = true;
+
+            oExcel.DisplayAlerts = false;
+
+            oExcel.Application.SheetsInNewWorkbook = 1;
+
+            oBooks = oExcel.Workbooks;
+
+            oBook = (Microsoft.Office.Interop.Excel.Workbook)(oExcel.Workbooks.Add(Type.Missing));
+
+            oSheets = oBook.Worksheets;
+
+            oSheet = (Microsoft.Office.Interop.Excel.Worksheet)oSheets.get_Item(1);
+
+            oSheet.Name = sheetName;
+
+            #region Tạo header
+            // Tạo phần đầu nếu muốn
+
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "E1");
+
+            head.MergeCells = true;
+
+            head.Value2 = "Chi tiết lương tháng "+SelectedThang+" năm "+SelectedNam;
+
+            head.Font.Bold = true;
+
+            head.Font.Name = "Arial";
+
+            head.Font.Size = "16";
+
+            head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            Microsoft.Office.Interop.Excel.Range hoTenNhanVien = oSheet.get_Range("A2", "A2");
+            hoTenNhanVien.Value2 = "Họ tên nhân viên: ";
+            hoTenNhanVien.ColumnWidth = 30;
+            oSheet.get_Range("B2", "B2").Value2 = SelectedBangLuong.NHANVIEN.HOTEN_NV;
+
+            oSheet.get_Range("B2", "B2").ColumnWidth=30;
+            oSheet.get_Range("D2", "D2").ColumnWidth=30;
+
+            Microsoft.Office.Interop.Excel.Range phongBan = oSheet.get_Range("C2", "C2");
+            phongBan.Value2 = "Phòng ban: ";
+            phongBan.ColumnWidth = 30;
+            oSheet.get_Range("D2", "D2").Value2 = SelectedBangLuong.NHANVIEN.PHONGBAN.TEN_PB;
+
+            Microsoft.Office.Interop.Excel.Range chucVuNhanVien = oSheet.get_Range("A3", "A3");
+            chucVuNhanVien.Value2 = "Chức vụ: ";
+            oSheet.get_Range("B3", "B3").Value2 = SelectedBangLuong.NHANVIEN.CHUCVU_NV;
+
+            Microsoft.Office.Interop.Excel.Range thangLuong = oSheet.get_Range("C3", "C3");
+            thangLuong.Value2 = "Tháng lương: ";
+            oSheet.get_Range("D3", "D3").Value2 = SelectedThang;
+
+            Microsoft.Office.Interop.Excel.Range nghiPhepCoLuong = oSheet.get_Range("A4", "A4");
+            nghiPhepCoLuong.Value2 = "Nghỉ phép có lương (ngày): ";
+            oSheet.get_Range("B4", "B4").Value2 = SoNgayNghiCoLuong;
+
+            Microsoft.Office.Interop.Excel.Range nghiPhepKhongLuong = oSheet.get_Range("C4", "C4");
+            nghiPhepKhongLuong.Value2 = "Nghỉ phép không lương (ngày): ";
+            oSheet.get_Range("D4", "D4").Value2 = SoNgayNghiKhongLuong;
+
+            Microsoft.Office.Interop.Excel.Range thoiGianDiLamChinhThuc = oSheet.get_Range("A5", "A5");
+            thoiGianDiLamChinhThuc.Value2 = "Thời gian đi làm chính thức (ngày): ";
+            oSheet.get_Range("B5", "B5").Value2 = SoNgayLamChinhThuc;
+
+            Microsoft.Office.Interop.Excel.Range thoiGianDiLamTangCa = oSheet.get_Range("C5", "C5");
+            thoiGianDiLamTangCa.Value2 = "Thời gian đi làm tăng ca (giờ): ";
+            oSheet.get_Range("D5", "D5").Value2 = SoGioLamTangCa;
+
+            Microsoft.Office.Interop.Excel.Range loaiLuong = oSheet.get_Range("A6", "A6");
+            loaiLuong.Value2 = "Loại lương ";
+
+
+            Microsoft.Office.Interop.Excel.Range soTien = oSheet.get_Range("B6", "B6");
+            soTien.Value2 = "Số tiền";
+
+
+            #endregion
+
+            #region Thông tin chi tiết lương
+
+            #endregion
+            
+            #region Đưa dữ liệu vào mảng
+            object[,] arrValue = new object[ListKhoanLuong.Count, 2];
+            for (int row = 0; row < ListKhoanLuong.Count; row++)
+            {
+                for (int column = 0; column < 2; column++)
+                {
+                    string value = "";
+                    switch (column)
+                    {
+                        case 0:
+                            value = ListKhoanLuong.ElementAt(row).LOAILUONG.TEN_LL.ToString();
+                            break;
+                        case 1:
+                            value = ((decimal)ListKhoanLuong.ElementAt(row).SOTIEN_KL).ToString("0");
+                            break;                      
+                            
+                    }
+                    arrValue[row, column] = value;
+                }
+            }
+            #endregion
+
+            #region Điền dữ liệu vào Excel
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListKhoanLuong.Count - 1, 2];
+
+            Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
+            range.Value2 = arrValue;
+
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Tổng lương            
+            Microsoft.Office.Interop.Excel.Range tongLuong = oSheet.get_Range("A" + (7 + ListKhoanLuong.Count).ToString(), "A" + (7 + ListKhoanLuong.Count).ToString());
+            tongLuong.Value2 = "Tổng lương: ";
+            tongLuong.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            tongLuong.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+            //Giá trị tổng lương
+            Microsoft.Office.Interop.Excel.Range giaTriTongLuong = oSheet.get_Range("B" + (7 + ListKhoanLuong.Count).ToString(), "D" + (7 + ListKhoanLuong.Count).ToString());
+            giaTriTongLuong.MergeCells = true;
+            giaTriTongLuong.Value2 = ((decimal)TongLuong).ToString("N0");
+            giaTriTongLuong.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+            tongLuong.Font.Bold = true;
+            giaTriTongLuong.Font.Bold = true;
+
+            oSheet.get_Range("A1", "D" + (7 + ListKhoanLuong.Count)).Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            #endregion
+
+        }
+
+
         #endregion
     }
 }

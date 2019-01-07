@@ -177,13 +177,13 @@
                 <Button Height="40" Width="100" Content="In"  BorderBrush="{x:Null}" Background="#8062FE" FontSize="14" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding LuuCommand}"
-                                                   CommandParameter="{Binding ElementName=phongBanWindow}">
+                            <i:InvokeCommandAction Command="{Binding InCommand}"
+                                                   CommandParameter="{Binding ElementName=chiTietLuongWindow}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Height="40" Width="100" Content="Huỷ"  BorderBrush="{x:Null}"
+                <Button Height="40" Width="100" Content="Đóng"  BorderBrush="{x:Null}"
                         Background="WhiteSmoke" Foreground="#FF232C3A" Margin="10,0,0,0" FontSize="14" FontWeight="Normal">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
