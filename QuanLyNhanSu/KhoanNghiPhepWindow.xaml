@@ -83,12 +83,12 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="600">
-                                <TextBlock Foreground="#6F7A80" 
+                            <StackPanel Width="600" Margin="0 0 0 10">
+                                    <TextBlock Foreground="#6F7A80" 
                                     Text="{Binding LOAINGHIPHEP.TEN_LNP}"></TextBlock>
-                                <TextBox Text="{Binding SONGAYNGHI_KNP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <TextBox Text="{Binding SONGAYNGHI_KNP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     FontSize="16" Margin="0,5,0,0"/>
-                            </StackPanel>
+                                </StackPanel>       
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

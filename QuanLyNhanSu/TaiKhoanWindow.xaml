@@ -79,62 +79,53 @@
                             </Style.Triggers>
                         </Style>
                     </ListView.Style>
-                    
-                    <ListViewItem>
-                        <StackPanel Width="600">
-                            <TextBlock Foreground="#6F7A80" 
+
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Tên đăng nhập"></TextBlock>
-                            <TextBox Text="{Binding TenTaiKhoan, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding TenTaiKhoan, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
+                    </StackPanel>
 
-                    <ListViewItem>
-                        <StackPanel Width="600">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Mật khẩu"></TextBlock>
-                            <PasswordBox Name="pbxMatKhau" FontSize="14" Margin="0,5,0,0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PasswordChanged">
-                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </PasswordBox>
-                        </StackPanel>
-                    </ListViewItem>
+                        <PasswordBox Name="pbxMatKhau" FontSize="14" Margin="0,5,0,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxMatKhau}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </StackPanel>
 
-                    <ListViewItem>
-                        <StackPanel Width="600">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Nhập lại mật khẩu"></TextBlock>
-                            <PasswordBox Name="pbxNhapLaiMatKhau" FontSize="14"  Margin="0,5,0,0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PasswordChanged">
-                                        <i:InvokeCommandAction Command="{Binding RepeatPasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxNhapLaiMatKhau}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                        <PasswordBox Name="pbxNhapLaiMatKhau" FontSize="14"  Margin="0,5,0,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding RepeatPasswordChangedCommand}" CommandParameter="{Binding ElementName=pbxNhapLaiMatKhau}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
 
-                            </PasswordBox>
-                        </StackPanel>
-                    </ListViewItem>
+                        </PasswordBox>
+                    </StackPanel>
 
-                    <ListViewItem>
-                        <StackPanel Width="600">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Quyền hạn"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListQuyenHan}" SelectedItem="{Binding SelectedQuyenHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <ComboBox ItemsSource="{Binding ListQuyenHan}" SelectedItem="{Binding SelectedQuyenHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    
-                    <ListViewItem>
-                        <StackPanel Width="600">
-                            <TextBlock Foreground="#6F7A80" 
+                    </StackPanel>
+
+                    <StackPanel Width="600">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Nhân viên"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListNhanVien}" SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <ComboBox ItemsSource="{Binding ListNhanVien}" SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="HOTEN_NV" FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
+                    </StackPanel>
+
                 </ListView>
             </Grid>
         </Grid>

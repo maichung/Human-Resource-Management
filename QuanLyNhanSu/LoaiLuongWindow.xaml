@@ -58,25 +58,22 @@
             <TextBlock Grid.Row="0" Text="Thông tin loại lương" FontFamily="Segoe UI Semibold" FontSize="22" 
                            VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
             <ListView Grid.Row="1">
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
-
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                <ListView.Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                <Setter Property="IsEnabled" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Tên loại lương"></TextBlock>
-                        <TextBox Text="{Binding TenLoaiLuong, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding TenLoaiLuong, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
+                </StackPanel>
             </ListView>
         </Grid>
         <!-- Lưu và huỷ -->

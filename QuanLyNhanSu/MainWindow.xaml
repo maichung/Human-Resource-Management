@@ -440,438 +440,437 @@
                 </Grid>
 
                 <!-- Nội dung trang -->
-                <ScrollViewer Grid.Row="1" FontSize="16" DataContext="{StaticResource MainVM}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <WrapPanel Orientation="Horizontal">
-                        <!-- Thẻ nghỉ phép -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                <WrapPanel Orientation="Horizontal" Grid.Row="1" DataContext="{StaticResource MainVM}">
+                    <!-- Thẻ nghỉ phép -->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#C28845"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Nghỉ phép" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
-                                        <Border  CornerRadius="8" Background="#C28845" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="{Binding SoLuongNghiPhep}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
-                                        </Border>
-                                    </StackPanel>
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#C28845"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Nghỉ phép" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                    <Border  CornerRadius="8" Background="#C28845" Width="20" Height="20" Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding SoLuongNghiPhep}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
+                                    </Border>
+                                </StackPanel>
 
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                </Grid>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            </Grid>
 
-                                <!-- Nội dung thẻ -->
-                                <Grid Grid.Row="1" Margin="10 0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <TextBlock Text="Hôm nay" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="10,0,0,0"></TextBlock>
-                                        </Grid>
-                                        <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding ListNhanVienNP1}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <WrapPanel/>
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
-                                                            <Ellipse.Fill>
-                                                                <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
-                                                            </Ellipse.Fill>
-                                                        </Ellipse>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </ScrollViewer>
+                            <!-- Nội dung thẻ -->
+                            <Grid Grid.Row="1" Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <TextBlock Text="Hôm nay" Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="10,0,0,0"></TextBlock>
                                     </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <TextBlock Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="10,0,0,0">7 ngày tới</TextBlock>
-                                        </Grid>
+                                    <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding ListNhanVienNP1}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
 
-                                        <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding ListNhanVienNP7}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <WrapPanel/>
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
-                                                            <Ellipse.Fill>
-                                                                <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
-                                                            </Ellipse.Fill>
-                                                        </Ellipse>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </ScrollViewer>
-                                    </Grid>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <TextBlock Grid.Row="0" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="10,0,0,0">7 ngày tới</TextBlock>
+                                    </Grid>
 
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
+                                    <ScrollViewer Grid.Row="1" Margin="0,5,0,0" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding ListNhanVienNP7}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </Grid>
                             </Grid>
-                        </materialDesign:Card>
 
-                        <!-- Thẻ nhên viên mới -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
-
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#ED9998"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Nhân viên mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
-                                        <Border  CornerRadius="8" Background="#ED9998" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="{Binding SoLuongNhanVienMoi}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
-                                        </Border>
-                                    </StackPanel>
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                </Grid>
-
-                                <!-- Nội dung thẻ -->
-                                <ScrollViewer  Grid.Row="1" Margin="10 0" VerticalScrollBarVisibility="Auto">
-                                    <ItemsControl ItemsSource="{Binding ListNhanVienMoi}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <WrapPanel/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </ScrollViewer>
-
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
-                                </Grid>
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BtnNghiPhepCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
                             </Grid>
-                        </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
 
-                        <!-- Thẻ sinh nhật trong tháng -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                    <!-- Thẻ nhên viên mới -->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#E5BD62"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Sinh nhật trong tháng" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
-                                        <Border  CornerRadius="8" Background="#E5BD62" Width="20" Height="20" Margin="5,0,0,0">
-                                            <TextBlock Text="{Binding SoLuongSinhNhatThang}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
-                                        </Border>
-                                    </StackPanel>
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                </Grid>
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#ED9998"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Nhân viên mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                    <Border  CornerRadius="8" Background="#ED9998" Width="20" Height="20" Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding SoLuongNhanVienMoi}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
+                                    </Border>
+                                </StackPanel>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            </Grid>
 
-                                <!-- Nội dung thẻ -->
-                                <ListView Grid.Row="1" Margin="10 0" ItemsSource="{Binding ListNhanVienSinhNhatThang}">
-                                    <ListView.ItemsPanel>
+                            <!-- Nội dung thẻ -->
+                            <ScrollViewer  Grid.Row="1" Margin="10 0" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding ListNhanVienMoi}">
+                                    <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Vertical"/>
+                                            <WrapPanel/>
                                         </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Ellipse Width="35" Height="35" HorizontalAlignment="Left" ToolTip="{Binding NhanVien.HOTEN_NV}">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                <TextBlock Text="{Binding NgaySinh}" Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80"/>
-                                            </StackPanel>
+                                            <Ellipse Width="35" Height="35" Margin="10" ToolTip="{Binding NhanVien.HOTEN_NV}">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
+                                                </Ellipse.Fill>
+                                            </Ellipse>
                                         </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
 
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
-                                </Grid>
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
                             </Grid>
-                        </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
 
-                        <!-- Thẻ tuyển dụng mới-->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                    <!-- Thẻ sinh nhật trong tháng -->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#5AA1D6"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Tuyển dụng mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
-
-                                    </StackPanel>
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                </Grid>
-
-                                <!-- Nội dung thẻ -->
-                                <Grid Grid.Row="1" Margin="10 0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <TextBlock Text="7 ngày qua" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <TextBlock Text="{Binding SoLuongTuyenDungTuan}" HorizontalAlignment="Center" FontSize="72" FontFamily="Segoe UI Light" />
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <TextBlock Text="Tháng này" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                                            <TextBlock Text="{Binding SoLuongTuyenDungThang}" HorizontalAlignment="Center" FontSize="72" FontFamily="Segoe UI Light" />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnTuyenDungCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
-                                </Grid>
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#E5BD62"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Sinh nhật trong tháng" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                                    <Border  CornerRadius="8" Background="#E5BD62" Width="20" Height="20" Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding SoLuongSinhNhatThang}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="12"></TextBlock>
+                                    </Border>
+                                </StackPanel>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
                             </Grid>
-                        </materialDesign:Card>
 
-                        <!-- Thẻ ngày lễ tiếp theo -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                            <!-- Nội dung thẻ -->
+                            <ListView Grid.Row="1" Margin="10 0" ItemsSource="{Binding ListNhanVienSinhNhatThang}">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="35" Height="35" HorizontalAlignment="Left" ToolTip="{Binding NhanVien.HOTEN_NV}">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding Avatar}" Stretch="Uniform" />
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Text="{Binding NgaySinh}" Margin="20 0 0 0" VerticalAlignment="Center" FontSize="16" Foreground="#FF6F7A80"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#AF8969"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Ngày lễ tiếp theo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BtnNhanVienCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
 
-                                    </StackPanel>
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                </Grid>
+                    <!-- Thẻ tuyển dụng mới-->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                <!-- Nội dung thẻ -->
-                                <Grid Grid.Row="1" Margin="10 0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#5AA1D6"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Tuyển dụng mới" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
 
-                                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
-                                        <TextBlock Margin="0 20" Text="Không có ngày nghỉ lễ kế tiếp" HorizontalAlignment="Center">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding HienNgayLe}" Value="false">
-                                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </StackPanel>
+                                </StackPanel>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            </Grid>
 
-                                    <Grid Grid.Column="0" Visibility="{Binding Path=NgayNghiKeTiep1, TargetNullValue=Collapsed}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid Grid.Row="0" Height="60" Width="60">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition Height="3*"></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding NgayNghiKeTiep1.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding NgayNghiKeTiep1.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
-                                                </Grid>
-                                            </Border>
-                                        </Grid>
-                                        <Grid Grid.Row="1">
-                                            <TextBlock Text="{Binding NgayNghiKeTiep1.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
-                                        </Grid>
+                            <!-- Nội dung thẻ -->
+                            <Grid Grid.Row="1" Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <TextBlock Text="7 ngày qua" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
                                     </Grid>
-                                    <Grid Grid.Column="1" Visibility="{Binding Path=NgayNghiKeTiep2, TargetNullValue=Collapsed}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid Grid.Row="0" Height="60" Width="60">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition Height="3*"></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding NgayNghiKeTiep2.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding NgayNghiKeTiep2.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
-                                                </Grid>
-                                            </Border>
-                                        </Grid>
-                                        <Grid Grid.Row="1">
-                                            <TextBlock Text="{Binding NgayNghiKeTiep2.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
-                                        </Grid>
+                                    <Grid Grid.Row="1" Margin="0,5,0,0">
+                                        <TextBlock Text="{Binding SoLuongTuyenDungTuan}" HorizontalAlignment="Center" FontSize="72" FontFamily="Segoe UI Light" />
                                     </Grid>
                                 </Grid>
-
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding BtnCaiDatCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <TextBlock Text="Tháng này" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF6F7A80" Margin="0"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="0,5,0,0">
+                                        <TextBlock Text="{Binding SoLuongTuyenDungThang}" HorizontalAlignment="Center" FontSize="72" FontFamily="Segoe UI Light" />
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </materialDesign:Card>
 
-                        <!-- Thẻ thông báo -->
-                        <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BtnTuyenDungCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
 
-                                <!-- Tiêu đề thẻ -->
-                                <Grid Grid.Row="0">
-                                    <Rectangle VerticalAlignment="Top" Height="3" Fill="#989CA0"></Rectangle>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
-                                        <TextBlock Text="Thông báo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+                    <!-- Thẻ ngày lễ tiếp theo -->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                    </StackPanel>
-                                    <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#AF8969"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Ngày lễ tiếp theo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+
+                                </StackPanel>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            </Grid>
+
+                            <!-- Nội dung thẻ -->
+                            <Grid Grid.Row="1" Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
+                                    <TextBlock Margin="0 20" Text="Không có ngày nghỉ lễ kế tiếp" HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HienNgayLe}" Value="false">
+                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Grid Grid.Column="0" Visibility="{Binding Path=NgayNghiKeTiep1, TargetNullValue=Collapsed}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" Height="60" Width="60">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
+                                            <Grid>
+                                                <TextBlock Text="{Binding NgayNghiKeTiep1.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
+                                            <Grid>
+                                                <TextBlock Text="{Binding NgayNghiKeTiep1.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <TextBlock Text="{Binding NgayNghiKeTiep1.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                    </Grid>
                                 </Grid>
+                                <Grid Grid.Column="1" Visibility="{Binding Path=NgayNghiKeTiep2, TargetNullValue=Collapsed}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
 
-                                <!-- Nội dung thẻ -->
-                                <TextBlock Grid.Row="1" Foreground="#FF6F7A80" Margin="10" TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Top" FontSize="14"/>
-
-                                <!-- Xem chi tiết -->
-                                <Grid Grid.Row="2">
-                                    <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                                    <Button Content="Xoá thông báo" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding XoaThongBaoCommand}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
+                                    <Grid Grid.Row="0" Height="60" Width="60">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="20 20 0 0" Background="#D83556">
+                                            <Grid>
+                                                <TextBlock Text="{Binding NgayNghiKeTiep2.Thang}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" Foreground="White"></TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="0 0 20 20" Background="#F2F4F5">
+                                            <Grid>
+                                                <TextBlock Text="{Binding NgayNghiKeTiep2.Ngay}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <TextBlock Text="{Binding NgayNghiKeTiep2.Ten}" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#FF6F7A80" FontSize="14"/>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </materialDesign:Card>
-                    </WrapPanel>
-                </ScrollViewer>
+
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xem chi tiết" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BtnCaiDatCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!-- Thẻ thông báo -->
+                    <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <!-- Tiêu đề thẻ -->
+                            <Grid Grid.Row="0">
+                                <Rectangle VerticalAlignment="Top" Height="3" Fill="#989CA0"></Rectangle>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
+                                    <TextBlock Text="Thông báo" FontSize="18" Foreground="#FF404855" FontFamily="Segoe UI Semibold"></TextBlock>
+
+                                </StackPanel>
+                                <Separator VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            </Grid>
+
+                            <!-- Nội dung thẻ -->
+                            <TextBlock Grid.Row="1" Foreground="#FF6F7A80" Margin="10" TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Top" FontSize="14"/>
+
+                            <!-- Xem chi tiết -->
+                            <Grid Grid.Row="2">
+                                <Separator VerticalAlignment="Top" Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                                <Button Content="Xoá thông báo" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF8062FE" Height="50" FontWeight="Normal" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding XoaThongBaoCommand}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                </WrapPanel>
+
             </Grid>
 
             <!-- Nhân viên -->
@@ -2484,7 +2483,7 @@
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
 
-                                    <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_PC,  StringFormat='0'}">
+                                    <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_PC,  StringFormat='N0'}">
                                         <GridViewColumnHeader Tag="TRIGIA_PC" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
@@ -3304,7 +3303,7 @@
             <Grid Name="gridCaiDat">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="9">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -3659,7 +3658,7 @@
                         <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangCD}" Value="2">
                                             <Setter Property="Visibility" Value="Visible"></Setter>

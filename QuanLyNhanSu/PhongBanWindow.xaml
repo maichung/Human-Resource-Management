@@ -58,83 +58,46 @@
             <TextBlock Grid.Row="0" Text="Thông tin phòng ban" FontFamily="Segoe UI Semibold" FontSize="22" 
                            VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
             <ListView Grid.Row="1">
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
+                <ListView.Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEditable}" Value="true">
+                                <Setter Property="IsEnabled" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
 
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Tên phòng ban"></TextBlock>
-                        <TextBox Text="{Binding TenPhongBan, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding TenPhongBan, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
+                </StackPanel>
 
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày thành lập"></TextBlock>
-                        <DatePicker SelectedDate="{Binding NgayThanhLap, UpdateSourceTrigger=PropertyChanged}"
+                    <DatePicker SelectedDate="{Binding NgayThanhLap, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
+                </StackPanel>
 
-                    <StackPanel Width="600" >
-                        <TextBlock Foreground="#6F7A80" 
+                <StackPanel Width="600" >
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Trưởng phòng"></TextBlock>
-                        <ComboBox Margin="0 5 0 0" ItemsSource="{Binding ListNhanVienPhongBan}" 
+                    <ComboBox Margin="0 5 0 0" ItemsSource="{Binding ListNhanVienPhongBan}" 
                                   SelectedItem="{Binding SelectedTruongPhong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  DisplayMemberPath="HOTEN_NV" />
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
+                                  DisplayMemberPath="HOTEN_NV" FontSize="16" />
+                </StackPanel>
 
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Địa chỉ"></TextBlock>
-                        <TextBox Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
                                 FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
+                </StackPanel>
+
             </ListView>
         </Grid>
         <!-- Lưu và huỷ -->

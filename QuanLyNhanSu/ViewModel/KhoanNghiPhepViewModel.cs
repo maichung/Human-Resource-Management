@@ -333,6 +333,7 @@ namespace QuanLyNhanSu.ViewModel
                     {
                         KHOANNGHIPHEP knp = new KHOANNGHIPHEP()
                         {
+                            LOAINGHIPHEP = item,
                             MA_LNP = item.MA_LNP,
                             SONGAYNGHI_KNP = 0
                         };

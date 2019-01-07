@@ -57,49 +57,30 @@
             <TextBlock Grid.Row="0" Text="Thông tin Chi tiết phiếu chi" FontFamily="Segoe UI Semibold" FontSize="22" 
                            VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
             <ListView Grid.Row="1">
-                <!-- Nội dung-->
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable_CTPC}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
+                <ListView.Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEditable_CTPC}" Value="true">
+                                <Setter Property="IsEnabled" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
 
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Nội dung"></TextBlock>
-                        <TextBox Text="{Binding NoiDung_CTPC, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding NoiDung_CTPC, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
-
-                <!-- Trị giá-->
-                <ListViewItem>
-                    <ListViewItem.Style>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="IsEnabled" Value="False"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEditable_CTPC}" Value="true">
-                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListViewItem.Style>
-
-                    <StackPanel Width="600">
-                        <TextBlock Foreground="#6F7A80" 
+                </StackPanel>
+                
+                <StackPanel Width="600">
+                    <TextBlock Foreground="#6F7A80" 
                                        Text="Trị giá"></TextBlock>
-                        <TextBox Text="{Binding TriGia_CTPC, StringFormat='N0', UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding TriGia_CTPC, StringFormat='N0', UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </ListViewItem>
-              
-
+                </StackPanel>
             </ListView>
         </Grid>
 

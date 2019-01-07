@@ -100,7 +100,6 @@
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
-
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Nhân viên"></TextBlock>
@@ -129,7 +128,6 @@
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
-
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Loại nghỉ phép"></TextBlock>
@@ -148,7 +146,6 @@
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
-
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày bắt đầu"></TextBlock>
@@ -167,7 +164,6 @@
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
-
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày kết thúc"></TextBlock>
@@ -186,7 +182,6 @@
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
-
                         <StackPanel Width="430">
                             <TextBlock Foreground="#6F7A80" 
                                        Text="Lí do"></TextBlock>
@@ -194,6 +189,7 @@
                                      FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
                     </ListViewItem>
+
                 </ListView>
             </Grid>
 

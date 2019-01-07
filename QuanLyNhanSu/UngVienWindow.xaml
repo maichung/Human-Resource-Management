@@ -100,71 +100,49 @@
                         </Style>
                     </ListView.Style>
                     <!-- Họ tên-->
-                    <ListViewItem>
-                      
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Họ tên"></TextBlock>
-                            <TextBox Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Ngày sinh-->
-                    <ListViewItem>
-                        
+                    </StackPanel>
 
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Ngày sinh"></TextBlock>
-                            <DatePicker SelectedDate="{Binding NgaySinh, UpdateSourceTrigger=PropertyChanged}"
+                        <DatePicker SelectedDate="{Binding NgaySinh, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Giới tính-->
-                    <ListViewItem>
-                        
+                    </StackPanel>
 
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Giới tính"></TextBlock>
-                            <ComboBox ItemsSource="{Binding ListGioiTinh}" SelectedItem="{Binding SelectedGioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <ComboBox ItemsSource="{Binding ListGioiTinh}" SelectedItem="{Binding SelectedGioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Địa chỉ-->
-                    <ListViewItem>
-                        
+                    </StackPanel>
 
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Địa chỉ"></TextBlock>
-                            <TextBox Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Email -->
-                    <ListViewItem>
-                       
+                    </StackPanel>
 
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Email"></TextBlock>
-                            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
+                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
                                      FontSize="16" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <!-- Số điện thoại-->
-                    <ListViewItem>
-                        
+                    </StackPanel>
 
-                        <StackPanel Width="430">
-                            <TextBlock Foreground="#6F7A80" 
+                    <StackPanel Width="430">
+                        <TextBlock Foreground="#6F7A80" 
                                        Text="Số điện thoại"></TextBlock>
-                            <TextBox Text="{Binding SDT,UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding SDT,UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="16" Margin="0,5,0,0"/>
 
-                        </StackPanel>
-                    </ListViewItem>
+                    </StackPanel>
+
                 </ListView>
             </Grid>
 
@@ -223,7 +201,7 @@
                                 <GridViewColumnHeader Tag="TRANGTHAI_HSUT" 
                                                       Command="{Binding Sort_HSUTCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                      VerticalAlignment="Center" Content="Trạng thấi" Width="100">
+                                                      VerticalAlignment="Center" Content="Trạng thái" Width="100">
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                         </GridView>
