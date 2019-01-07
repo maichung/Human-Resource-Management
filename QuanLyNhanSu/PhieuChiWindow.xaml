@@ -196,7 +196,7 @@
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
-                            <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_CTPC ,StringFormat='0'}">
+                            <GridViewColumn DisplayMemberBinding="{Binding TRIGIA_CTPC ,StringFormat='N0'}">
                                 <GridViewColumnHeader Tag="TRIGIA_CTPC" 
                                                       Command="{Binding Sort_CTPCCommand}" 
                                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 

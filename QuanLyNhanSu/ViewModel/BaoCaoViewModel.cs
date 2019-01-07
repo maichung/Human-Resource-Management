@@ -240,27 +240,67 @@ namespace QuanLyNhanSu.ViewModel
                 {
 
                     case (int)ChucNangBaoCao.ChamCong:
+                        if (ListChamCong.Count==0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo",MessageBoxButton.OK,MessageBoxImage.Warning);
+                            return;
+                        }
                          XuatBaoCaoChamCong("Báo cáo chấm công", "Báo cáo chấm công");
                         break;
                     case (int)ChucNangBaoCao.ChiPhi:
+                        if (ListPhieuChi.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoChiPhi("Báo cáo chi phí", "Báo cáo chi phí");
                         break;
                     case (int)ChucNangBaoCao.Luong:
+                        if (ListBangLuong.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoLuong("Báo cáo lương", "Báo cáo lương");
                         break;
                     case (int)ChucNangBaoCao.NgayNghiLe:
+                        if (ListNgayNghiLe.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoNgayNghiLe("Báo cáo ngày nghỉ lễ", "Báo cáo ngày nghỉ lễ");
                         break;
                     case (int)ChucNangBaoCao.NghiPhep:
+                        if (ListNghiPhep.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoNghiPhep("Báo cáo nghỉ phép", "Báo cáo nghỉ phép");
                         break;
                     case (int)ChucNangBaoCao.NhanVien:
+                        if (ListNhanVien.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoNhanVien("Báo cáo nhân viên", "Báo cáo nhân viên");
                         break;
                     case (int)ChucNangBaoCao.PhongBan:
+                        if (ListPhongBan.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoPhongBan("Báo cáo phòng ban", "Báo cáo phòng ban");
                         break;
                     case (int)ChucNangBaoCao.UngVien:
+                        if (ListUngVien.Count == 0)
+                        {
+                            MessageBox.Show("Không có dữ liệu để xuất báo cáo! Vui lòng thay đổi thông tin cần lập báo cáo và thử lại.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         XuatBaoCaoUngVien("Báo cáo ứng viên", "Báo cáo ứng viên");
                         break;
                 }
@@ -460,7 +500,7 @@ namespace QuanLyNhanSu.ViewModel
             #region Tạo header
             // Tạo phần đầu nếu muốn
 
-            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "F1");
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "G1");
 
             head.MergeCells = true;
 
@@ -468,56 +508,67 @@ namespace QuanLyNhanSu.ViewModel
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            CreateHeader(oSheet,"G");
+
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã ứng viên";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Họ tên ứng viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Ngày sinh";
 
-            column3.ColumnWidth = 14.0;
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            column3.ColumnWidth = 15.0;
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Giới tính";
 
             column4.ColumnWidth = 10.0;
 
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E6", "E6");
 
-            column5.Value2 = "Số điện thoại";
+            column5.Value2 = "Email";
 
-            column5.ColumnWidth = 15.0;
+            column5.ColumnWidth = 25.0;
 
-            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F6", "F6");
 
-            column6.Value2 = "Địa chỉ";
+            column6.Value2 = "Số điện thoại";
 
-            column6.ColumnWidth = 40.0;
+            column6.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+            Microsoft.Office.Interop.Excel.Range column7 = oSheet.get_Range("G6", "G6");
+
+            column7.Value2 = "Địa chỉ";
+
+            column7.ColumnWidth = 40.0;          
+            
+        
+            #endregion
+
+            #region Format tiêu đề cột
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "G6");
 
             rowHead.Font.Bold = true;
-            #endregion  
-
             // Kẻ viền
 
             rowHead.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
@@ -527,12 +578,13 @@ namespace QuanLyNhanSu.ViewModel
             rowHead.Interior.ColorIndex = 15;
 
             rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            #endregion
 
             #region Đưa dữ liệu vào mảng
-            object[,] arrValue = new object[ListUngVien.Count, 6];
+            object[,] arrValue = new object[ListUngVien.Count, 7];
             for (int row = 0; row < ListUngVien.Count; row++)
             {
-                for (int column = 0; column < 6; column++)
+                for (int column = 0; column < 7; column++)
                 {
                     string value = "";
                     switch (column)
@@ -544,15 +596,18 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListUngVien.ElementAt(row).HOTEN_UV.ToString();
                             break;
                         case 2:
-                            value = ListUngVien.ElementAt(row).NGAYSINH_UV.ToString();
+                            value = ((DateTime)(ListUngVien.ElementAt(row).NGAYSINH_UV)).ToString("dd/MM/yyyy");
                             break;
                         case 3:
                             value = ListUngVien.ElementAt(row).GIOITINH_UV == true ? "Nữ" : "Nam" ;
                             break;
                         case 4:
-                            value = ListUngVien.ElementAt(row).SODIENTHOAI_UV.ToString();
+                            value = ListUngVien.ElementAt(row).EMAIL_UV.ToString();
                             break;
                         case 5:
+                            value = ListUngVien.ElementAt(row).SODIENTHOAI_UV.ToString();
+                            break;
+                        case 6:
                             value = ListUngVien.ElementAt(row).DIACHI_UV.ToString();
                             break;
                     }
@@ -562,11 +617,12 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListUngVien.Count - 1, 6];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListUngVien.Count - 1, 7];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
@@ -614,68 +670,73 @@ namespace QuanLyNhanSu.ViewModel
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            CreateHeader(oSheet, "H");
+
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã nhân viên";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Họ tên nhân viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Chức vụ";
 
-            column3.ColumnWidth = 14.0;
+            column3.ColumnWidth = 35.0;
 
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Phòng ban";
 
-            column4.ColumnWidth = 14.0;
+            column4.ColumnWidth = 35.0;
 
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E6", "E6");
 
             column5.Value2 = "Ngày vào làm";
 
-            column5.ColumnWidth = 14.0;
+            column5.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F6", "F6");
 
             column6.Value2 = "Email";
 
-            column6.ColumnWidth = 15.0;
+            column6.ColumnWidth = 25.0;
 
-            Microsoft.Office.Interop.Excel.Range column7 = oSheet.get_Range("G3", "G3");
+            Microsoft.Office.Interop.Excel.Range column7 = oSheet.get_Range("G6", "G6");
 
             column7.Value2 = "Số điện thoại";
 
             column7.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range column8 = oSheet.get_Range("H3", "H3");
+            Microsoft.Office.Interop.Excel.Range column8 = oSheet.get_Range("H6", "H6");
 
             column8.Value2 = "Địa chỉ";
 
             column8.ColumnWidth = 40.0;
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "H3");
+        
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "H6");
 
             rowHead.Font.Bold = true;
             #endregion  
+
 
             // Kẻ viền
 
@@ -688,6 +749,7 @@ namespace QuanLyNhanSu.ViewModel
             rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
             #region Đưa dữ liệu vào mảng
+
             object[,] arrValue = new object[ListNhanVien.Count, 8];
             for (int row = 0; row < ListNhanVien.Count; row++)
             {
@@ -709,7 +771,7 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListNhanVien.ElementAt(row).PHONGBAN.TEN_PB.ToString();
                             break;
                         case 4:
-                            value = ListNhanVien.ElementAt(row).NGAYVAOLAM_NV.Value.ToString();
+                            value =((DateTime) ListNhanVien.ElementAt(row).NGAYVAOLAM_NV.Value).ToString("dd/MM/yyyy");
                             break;
                         case 5:
                             value = ListNhanVien.ElementAt(row).EMAIL_NV.ToString();
@@ -727,11 +789,12 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 8];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListNhanVien.Count - 1, 8];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
@@ -779,41 +842,43 @@ namespace QuanLyNhanSu.ViewModel
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            CreateHeader(oSheet,"D");
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã phòng ban";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Tên phòng ban";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 35.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Địa chỉ";
 
-            column3.ColumnWidth = 14.0;
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            column3.ColumnWidth = 40.0;
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Ngày thành lập";
 
-            column4.ColumnWidth = 14.0;
+            column4.ColumnWidth = 15.0;
 
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "D3");
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "D6");
 
             rowHead.Font.Bold = true;
             #endregion  
@@ -847,7 +912,7 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListPhongBan.ElementAt(row).DIACHI_PB.ToString();
                             break;
                         case 3:
-                            value = ListPhongBan.ElementAt(row).NGAYTHANHLAP_PB.Value.ToString();
+                            value = ListPhongBan.ElementAt(row).NGAYTHANHLAP_PB.Value.ToString("dd/MM/yyyy");
                             break;
 
                     }
@@ -857,11 +922,12 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListPhongBan.Count - 1, 4];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListPhongBan.Count - 1, 4];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
@@ -901,64 +967,84 @@ namespace QuanLyNhanSu.ViewModel
             #region Tạo header
             // Tạo phần đầu nếu muốn
 
-            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "F1");
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "G1");
 
             head.MergeCells = true;
 
-            head.Value2 = "Danh sách nghỉ phép " ;
 
+            string Title = "Danh sách nghỉ phép ";
+            if (SelectedThang == 0 && SelectedNam == 0)
+            {
+                Title = Title + "toàn bộ thời gian";
+            }
+            else
+            {
+                if (SelectedThang != 0)
+                    Title = Title + "tháng " + SelectedThang.ToString();
+                if (SelectedNam != 0)
+                    Title = Title + "năm " + SelectedNam.ToString();
+            }
+            head.Value2 = Title;
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            CreateHeader(oSheet,"G");
+        
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã nghỉ phép";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Họ tên nhân viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Tên loại nghỉ phép";
 
-            column3.ColumnWidth = 24.0;
+            column3.ColumnWidth = 19.0;
 
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Ngày bắt đầu";
 
-            column4.ColumnWidth = 14.0;
+            column4.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E6", "E6");
 
             column5.Value2 = "Ngày kết thúc";
 
-            column5.ColumnWidth = 14.0;
+            column5.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F6", "F6");
 
             column6.Value2 = "Lí do";
 
-            column6.ColumnWidth = 20.0;          
-            
+            column6.ColumnWidth = 30.0;
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+            Microsoft.Office.Interop.Excel.Range column7 = oSheet.get_Range("G6", "G6");
+
+            column7.Value2 = "Phòng ban";
+
+            column7.ColumnWidth = 35.0;
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "G6");
 
             rowHead.Font.Bold = true;
+
             #endregion  
 
             // Kẻ viền
@@ -972,10 +1058,10 @@ namespace QuanLyNhanSu.ViewModel
             rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
             #region Đưa dữ liệu vào mảng
-            object[,] arrValue = new object[ListNghiPhep.Count, 6];
+            object[,] arrValue = new object[ListNghiPhep.Count, 7];
             for (int row = 0; row < ListNghiPhep.Count; row++)
             {
-                for (int column = 0; column < 6; column++)
+                for (int column = 0; column < 7; column++)
                 {
                     string value = "";
                     switch (column)
@@ -990,15 +1076,18 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListNghiPhep.ElementAt(row).KHOANNGHIPHEP.LOAINGHIPHEP.TEN_LNP.ToString();
                             break;
                         case 3:
-                            value = ListNghiPhep.ElementAt(row).NGAYBATDAU_NP.Value.ToString();
+                            value = ListNghiPhep.ElementAt(row).NGAYBATDAU_NP.Value.ToString("dd/MM/yyyy");
                             break;
                         case 4:
-                            value = ListNghiPhep.ElementAt(row).NGAYKETTHUC_NP.Value.ToString();
+                            value = ListNghiPhep.ElementAt(row).NGAYKETTHUC_NP.Value.ToString("dd/MM/yyyy");
                             break;
                         case 5:
                             value = ListNghiPhep.ElementAt(row).LIDO_NP.ToString();
                             break;
-                      
+                        case 6:
+                            value = ListNghiPhep.ElementAt(row).NHANVIEN.PHONGBAN.TEN_PB.ToString();
+                            break;
+
                     }
                     arrValue[row, column] = value;
                 }
@@ -1006,11 +1095,12 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNghiPhep.Count - 1, 6];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListNghiPhep.Count - 1, 7];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
@@ -1054,41 +1144,55 @@ namespace QuanLyNhanSu.ViewModel
 
             head.MergeCells = true;
 
-            head.Value2 = "Danh sách ngày nghỉ lễ ";
+
+            string Title = "Danh sách ngày nghỉ lễ ";
+            if (SelectedThang == 0 && SelectedNam == 0)
+            {
+                Title = Title + "toàn bộ thời gian";
+            }
+            else
+            {
+                if (SelectedThang != 0)
+                    Title = Title + "tháng " + SelectedThang.ToString();
+                if (SelectedNam != 0)
+                    Title = Title + "năm " + SelectedNam.ToString();
+            }
+            head.Value2 = Title;
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            CreateHeader(oSheet,"C");
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã ngày nghỉ lễ";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Ngày";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 15.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Tên ngày nghỉ lễ";
 
-            column3.ColumnWidth = 24.0;
+            column3.ColumnWidth = 25.0;
 
          
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "C3");
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "C6");
 
             rowHead.Font.Bold = true;
             #endregion  
@@ -1116,7 +1220,7 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListNgayNghiLe.ElementAt(row).MA_NNL.ToString();
                             break;
                         case 1:
-                            value = ListNgayNghiLe.ElementAt(row).NGAY_NNL.Value.ToString();
+                            value = ListNgayNghiLe.ElementAt(row).NGAY_NNL.Value.ToString("dd/MM/yyyy");
                             break;
                         case 2:
                             value = ListNgayNghiLe.ElementAt(row).TEN_NNL.ToString();
@@ -1129,11 +1233,12 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNgayNghiLe.Count - 1, 3];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListNgayNghiLe.Count - 1, 3];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
@@ -1173,62 +1278,62 @@ namespace QuanLyNhanSu.ViewModel
             #region Tạo header
             // Tạo phần đầu nếu muốn
 
-            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "H1");
+            Microsoft.Office.Interop.Excel.Range head = oSheet.get_Range("A1", "D1");
 
             head.MergeCells = true;
 
-            head.Value2 = "Danh sách lương tháng " + SelectedThang +" năm "+SelectedNam;
-            if (SelectedThang == 0 || SelectedNam == 0)
-                head.Value2 = "Danh sách lương tháng ";
+            string Title = "Danh sách lương ";
+            if (SelectedThang == 0 && SelectedNam == 0)
+            {
+                Title = Title + "toàn bộ thời gian";
+            }
+            else
+            {
+                if (SelectedThang != 0)
+                    Title = Title + "tháng " + SelectedThang.ToString();
+                if (SelectedNam != 0)
+                    Title = Title + "năm " + SelectedNam.ToString();
+            }
+            head.Value2 = Title;
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            CreateHeader(oSheet,"D");
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
-            column1.Value2 = "Mã nhân viên";
+            column1.Value2 = "Mã bảng lương";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = " Tên nhân viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
+            
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
-
-            column3.Value2 = "Tháng";
-
-            column3.ColumnWidth = 14.0;
-
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
-
-            column4.Value2 = "Năm";
-
-            column4.ColumnWidth = 14.0;
-
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("C6", "C6");
 
             column5.Value2 = "Tổng lương";
 
-            column5.ColumnWidth = 10.0;
+            column5.ColumnWidth = 17.0;
 
-            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("D6", "D6");
 
             column6.Value2 = "Phòng ban";
 
-            column6.ColumnWidth = 15.0;                    
+            column6.ColumnWidth = 35.0;                    
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "D6");
 
             rowHead.Font.Bold = true;
             #endregion  
@@ -1244,10 +1349,10 @@ namespace QuanLyNhanSu.ViewModel
             rowHead.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
             #region Đưa dữ liệu vào mảng
-            object[,] arrValue = new object[ListBangLuong.Count, 6];
+            object[,] arrValue = new object[ListBangLuong.Count, 4];
             for (int row = 0; row < ListBangLuong.Count; row++)
             {
-                for (int column = 0; column < 6; column++)
+                for (int column = 0; column < 4; column++)
                 {
                     string value = "";
                     switch (column)
@@ -1258,16 +1363,11 @@ namespace QuanLyNhanSu.ViewModel
                         case 1:
                             value = ListBangLuong.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
                             break;
+
                         case 2:
-                            value = ListBangLuong.ElementAt(row).THANG_BL.Value.Month.ToString();
+                            value = ((decimal)ListBangLuong.ElementAt(row).TONGLUONG_BL).ToString("N0");                           
                             break;
                         case 3:
-                            value = ListBangLuong.ElementAt(row).THANG_BL.Value.Year.ToString();
-                            break;
-                        case 4:
-                            value = ListBangLuong.ElementAt(row).TONGLUONG_BL.ToString();
-                            break;
-                        case 5:
                             value = ListBangLuong.ElementAt(row).NHANVIEN.PHONGBAN.TEN_PB.ToString();
                             break;
                       
@@ -1278,11 +1378,28 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListBangLuong.Count - 1, 6];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListBangLuong.Count - 1, 4];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Tổng lương            
+            Microsoft.Office.Interop.Excel.Range tongLuong = oSheet.get_Range("A"+(7 + ListBangLuong.Count).ToString(), "A"+ (7 + ListBangLuong.Count).ToString());
+            tongLuong.Value2 = "Tổng lương: ";
+            tongLuong.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            tongLuong.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+            //Giá trị tổng lương
+            Microsoft.Office.Interop.Excel.Range giaTriTongLuong = oSheet.get_Range("B" + (7 + ListBangLuong.Count).ToString(), "D"+(7 + ListBangLuong.Count).ToString());
+            giaTriTongLuong.MergeCells = true;
+            giaTriTongLuong.Value2 = "=SUM(C7:C" + (7 + ListBangLuong.Count-1).ToString();
+            giaTriTongLuong.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+            tongLuong.Font.Bold = true;
+            giaTriTongLuong.Font.Bold = true;
+
             #endregion
         }
 
@@ -1326,53 +1443,66 @@ namespace QuanLyNhanSu.ViewModel
 
             head.MergeCells = true;
 
-            head.Value2 = "Danh sách phiếu chi " + SelectedThang + " năm " + SelectedNam;
-            if (SelectedThang == 0 || SelectedNam == 0)
-                head.Value2 = "Danh sách phiếu chi ";
+
+            string Title = "Danh sách phiếu chi ";
+            if (SelectedThang == 0 && SelectedNam == 0)
+            {
+                Title = Title + "toàn bộ thời gian";
+            }
+            else
+            {
+                if (SelectedThang != 0)
+                    Title = Title + "tháng " + SelectedThang.ToString();
+                if (SelectedNam != 0)
+                    Title = Title + "năm " + SelectedNam.ToString();
+            }
+            head.Value2 = Title;
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+            CreateHeader(oSheet,"E");
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã phiếu chi";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Họ tên nhân viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Trị giá";
 
-            column3.ColumnWidth = 14.0;
+            column3.ColumnWidth = 17.0;
 
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Thời gian lập";
 
-            column4.ColumnWidth = 14.0;
+            column4.ColumnWidth = 20.0;
 
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E6", "E6");
 
             column5.Value2 = "Phòng ban";
 
-            column5.ColumnWidth = 10.0;            
+            column5.ColumnWidth = 35.0;            
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "E3");
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "E6");
 
             rowHead.Font.Bold = true;
             #endregion  
@@ -1403,10 +1533,10 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListPhieuChi.ElementAt(row).NHANVIEN.HOTEN_NV.ToString();
                             break;
                         case 2:
-                            value = ListPhieuChi.ElementAt(row).TRIGIA_PC.ToString();
+                            value = ((decimal)ListPhieuChi.ElementAt(row).TRIGIA_PC).ToString("N0");
                             break;
                         case 3:
-                            value = ListPhieuChi.ElementAt(row).THOIGIANLAP_PC.Value.ToString();
+                            value = ListPhieuChi.ElementAt(row).THOIGIANLAP_PC.Value.ToString("dd/MM/yyyy HH:mm");
                             break;
                         case 4:
                             value = ListPhieuChi.ElementAt(row).NHANVIEN.PHONGBAN.TEN_PB.ToString();
@@ -1418,14 +1548,29 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 5];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListPhieuChi.Count - 1, 5];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+
+            // Tổng chi phí            
+            Microsoft.Office.Interop.Excel.Range tongChiPhi = oSheet.get_Range("A" + (7 + ListPhieuChi.Count).ToString(), "A" + (7 + ListPhieuChi.Count).ToString());
+            tongChiPhi.Value2 = "Tổng chi phí: ";
+            tongChiPhi.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            tongChiPhi.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+            //Giá trị tổng chi phí
+            Microsoft.Office.Interop.Excel.Range giaTriTongChiPhi = oSheet.get_Range("B" + (7 + ListPhieuChi.Count).ToString(), "E" + (7 + ListPhieuChi.Count).ToString());
+            giaTriTongChiPhi.MergeCells = true;
+            giaTriTongChiPhi.Value2 = "=SUM(C7:C" + (7 + ListPhieuChi.Count - 1).ToString();
+            giaTriTongChiPhi.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+            tongChiPhi.Font.Bold = true;
+            giaTriTongChiPhi.Font.Bold = true;
             #endregion
         }
-
 
         public void XuatBaoCaoChamCong(string sheetName, string title)
         {
@@ -1467,59 +1612,73 @@ namespace QuanLyNhanSu.ViewModel
 
             head.MergeCells = true;
 
-            head.Value2 = "Danh sách chấm công " + SelectedThang + " năm " + SelectedNam;
-            if (SelectedThang == 0 || SelectedNam == 0)
-                head.Value2 = "Danh sách chấm công ";
+
+            string Title = "Danh sách chấm công ";
+            if (SelectedThang == 0 && SelectedNam == 0)
+            {
+                Title = Title + "toàn bộ thời gian";
+            }
+            else
+            {
+                if (SelectedThang != 0)
+                    Title = Title + "tháng " + SelectedThang.ToString();
+                if (SelectedNam != 0)
+                    Title = Title + "năm " + SelectedNam.ToString();
+            }
+            head.Value2 = Title;
+
 
             head.Font.Bold = true;
 
-            head.Font.Name = "Tahoma";
+            head.Font.Name = "Arial";
 
             head.Font.Size = "18";
 
             head.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            CreateHeader(oSheet,"F");
+
             #endregion
 
             #region Tạo tiêu đề cột
             // Tạo tiêu đề cột 
 
-            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A3", "A3");
+            Microsoft.Office.Interop.Excel.Range column1 = oSheet.get_Range("A6", "A6");
 
             column1.Value2 = "Mã chấm công";
 
-            column1.ColumnWidth = 11;
+            column1.ColumnWidth = 15;
 
-            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B3", "B3");
+            Microsoft.Office.Interop.Excel.Range column2 = oSheet.get_Range("B6", "B6");
 
             column2.Value2 = "Họ tên nhân viên";
 
-            column2.ColumnWidth = 25.0;
+            column2.ColumnWidth = 27.0;
 
-            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C3", "C3");
+            Microsoft.Office.Interop.Excel.Range column3 = oSheet.get_Range("C6", "C6");
 
             column3.Value2 = "Loại chấm công";
 
-            column3.ColumnWidth = 14.0;
+            column3.ColumnWidth = 16.0;
 
-            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D3", "D3");
+            Microsoft.Office.Interop.Excel.Range column4 = oSheet.get_Range("D6", "D6");
 
             column4.Value2 = "Thời gian bắt đâu";
 
-            column4.ColumnWidth = 14.0;
+            column4.ColumnWidth = 20;
 
-            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E3", "E3");
+            Microsoft.Office.Interop.Excel.Range column5 = oSheet.get_Range("E6", "E6");
 
             column5.Value2 = "Thời gian kết thúc";
 
-            column5.ColumnWidth = 14.0;
+            column5.ColumnWidth = 20.0;
 
-            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F3", "F3");
+            Microsoft.Office.Interop.Excel.Range column6 = oSheet.get_Range("F6", "F6");
 
             column6.Value2 = "Phòng ban";
 
-            column6.ColumnWidth = 20.0;
+            column6.ColumnWidth = 35.0;
 
-            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A3", "F3");
+            Microsoft.Office.Interop.Excel.Range rowHead = oSheet.get_Range("A6", "F6");
 
             rowHead.Font.Bold = true;
             #endregion  
@@ -1553,28 +1712,63 @@ namespace QuanLyNhanSu.ViewModel
                             value = ListChamCong.ElementAt(row).LOAICHAMCONG.TEN_LCC.ToString();
                             break;
                         case 3:
-                            value = ListChamCong.ElementAt(row).THOIGIANBATDAU_CCN.Value.ToString();
+                            value = ListChamCong.ElementAt(row).THOIGIANBATDAU_CCN.Value.ToString("dd/MM/yyyy HH:mm");
                             break;
                         case 4:
-                            value = ListChamCong.ElementAt(row).THOIGIANKETTHUC_CCN.Value.ToString();
+                            value = ListChamCong.ElementAt(row).THOIGIANKETTHUC_CCN.Value.ToString("dd/MM/yyyy HH:mm");
                             break;
                         case 5:
                             value = (ListChamCong.ElementAt(row).NHANVIEN).PHONGBAN.TEN_PB.ToString();
                             break;
                     }
                     arrValue[row, column] = value;
+                   
                 }
             }
             #endregion
 
             #region Điền dữ liệu vào Excel
-            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4, 1];
-            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[4 + ListNhanVien.Count - 1, 6];
+            Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7, 1];
+            Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[7 + ListChamCong.Count - 1, 6];
 
             Microsoft.Office.Interop.Excel.Range range = oSheet.get_Range(c1, c2);
             range.Value2 = arrValue;
+            range.Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
             #endregion
         }
 
+        private void CreateHeader(Microsoft.Office.Interop.Excel.Worksheet  oSheet,string lastColumn)
+        {
+            //Tên người lập
+
+            Microsoft.Office.Interop.Excel.Range author = oSheet.get_Range("A3", "A3");
+            author.Value2 = "Người lập: ";
+            author.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            author.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+
+            //Thời gian lập
+            Microsoft.Office.Interop.Excel.Range time = oSheet.get_Range("A4", "A4");
+            time.Value2 = "Thời gian lập: ";
+            time.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            time.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+            //Tên người lập
+            Microsoft.Office.Interop.Excel.Range authorName = oSheet.get_Range("B3", lastColumn.ToString() + "3");
+            authorName.MergeCells = true;
+            authorName.Value2 = MainViewModel.TaiKhoan.NHANVIEN.HOTEN_NV.ToString();
+            authorName.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            authorName.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+            // Thời gian lập - thời gian hiện tại
+            Microsoft.Office.Interop.Excel.Range currentTime = oSheet.get_Range("B4", lastColumn.ToString() + "4");
+            currentTime.MergeCells = true;
+            currentTime.Value2 = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            currentTime.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+            currentTime.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+
+            oSheet.get_Range("A3", lastColumn.ToString() + "4").Borders.LineStyle = Microsoft.Office.Interop.Excel.Constants.xlSolid;
+        }
     }
 }
