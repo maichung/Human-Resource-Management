@@ -836,13 +836,13 @@
                     <!-- Thẻ thông báo -->
                     <materialDesign:Card Width="280" Height="250" Margin="5,0,30,35">
                         <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                </Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-                                <!-- Tiêu đề thẻ -->
+                            <!-- Tiêu đề thẻ -->
                             <Grid Grid.Row="0">
                                 <Rectangle VerticalAlignment="Top" Height="3" Fill="#989CA0"></Rectangle>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 10" >
@@ -2490,7 +2490,7 @@
                                                               VerticalAlignment="Center" Content="Trị giá" Width="100">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding THOIGIANLAP_PC, StringFormat=dd/MM/yyyy}">
+                                    <GridViewColumn DisplayMemberBinding="{Binding THOIGIANLAP_PC, StringFormat='dd/MM/yyyy HH:mm:ss'}">
                                         <GridViewColumnHeader Tag="THOIGIANLAP_PC" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
@@ -3720,7 +3720,35 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <TextBlock>Thông tin phần mềm</TextBlock>
+
+                            <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center" Height="350"  Width="750">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Image Height="80" Source="Resources/Icons/logo2.png" Stretch="Uniform" />
+                                            <TextBlock Text="Focus on what matters." TextAlignment="Center" Margin="0 20 0 0" FontSize="20" FontFamily="Segoe UI Light"></TextBlock>
+                                            <TextBlock Text="Phiên bản 1.0.0 - 08/01/2019" TextAlignment="Center" Margin="0 10 0 0" FontSize="14" FontFamily="Segoe UI Light"></TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Background="#E10028">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="Đồng tác giả:" FontSize="14" Foreground="White" FontFamily="Segoe UI Light"></TextBlock>
+                                            <TextBlock Text="Bùi Huy Phúc" Margin="0,10,0,0" FontSize="20" Foreground="White"/>
+                                            <TextBlock Text="Nguyễn Xuân Hảo" Margin="0,10,0,0" FontSize="20" Foreground="White"/>
+                                            <TextBlock Text="Bùi Thanh Tùng" Margin="0,10,0,0" FontSize="20" Foreground="White"/>
+                                            <TextBlock Text="Phạm Phong Phú" Margin="0,10,0,0" FontSize="20" Foreground="White"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Grid>
+
+                            </materialDesign:Card>
+
                         </Grid>
                     </Grid>
                 </Grid>
