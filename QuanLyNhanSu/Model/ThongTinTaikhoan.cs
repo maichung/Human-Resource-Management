@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhanSu.Model
 {
-    class ThongTinTaikhoan
+    class ThongTinTaikhoana
     {
         public TAIKHOAN TaiKhoan { get; set; }
         public NHANVIEN NhanVien { get; set; }

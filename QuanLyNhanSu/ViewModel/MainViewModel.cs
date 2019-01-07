@@ -51,7 +51,9 @@ namespace QuanLyNhanSu.ViewModel
         public ObservableCollection<ThongTinNhanVien> ListNhanVienSinhNhatThang { get => _ListNhanVienSinhNhatThang; set { _ListNhanVienSinhNhatThang = value; OnPropertyChanged(); } }
         #endregion
 
+        #region Thuộc tính khác
         static public TAIKHOAN TaiKhoan { get; set; }
+        #endregion
 
         #region Thuộc tính binding
         private TAIKHOAN _TaiKhoanHienThi;
@@ -73,8 +75,10 @@ namespace QuanLyNhanSu.ViewModel
 
         private ThongTinNgayNghiLe _NgayNghiKeTiep1;
         public ThongTinNgayNghiLe NgayNghiKeTiep1 { get => _NgayNghiKeTiep1; set { _NgayNghiKeTiep1 = value; OnPropertyChanged(); } }
+
         private ThongTinNgayNghiLe _NgayNghiKeTiep2;
         public ThongTinNgayNghiLe NgayNghiKeTiep2 { get => _NgayNghiKeTiep2; set { _NgayNghiKeTiep2 = value; OnPropertyChanged(); } }
+
         private ImageSource _AvatarSource;
         public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
 

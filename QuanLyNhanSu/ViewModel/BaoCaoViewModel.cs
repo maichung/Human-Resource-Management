@@ -17,11 +17,10 @@ namespace QuanLyNhanSu.ViewModel
 {
     public class BaoCaoViewModel : BaseViewModel
     {
-
         #region Thuộc tính ẩn hiện grid
         public enum ChucNangBaoCao
         {
-            NhanVien,PhongBan,NghiPhep,ChamCong,Luong,UngVien,ChiPhi,NgayNghiLe
+            NhanVien, PhongBan, NghiPhep, ChamCong, Luong, UngVien, ChiPhi, NgayNghiLe
         };
         private int _ChucNangBC;
         public int ChucNangBC { get => _ChucNangBC; set { _ChucNangBC = value; OnPropertyChanged(); } }
@@ -69,7 +68,6 @@ namespace QuanLyNhanSu.ViewModel
         private string _SelectedTrangThaiNhanVien;
         public string SelectedTrangThaiNhanVien { get => _SelectedTrangThaiNhanVien; set { _SelectedTrangThaiNhanVien = value; OnPropertyChanged(); } }
 
-
         private ObservableCollection<int> _ListThang;
         public ObservableCollection<int> ListThang { get => _ListThang; set { _ListThang = value; OnPropertyChanged(); } }
 
@@ -78,7 +76,6 @@ namespace QuanLyNhanSu.ViewModel
 
         private int _SelectedNam;
         public int SelectedNam { get => _SelectedNam; set { _SelectedNam = value; OnPropertyChanged(); } }
-
 
         private ObservableCollection<int> _ListNam;
         public ObservableCollection<int> ListNam { get => _ListNam; set { _ListNam = value; OnPropertyChanged(); } }
@@ -99,6 +96,7 @@ namespace QuanLyNhanSu.ViewModel
 
         public BaoCaoViewModel()
         {
+            #region Load dữ liệu khi chạy chương trình
             string[] DSChucNangBC = new string[] { "Nhân viên", "Phòng ban", "Nghỉ phép", "Chấm công","Lương",
                 "Ứng viên", "Chi phí", "Ngày nghỉ lễ" };
             ListChucNangBaoCao = new ObservableCollection<string>(DSChucNangBC);
@@ -124,8 +122,8 @@ namespace QuanLyNhanSu.ViewModel
             LoadListUngvien();
             LoadListPhieuChi();
             LoadListChamCong();
-            LoadListNgayNghiLe();          
-
+            LoadListNgayNghiLe();
+            #endregion
 
             #region SelectedChangedTrangThaiNhanVien command
             ChangedTrangThaiNhanVienCommand = new RelayCommand<Object>((p) =>
@@ -238,7 +236,6 @@ namespace QuanLyNhanSu.ViewModel
             {
                 switch (ChucNangBC)
                 {
-
                     case (int)ChucNangBaoCao.ChamCong:
                          XuatBaoCaoChamCong("Báo cáo chấm công", "Báo cáo chấm công");
                         break;
@@ -268,6 +265,7 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
+        #region Load dữ liệu báo cáo
         public void LoadListNhanVien()
         {
             bool TrangThai = SelectedTrangThaiNhanVien == "Đang làm việc" ? true : false;
@@ -396,6 +394,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
             }
         }
+
         public void LoadListNgayNghiLe()
         {
             ListNgayNghiLe = new ObservableCollection<NGAYNGHILE>(DataProvider.Ins.model.NGAYNGHILE);
@@ -423,10 +422,11 @@ namespace QuanLyNhanSu.ViewModel
                 }
             }
         }
+        #endregion
 
+        #region Xuất báo cáo
         public void XuatBaoCaoUngVien(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -572,7 +572,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoNhanVien(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -737,7 +736,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoPhongBan(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -867,7 +865,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoNghiPhep(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -1016,7 +1013,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoNgayNghiLe(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -1139,7 +1135,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoLuong(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -1288,7 +1283,6 @@ namespace QuanLyNhanSu.ViewModel
 
         public void XuatBaoCaoChiPhi(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -1426,10 +1420,8 @@ namespace QuanLyNhanSu.ViewModel
             #endregion
         }
 
-
         public void XuatBaoCaoChamCong(string sheetName, string title)
         {
-
             //Tạo các đối tượng Excel
 
             Microsoft.Office.Interop.Excel.Application oExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -1575,6 +1567,6 @@ namespace QuanLyNhanSu.ViewModel
             range.Value2 = arrValue;
             #endregion
         }
-
+        #endregion
     }
 }

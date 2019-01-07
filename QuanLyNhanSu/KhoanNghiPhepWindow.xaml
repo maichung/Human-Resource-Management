@@ -35,6 +35,9 @@
                     </i:Interaction.Triggers>
                 </Button>
             </StackPanel>
+
+            <TextBlock Grid.Row="0" Text="Thông tin khoản nghỉ phép" FontFamily="Segoe UI Semibold" FontSize="22" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Left" ></TextBlock>
         </Grid>
 
         <!-- Thông tin phòng ban -->

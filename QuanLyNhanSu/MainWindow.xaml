@@ -3304,7 +3304,7 @@
             <Grid Name="gridCaiDat">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="9">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
