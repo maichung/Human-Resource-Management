@@ -854,7 +854,7 @@
                                 </Grid>
 
                                 <!-- Nội dung thẻ -->
-                                <TextBlock Grid.Row="1" Foreground="#FF6F7A80" Margin="10" TextWrapping="Wrap" Text="Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày 2." VerticalAlignment="Top" FontSize="14"/>
+                                <TextBlock Grid.Row="1" Foreground="#FF6F7A80" Margin="20 10" TextWrapping="Wrap" Text="{Binding ThongBao}" VerticalAlignment="Top" FontSize="14"/>
 
                                 <!-- Xem chi tiết -->
                                 <Grid Grid.Row="2">
@@ -1736,7 +1736,7 @@
                                         <GridViewColumnHeader Tag="HOTEN_NV" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Họ tên" Width="350">
+                                                              VerticalAlignment="Center" Content="Họ tên" Width="250">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
                                     <GridViewColumn DisplayMemberBinding="{Binding PHONGBAN.TEN_PB}">
@@ -2244,7 +2244,7 @@
                                             <GridViewColumnHeader Tag="TEN_LL" 
                                                               Command="{Binding SortCommand}" 
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Tên loại nghỉ phép" Width="250">
+                                                              VerticalAlignment="Center" Content="Tên loại lương" Width="250">
                                             </GridViewColumnHeader>
                                         </GridViewColumn>
                                     </GridView>
@@ -2703,7 +2703,7 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding DIACHI_PB}">
                                         <GridViewColumnHeader Tag="DIACHI_PB"                                                               
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
-                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="100">
+                                                              VerticalAlignment="Center" Content="Địa chỉ" Width="250">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
 
@@ -3304,7 +3304,7 @@
             <Grid Name="gridCaiDat">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ChucNangNS}" Value="9">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -3659,7 +3659,7 @@
                         <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ChucNangCD}" Value="2">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
@@ -3667,7 +3667,6 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-
                             <TextBlock>Thông tin phần mềm</TextBlock>
                         </Grid>
                     </Grid>

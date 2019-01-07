@@ -78,6 +78,9 @@ namespace QuanLyNhanSu.ViewModel
         private ImageSource _AvatarSource;
         public ImageSource AvatarSource { get => _AvatarSource; set { _AvatarSource = value; OnPropertyChanged(); } }
 
+        private string _ThongBao;
+        public string ThongBao { get => _ThongBao; set { _ThongBao = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region Set quyền command
@@ -101,6 +104,10 @@ namespace QuanLyNhanSu.ViewModel
         public ICommand DangXuatCommand { get; set; }
         #endregion
 
+        #region Xóa thông báo
+        public ICommand XoaThongBaoCommand { get; set; }
+        #endregion
+
         public MainViewModel()
         {
             #region Xử lý load dữ liệu khi đăng nhập thành công
@@ -116,7 +123,7 @@ namespace QuanLyNhanSu.ViewModel
             #region Xử lý ẩn hiện Grid
             BtnTrangChuCommand = new RelayCommand<Object>((p) =>
             {
-                  return true;
+                return true;
             }, (p) =>
             {
                 ChucNangNS = (int)ChucNangNhanSu.TrangChu;
@@ -135,7 +142,7 @@ namespace QuanLyNhanSu.ViewModel
                     MessageBoxResult result = MessageBox.Show("Bạn không đủ quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
-                    
+
 
                 return true;
             }, (p) =>
@@ -256,6 +263,16 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
+            #region Xử lý Xóa thông báo
+            XoaThongBaoCommand = new RelayCommand<Grid>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ThongBao = "Không có thông báo.";
+            });
+            #endregion
+
             #region Load thẻ
             LoadListNghiPhep1Ngay();
             LoadListNghiPhep7Ngay();
@@ -263,6 +280,7 @@ namespace QuanLyNhanSu.ViewModel
             LoadListNhanVienSinhNhatThang();
             LoadSoLuongTuyenDung();
             LoadNgayLeKeTiep();
+            LoadThongBao();
             #endregion
 
             #region Đăng xuất command
@@ -307,10 +325,11 @@ namespace QuanLyNhanSu.ViewModel
 
             ListNhanVienNP1 = new ObservableCollection<ThongTinNhanVien>();
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                             join np in DataProvider.Ins.model.NGHIPHEP
-                             on nv.MA_NV equals np.MA_NV
-                             where (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) == 0)
-                             select nv;
+                               join np in DataProvider.Ins.model.NGHIPHEP
+                               on nv.MA_NV equals np.MA_NV
+                               where (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) == 0
+                               && nv.TRANGTHAI_NV == true)
+                               select nv;
             foreach (NHANVIEN nv in listNhanVien)
             {
                 ListNhanVienNP1.Add(new ThongTinNhanVien
@@ -326,10 +345,12 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListNhanVienNP7 = new ObservableCollection<ThongTinNhanVien>();
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                             join np in DataProvider.Ins.model.NGHIPHEP
-                             on nv.MA_NV equals np.MA_NV
-                             where ((DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) <= 7) && (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) >= 0))
-                             select nv;
+                               join np in DataProvider.Ins.model.NGHIPHEP
+                               on nv.MA_NV equals np.MA_NV
+                               where ((DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) <= 7) 
+                               && (DbFunctions.DiffDays(DateTime.Now, np.NGAYBATDAU_NP) >= 0)
+                               && nv.TRANGTHAI_NV == true)
+                               select nv;
             foreach (NHANVIEN nv in listNhanVien)
             {
                 ListNhanVienNP7.Add(new ThongTinNhanVien
@@ -347,8 +368,10 @@ namespace QuanLyNhanSu.ViewModel
         {
             ListNhanVienMoi = new ObservableCollection<ThongTinNhanVien>();
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                             where (nv.NGAYVAOLAM_NV.Value.Month == DateTime.Now.Month && nv.NGAYVAOLAM_NV.Value.Year == DateTime.Now.Year)
-                             select nv;
+                               where (nv.NGAYVAOLAM_NV.Value.Month == DateTime.Now.Month 
+                               && nv.NGAYVAOLAM_NV.Value.Year == DateTime.Now.Year
+                               && nv.TRANGTHAI_NV == true)
+                               select nv;
             foreach (NHANVIEN nv in listNhanVien)
             {
                 ListNhanVienMoi.Add(new ThongTinNhanVien
@@ -367,7 +390,8 @@ namespace QuanLyNhanSu.ViewModel
             ListNhanVienSinhNhatThang = new ObservableCollection<ThongTinNhanVien>();
 
             var listNhanVien = from nv in DataProvider.Ins.model.NHANVIEN
-                               where (nv.NGAYSINH_NV.Value.Month == DateTime.Now.Month)
+                               where (nv.NGAYSINH_NV.Value.Month == DateTime.Now.Month
+                               && nv.TRANGTHAI_NV == true)
                                orderby nv.NGAYSINH_NV.Value.Day
                                select nv;
 
@@ -389,8 +413,8 @@ namespace QuanLyNhanSu.ViewModel
                                     where (DbFunctions.DiffDays(DateTime.Now, td.NGAYNOP_HSUT) <= 7)
                                     select td.MA_UV).Count();
             SoLuongTuyenDungThang = (from td in DataProvider.Ins.model.HOSOUNGTUYEN
-                                    where ((td.NGAYNOP_HSUT ?? DateTime.Now).Month == DateTime.Now.Month)
-                                    select td.MA_UV).Count();
+                                     where ((td.NGAYNOP_HSUT ?? DateTime.Now).Month == DateTime.Now.Month)
+                                     select td.MA_UV).Count();
         }
 
         public void LoadNgayLeKeTiep()
@@ -420,10 +444,31 @@ namespace QuanLyNhanSu.ViewModel
                 };
             }
 
+            if (sortedListNgayNghiLe.Count == 1)
+                NgayNghiKeTiep2 = null;
+
             if (sortedListNgayNghiLe.Count == 0)
+            {
+                NgayNghiKeTiep1 = null;
+                NgayNghiKeTiep2 = null;
                 HienNgayLe = false;
+            }
             else
                 HienNgayLe = true;
+        }
+
+        public void LoadThongBao()
+        {
+            int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            int diffDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - DateTime.Now.Day;
+            if (diffDay <= 5 && diffDay >= 3)
+                ThongBao = "Gần đến ngày tính lương, vui lòng tổng kết chấm công trước ngày " + (daysInMonth - 3) + ".";
+            else if (diffDay <= 3)
+                ThongBao = "Gần đến ngày phát lương, vui lòng tính lương trước ngày " + daysInMonth + ".";
+            else if (DateTime.Now.Day <= 2)
+                ThongBao = "Gần đến ngày phát lương (ngày " + DateTime.Now.ToString("02/MM/yyyy") + ").";
+            else
+                ThongBao = "Không có thông báo.";
         }
 
         public string MonthNumberToString(int m)
