@@ -205,7 +205,7 @@ namespace QuanLyNhanSu.ViewModel
                     PhongBanSua.TEN_PB = TenPhongBan;
                     PhongBanSua.MA_PB = SelectedPhongBan.MA_PB;
 
-                    if (SelectedPhongBan.MATRUONGPHONG_PB != null)
+                    if (SelectedTruongPhong != null)
                         PhongBanSua.MATRUONGPHONG_PB = SelectedTruongPhong.MA_NV;
 
                     PhongBanSua.NGAYTHANHLAP_PB = NgayThanhLap;
@@ -274,6 +274,7 @@ namespace QuanLyNhanSu.ViewModel
             var listTenTruongPhong = from pb in DataProvider.Ins.model.PHONGBAN
                                      join nv in DataProvider.Ins.model.NHANVIEN
                                      on pb.MATRUONGPHONG_PB equals nv.MA_NV
+                                     where (nv.TRANGTHAI_NV == true)
                                      select nv.HOTEN_NV;
             foreach (string s in listTenTruongPhong)
             {
