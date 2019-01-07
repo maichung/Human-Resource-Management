@@ -3273,14 +3273,13 @@
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding MA_NNL}" >
                                         <GridViewColumnHeader Tag="MA_NNL" 
-                                                              
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="ID" Width="80">
                                         </GridViewColumnHeader>
                                     </GridViewColumn>
 
                                     <GridViewColumn DisplayMemberBinding="{Binding NGAYNGHILE_NNL}" >
-                                        <GridViewColumnHeader Tag="THOIGIANLAP_PC"                                                               
+                                        <GridViewColumnHeader Tag="NGAYNGHILE_NNL"                                                               
                                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
                                                               VerticalAlignment="Center" Content="Ngày" Width="200">
                                         </GridViewColumnHeader>

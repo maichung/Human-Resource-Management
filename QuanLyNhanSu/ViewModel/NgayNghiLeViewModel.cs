@@ -113,7 +113,7 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
-            // Huỷ command
+            #region Huỷ command
             HuyCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
@@ -127,8 +127,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
 
-            // Xóa command
+            #region Xóa command
             XoaCommand = new RelayCommand<Window>((p) =>
             {
 
@@ -165,8 +166,9 @@ namespace QuanLyNhanSu.ViewModel
                     LoadListNgayNghiLe();
                 }
             });
+            #endregion
 
-            // Sửa command
+            #region Sửa command
             SuaCommand = new RelayCommand<Object>((p) =>
             {
                 return true;
@@ -174,8 +176,9 @@ namespace QuanLyNhanSu.ViewModel
             {
                 IsEditable = true;
             });
+            #endregion
 
-            // Hiển thị command
+            #region Hiển thị command
             HienThiCommand = new RelayCommand<Object>((p) =>
             {
                 return SelectedNgayNghiLe == null ? false : true;
@@ -189,7 +192,9 @@ namespace QuanLyNhanSu.ViewModel
                 NgayNghiLeWindow ngayNghiLeWindow = new NgayNghiLeWindow();
                 ngayNghiLeWindow.ShowDialog();
             });
+            #endregion
 
+            #region Sort command
             SortCommand = new RelayCommand<GridViewColumnHeader>((p) => { return p == null ? false : true; }, (p) =>
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListNgayNghiLe);
@@ -205,7 +210,9 @@ namespace QuanLyNhanSu.ViewModel
                 }
                 sort = !sort;
             });
+            #endregion
 
+            #region Search command
             SearchCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 if (string.IsNullOrEmpty(SearchNgayNghiLe))
@@ -221,6 +228,7 @@ namespace QuanLyNhanSu.ViewModel
                 }
 
             });
+            #endregion
         }
 
         public void LoadListNgayNghiLe()
