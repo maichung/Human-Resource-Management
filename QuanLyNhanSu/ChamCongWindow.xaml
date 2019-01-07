@@ -24,6 +24,9 @@
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/Icons/background.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
+
+            <TextBlock Grid.Row="0" Text="Chấm công ngày" FontFamily="Segoe UI Semibold" FontSize="22" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
         </Grid>
 
         <!-- Thông tin chấm công -->
