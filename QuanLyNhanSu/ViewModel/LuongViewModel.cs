@@ -102,6 +102,8 @@ namespace QuanLyNhanSu.ViewModel
             int[] DSThang = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
             ListThang = new ObservableCollection<int>(DSThang);
 
+            SelectedNam = DateTime.Now.Year;
+            SelectedThang = DateTime.Now.Month;
             #endregion
 
             #region Xử lý ẩn hiện tab
@@ -279,7 +281,7 @@ namespace QuanLyNhanSu.ViewModel
             });
             #endregion
 
-            #region
+            #region In Command
             InCommand = new RelayCommand<Window>((p) =>
             {
                 return true;
